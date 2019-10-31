@@ -1,2 +1,5 @@
 site_name: FlashBase Docs
+nav:
+  - Introduction: index.md
+  - Command Line Interface: command-line-interface.md
 theme: readthedocs
