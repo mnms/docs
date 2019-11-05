@@ -1,6 +1,14 @@
 Get Started with FlashBase
 ==============================================================================
+In './scripts', you can find all files that are used in this document .
 
+``` bash
+-rw-r--r--  1 admin  SDomain Users   701B 11  5 10:07 .use_cluster
+-rw-r--r--@ 1 admin  Domain Users   488B 11  5 10:08 ddl_fb_test_101.sql
+-rwxr-xr-x@ 1 admin  Domain Users   1.7K 11  5 10:07 deploy-flashbase.sh
+-rw-r--r--@ 1 admin  Domain Users   155B 11  5 10:08 test.json
+-rw-r--r--@ 1 admin  Domain Users    17K 11  5 10:08 test_data.csv
+```
 
 ## 1. Optimizing System Parameters
 
