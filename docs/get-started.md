@@ -1,5 +1,5 @@
-Get Started with FlashBase
-==============================================================================
+# Get Started with FlashBase
+
 In './scripts', you can find all files that are used in this document .
 
 ``` bash
@@ -12,103 +12,111 @@ In './scripts', you can find all files that are used in this document .
 
 ## 1. Optimizing System Parameters
 
- - System Parameters 
+### System Parameters
 
-    (1) Edit '/etc/sysctl.conf' like following
-    ``` bash
-    ...
-    vm.swappiness = 0 
-    vm.overcommit_memory = 1 
-    vm.overcommit_ratio = 50 
-    fs.file-max = 6815744 
-    net.ipv4.ip_local_port_range = 32768 65535 
-    net.core.rmem_default = 262144 
-    net.core.wmem_default = 262144 
-    net.core.rmem_max = 16777216 
-    net.core.wmem_max = 16777216
-    net.ipv4.tcp_max_syn_backlog = 4096 
-    net.core.somaxconn = 65535
-    ...
-    ```
-    > Notice) In case of application in runtime, use 'sudo sysctl -p'
-    
-    (2) Edit '/etc/security/limits.conf'
-    ``` bash
-    ...
-    * soft nofile 262144
-    * hard nofile 262144
-    * soft nproc 131072 
-    * hard nproc 131072
-    [account name] * soft nofile 262144
-    [account name] * hard nofile 262144
-    [account name] * soft nproc 131072 
-    [account name] * hard nproc 131072
-    ...
-    ```
-    > Notice) In case of application in runtime, use 'ulimit -n 65535, ulimit -u 131072'
+(1) Edit '/etc/sysctl.conf' like following
 
-    (3) Edit '/etc/fstab'
-    
-    Remove SWAP Partition(Comment out SWAP partition with using '#' and reboot)
-    ``` bash
-    ...    
-    #/dev/mapper/centos-swap swap swap defaults 0 0
-    ...
-    ```
-    > Notice) In case of application in runtime, use 'swapoff -a'
+``` bash
+...
+vm.swappiness = 0
+vm.overcommit_memory = 1
+vm.overcommit_ratio = 50
+fs.file-max = 6815744
+net.ipv4.ip_local_port_range = 32768 65535
+net.core.rmem_default = 262144
+net.core.wmem_default = 262144
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_max_syn_backlog = 4096
+net.core.somaxconn = 65535
+...
+```
 
-    (4) '/etc/init.d/disable-transparent-hugepages'
-    ``` bash
-    root@fbg01 ~]# cat /etc/init.d/disable-transparent-hugepages
-    #!/bin/bash
-    ### BEGIN INIT INFO
-    # Provides:          disable-transparent-hugepages
-    # Required-Start:    $local_fs
-    # Required-Stop:
-    # X-Start-Before:    mongod mongodb-mms-automation-agent
-    # Default-Start:     2 3 4 5
-    # Default-Stop:      0 1 6
-    # Short-Description: Disable Linux transparent huge pages
-    # Description:       Disable Linux transparent huge pages, to improve
-    #                    database performance.
-    ### END INIT INFO
-    
-    case $1 in
-    start)
-        if [ -d /sys/kernel/mm/transparent_hugepage ]; then
-        thp_path=/sys/kernel/mm/transparent_hugepage
-        elif [ -d /sys/kernel/mm/redhat_transparent_hugepage ]; then
-        thp_path=/sys/kernel/mm/redhat_transparent_hugepage
-        else
-        return 0
-        fi
-    
-        echo 'never' > ${thp_path}/enabled
-        echo 'never' > ${thp_path}/defrag
-    
-        re='^[0-1]+$'
-        if [[ $(cat ${thp_path}/khugepaged/defrag) =~ $re ]]
-        then
-        # RHEL 7
-        echo 0  > ${thp_path}/khugepaged/defrag
-        else
-        # RHEL 6
-        echo 'no' > ${thp_path}/khugepaged/defrag
-        fi
-    
-        unset re
-        unset thp_path
-        ;;
-    esac
-    [root@fbg01 ~]
-    [root@fbg01 ~]
-    [root@fbg01 ~] chmod 755 /etc/init.d/disable-transparent-hugepages
-    [root@fbg01 ~] chkconfig --add disable-transparent-hugepages
-    ```
+Notice: In case of application in runtime, use 'sudo sysctl -p'
 
+(2) Edit '/etc/security/limits.conf'
+
+``` bash
+...
+* soft nofile 262144
+* hard nofile 262144
+* soft nproc 131072
+* hard nproc 131072
+[account name] * soft nofile 262144
+[account name] * hard nofile 262144
+[account name] * soft nproc 131072
+[account name] * hard nproc 131072
+...
+```
+
+Notice: In case of application in runtime, use 'ulimit -n 65535, ulimit -u 131072'
+
+(3) Edit '/etc/fstab'
+
+Remove SWAP Partition(Comment out SWAP partition with using '#' and reboot)
+
+``` bash
+...
+#/dev/mapper/centos-swap swap swap defaults 0 0
+...
+```
+
+Notice: In case of application in runtime, use 'swapoff -a'
+
+(4) '/etc/init.d/disable-transparent-hugepages'
+
+``` bash
+root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          disable-transparent-hugepages
+# Required-Start:    $local_fs
+# Required-Stop:
+# X-Start-Before:    mongod mongodb-mms-automation-agent
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Disable Linux transparent huge pages
+# Description:       Disable Linux transparent huge pages, to improve
+#                    database performance.
+### END INIT INFO
+
+case $1 in
+start)
+    if [ -d /sys/kernel/mm/transparent_hugepage ]; then
+    thp_path=/sys/kernel/mm/transparent_hugepage
+    elif [ -d /sys/kernel/mm/redhat_transparent_hugepage ]; then
+    thp_path=/sys/kernel/mm/redhat_transparent_hugepage
+    else
+    return 0
+    fi
+
+    echo 'never' > ${thp_path}/enabled
+    echo 'never' > ${thp_path}/defrag
+
+    re='^[0-1]+$'
+    if [[ $(cat ${thp_path}/khugepaged/defrag) =~ $re ]]
+    then
+    # RHEL 7
+    echo 0  > ${thp_path}/khugepaged/defrag
+    else
+    # RHEL 6
+    echo 'no' > ${thp_path}/khugepaged/defrag
+    fi
+
+    unset re
+    unset thp_path
+    ;;
+esac
+[root@fbg01 ~]
+[root@fbg01 ~]
+[root@fbg01 ~] chmod 755 /etc/init.d/disable-transparent-hugepages
+[root@fbg01 ~] chkconfig --add disable-transparent-hugepages
+```
 
 ## 2. Setup Prerequisites
+
 ### Install Packages
+
 - bash, unzip, ssh
 
 - JDK 1.8 or greater
@@ -118,134 +126,141 @@ In './scripts', you can find all files that are used in this document .
 - glibc 2.17 or greater
 
 - epel-release
-    ``` bash
-    sudo yum install epel-release
-    ```
+
+``` bash
+sudo yum install epel-release
+```
 
 - boost, boost-thread, boost-devel
-    ``` bash
-    sudo yum install boost boost-thread boost-devel 
-    ```
 
- - Exchange SSH Key
+``` bash
+sudo yum install boost boost-thread boost-devel 
+```
 
-    For all servers that FlashBase will be deployed, SSH key should be exchanged.
-    ``` bash
-    ssh-keygen -t rsa
-    chmod 0600 ~/.ssh/authorized_keys
-    cat .ssh/id_rsa.pub | ssh {server name} "cat >> .ssh/authorized_keys"
-    ```
- - Intel MKL library
- 
-     (1) Intel MKL 2019 library install
+- Exchange SSH Key
 
-    - go to the website: https://software.intel.com/en-us/mkl/choose-download/macos
-    - register and login
-    - select product named "Intel * Math Kernel Library for Linux" or "Intel * Math Kernel Library for Mac" from the select box "Choose Product to Download"
-    - Choose a Version "2019 Update 2" and download
-    - unzip the file and execute the install.sh file with root account or (sudo command)
-        ``` bash
-            sudo ./install.sh
-        ```
-    - choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)
-        ``` bash
-        matthew@fbg05 /opt/intel $ pwd
-        /opt/intel
+For all servers that FlashBase will be deployed, SSH key should be exchanged.
 
-        matthew@fbg05 /opt/intel $ ls -alh
-        합계 0
-        drwxr-xr-x  10 root root 307  3월 22 01:34 .
-        drwxr-xr-x.  5 root root  83  3월 22 01:34 ..
-        drwxr-xr-x   6 root root  72  3월 22 01:35 .pset
-        drwxr-xr-x   2 root root  53  3월 22 01:34 bin
-        lrwxrwxrwx   1 root root  28  3월 22 01:34 compilers_and_libraries -> compilers_and_libraries_2019
-        drwxr-xr-x   3 root root  19  3월 22 01:34 compilers_and_libraries_2019
-        drwxr-xr-x   4 root root  36  1월 24 23:04 compilers_and_libraries_2019.2.187
-        drwxr-xr-x   6 root root  63  1월 24 22:50 conda_channel
-        drwxr-xr-x   4 root root  26  1월 24 23:01 documentation_2019
-        lrwxrwxrwx   1 root root  33  3월 22 01:34 lib -> compilers_and_libraries/linux/lib
-        lrwxrwxrwx   1 root root  33  3월 22 01:34 mkl -> compilers_and_libraries/linux/mkl
-        lrwxrwxrwx   1 root root  29  3월 22 01:34 parallel_studio_xe_2019 -> parallel_studio_xe_2019.2.057
-        drwxr-xr-x   5 root root 216  3월 22 01:34 parallel_studio_xe_2019.2.057
-        drwxr-xr-x   3 root root  16  3월 22 01:34 samples_2019
-        lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -> compilers_and_libraries/linux/tbb
-        ```
+``` bash
+ssh-keygen -t rsa
+chmod 0600 ~/.ssh/authorized_keys
+cat .ssh/id_rsa.pub | ssh {server name} "cat >> .ssh/authorized_keys"
+```
 
+- Intel MKL library
 
-    (2) Intel MKL 2019 library environment settings
+(1) Intel MKL 2019 library install
 
-    - append the following statement into ~/.bashrc
-        ``` bash
-        # INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
-        source /opt/intel/mkl/bin/mklvars.sh intel64
-        ```
+- go to the website: https://software.intel.com/en-us/mkl/choose-download/macos
+- register and login
+- select product named "Intel * Math Kernel Library for Linux" or "Intel * Math Kernel Library for Mac" from the select box "Choose Product to Download"
+- Choose a Version "2019 Update 2" and download
+- unzip the file and execute the install.sh file with root account or (sudo command)
+
+``` bash
+    sudo ./install.sh
+```
+
+- choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)
+
+``` bash
+matthew@fbg05 /opt/intel $ pwd
+/opt/intel
+
+matthew@fbg05 /opt/intel $ ls -alh
+합계 0
+drwxr-xr-x  10 root root 307  3월 22 01:34 .
+drwxr-xr-x.  5 root root  83  3월 22 01:34 ..
+drwxr-xr-x   6 root root  72  3월 22 01:35 .pset
+drwxr-xr-x   2 root root  53  3월 22 01:34 bin
+lrwxrwxrwx   1 root root  28  3월 22 01:34 compilers_and_libraries -> compilers_and_libraries_2019
+drwxr-xr-x   3 root root  19  3월 22 01:34 compilers_and_libraries_2019
+drwxr-xr-x   4 root root  36  1월 24 23:04 compilers_and_libraries_2019.2.187
+drwxr-xr-x   6 root root  63  1월 24 22:50 conda_channel
+drwxr-xr-x   4 root root  26  1월 24 23:01 documentation_2019
+lrwxrwxrwx   1 root root  33  3월 22 01:34 lib -> compilers_and_libraries/linux/lib
+lrwxrwxrwx   1 root root  33  3월 22 01:34 mkl -> compilers_and_libraries/linux/mkl
+lrwxrwxrwx   1 root root  29  3월 22 01:34 parallel_studio_xe_2019 -> parallel_studio_xe_2019.2.057
+drwxr-xr-x   5 root root 216  3월 22 01:34 parallel_studio_xe_2019.2.057
+drwxr-xr-x   3 root root  16  3월 22 01:34 samples_2019
+lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -> compilers_and_libraries/linux/tbb
+```
+
+(2) Intel MKL 2019 library environment settings
+
+- append the following statement into ~/.bashrc
+
+``` bash
+# INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
+source /opt/intel/mkl/bin/mklvars.sh intel64
+```
 
 - Apache hadoop 2.6.0 or greater
 
 - Apache spark 2.3 on hadoop 2.6 
 
-- ntp
+- ntp: For clock synchronization between servers over packet-switched, variable-latency data networks.
 
-    For clock synchronization between servers over packet-switched, variable-latency data networks.
+## 3. Session configuration files
 
+- Edit '~/.bashrc'
 
-## Session configuration files
- - Edit '~/.bashrc'
+Add followings
 
-    Add followings
-    ``` bash
-    # .bashrc
+``` bash
+# .bashrc
 
-    if [ -f /etc/bashrc ]; then
-    . /etc/bashrc
-    fi
+if [ -f /etc/bashrc ]; then
+. /etc/bashrc
+fi
 
-    # User specific environment and startup programs
+# User specific environment and startup programs
 
-    PATH=$PATH:$HOME/.local/bin:$HOME/bin
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
 
-    HADOOP_HOME=/home/nvkvs/hadoop
-    HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-    YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
-    SPARK_HOME=/home/nvkvs/spark
+HADOOP_HOME=/home/nvkvs/hadoop
+HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+SPARK_HOME=/home/nvkvs/spark
 
-    PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$HOME/sbin
+PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$HOME/sbin
 
-    export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
-    alias cfc='source ~/.use_cluster'
-    ```
+export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
+alias cfc='source ~/.use_cluster'
+```
 
-- Edit '~/.use_cluster'
+- Add '~/.use_cluster'
 
-    This script helps to change the path of FlasBase Cluster.
-    ```bash
-    #!/bin/bash
+This script helps to change the path of FlasBase Cluster.
 
-    ## set cluster-#{NUM} path
-    export PATH="/bin/:/sbin/:/usr/local/bin/:/usr/local/sbin"
-    export SR2_HOME=${HOME}/tsr2/cluster_$1/tsr2-assembly-1.0.0-SNAPSHOT
+```bash
+#!/bin/bash
 
-    source ${HOME}/.bash_profile
+## set cluster-#{NUM} path
+export PATH="/bin/:/sbin/:/usr/local/bin/:/usr/local/sbin"
+export SR2_HOME=${HOME}/tsr2/cluster_$1/tsr2-assembly-1.0.0-SNAPSHOT
 
-    echo $PATH | grep ${SR2_HOME} > /dev/null
-    RET=$?
-    if [[ $RET -eq 1 ]]; then
-        PATH=$PATH:$SR2_HOME/bin:$SR2_HOME/sbin
-    fi
+source ${HOME}/.bash_profile
 
-    ## source command auto-complate
-    source $SR2_HOME/sbin/tsr2-helper
+echo $PATH | grep ${SR2_HOME} > /dev/null
+RET=$?
+if [[ $RET -eq 1 ]]; then
+    PATH=$PATH:$SR2_HOME/bin:$SR2_HOME/sbin
+fi
 
-    if [ "$#" -le "1" ]; then
-        return 0
-    else
-        shift
-        "$@"
-        return $?
-    fi
-    ```
+## source command auto-complate
+source $SR2_HOME/sbin/tsr2-helper
 
-## Install FlashBase
+if [ "$#" -le "1" ]; then
+    return 0
+else
+    shift
+    "$@"
+    return $?
+fi
+```
+
+## 4. Install FlashBase
 
 (1) Generate directory for deploying FlashBase.
 
@@ -260,7 +275,8 @@ cp ./flashbase.xxx.bin ~/deploy/
 ```
 
 (3) Copy 'deploy-flashbase.sh'
-``` bash 
+
+``` bash
 cp deploy-flashbase.sh ~/deploy/
 ```
 
@@ -321,9 +337,9 @@ cp deploy-flashbase.sh ~/deploy/
 
 ```
 
- - At 'line 3', add the names of servers that create FlashBase cluster. In case of multiple servers, use ' '(whitespace)  like 'line1' or 'line2'.
- - At 'line 17', type cluster number to deploy.(ex, in case of cluster_1, type '1'). Like 'for cluster_num in "1" "2" "3";', serveral clusters can be deployed simultaneously.
- - Finally, type './deploy-flashbase.sh [file name]' to deploy.
+- At 'line 3', add the names of servers that create FlashBase cluster. In case of multiple servers, use ' '(whitespace)  like 'line1' or 'line2'.
+- At 'line 17', type cluster number to deploy.(ex, in case of cluster_1, type '1'). Like 'for cluster_num in "1" "2" "3";', serveral clusters can be deployed simultaneously.
+- Finally, type './deploy-flashbase.sh [file name]' to deploy.
 
 ``` bash
 ./deploy-flashbase.sh ./flashbase.xxx.bin
@@ -331,21 +347,25 @@ cp deploy-flashbase.sh ~/deploy/
 
 (5) Copy '.use_cluster'
 
-```
-cp .use_cluster ~/ 
+``` bash
+cp .use_cluster ~/
 ```
 
 With '.use_cluster' like below, cluster number can be changed.
-```
+
+``` bash
 source ~/.use_cluster 1 
 ```
+
 If 'cfc' alias is already set in '.bashrc', you can use 'cfc'.
+
 ``` bash
 cfc 1
 ```
 
 (6) Check cluster number and version information
-```
+
+``` bash
 $ which flashbase
 /Users/admin/tsr2cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/sbin/flashbase
 
@@ -361,12 +381,14 @@ Git Commit User : sungho2.kim@sk.com
 ```
 
 (7) Setup the number of redis-server process, replica and the number of disks.
+
 ```  bash
 matthew@fbg05 cfc 1
 matthew@fbg05 flashbase edit
 ```
 
 With using 'flashbase edit', open '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/conf/redis.properties' file.
+
 ``` bash
 1 #!/bin/bash
 2
@@ -396,29 +418,34 @@ With using 'flashbase edit', open '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT
 
  At 'line 18', set the count of disks. With this value, FlashBase calculates the storage path of each redis-server
 
-
 (8) Setup configuration and features
 
-```
+``` bash
 flashbase edit template
 ```
+
 If 'flashbase edit template' is executed, templates of masters and slaves will be open to modify configurations and features.
 
-### Examples
+Following is example.
+
 - maxmemory
+
 ``` bash
 # maxmemory <bytes>
 # maxmemory should be greater than 51mb in TSR2
 maxmemory 200mb
 ```
+
 - flash-db-ttl
-```
+
+``` bash
 # for setting ttl value for flash db (default value is 2592000 = 3600 secs * 24 housrs * 30 days)
 flash-db-ttl 2592000
 ```
 
 These values can be checked and set like bellow.
-```
+
+``` bash
 ~ flashbase cli
 127.0.0.1:18108> config get maxmemory
 1) "maxmemory"
@@ -441,34 +468,40 @@ OK
 127.0.0.1:18108>
 ```
 
+## 5. Start FlashBase
 
-
-## Start FlashBase
 (1) Set cluster number(ex, we will use cluster 1)
+
 ``` bash
 source ~/.use_cluster 1
 ```
+
 or
+
 ``` bash
 cfc 1
 ```
 
 (2) Stop all redis-server process of cluster 1
+
 ``` bash
 flashbase stop
 ```
 
 (3) Remove all data files of cluster 1
+
 ``` bash
 flashbase clean
 ```
 
 (4) Type 'flashbase edit template' and set required configurations
+
 ``` bash
 flashbase edit template
 ```
 
 (5) restart cluster with initialization
+
 ``` bash
 flashbase restart --reset --cluster --yes
 ```
@@ -476,8 +509,9 @@ flashbase restart --reset --cluster --yes
 (6) In case of failure
 
 Move to '$SR2_HOME/logs/redis' and check log files
+
 ``` bash
-cd $SR2_HOME/logs/redis 
+cd $SR2_HOME/logs/redis
 ```
 
 If there is no hint about error, try like below.
@@ -486,9 +520,7 @@ If there is no hint about error, try like below.
 DYLD_LIBRARY_PATH=~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/lib/native/ ~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/bin/redis-server ~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/conf/redis/redis-18101.conf
 ```
 
-
-
-## Ingestion and Query
+## 6. Ingestion and Query
 
 For Ingestion, FlashBase provides serveral ways like tsr2-tools, kafka and redis command.
 With using tsr2-tools, you can ingest data easily.
@@ -500,6 +532,7 @@ For example, we can use like below.
 Let's try with sample data.
 
 (1) mkdir directory and copy data
+
 ``` bash
 mkdir ~/tsr2-test
 mkdir ~/tsr2-test/load
@@ -507,6 +540,7 @@ cp data.csv ~/tsr2-test/load/
 ```
 
 (2) generator json file that contains table schema information.
+
 ``` bash
 mkdir ~/tsr2-test/json
 ```
@@ -533,6 +567,7 @@ tsr2-tools insert -d ~/tsr2-test/load -s "|" -t test.json -p 8 -c 1 -i
 ```
 
 (4) With monitor command, monitoring is enabled. Because monitoring will increase the load of the redis-server, it is better to quit in short time.
+
 ``` bash
 flashbase cli monitor
 
@@ -550,7 +585,8 @@ flashbase cli monitor
 ```
 
 (5) Check ingested data in 'flashbase cli'
-``` bash 
+
+``` bash
 $flashbase cli
 127.0.0.1:18100> metakeys *
  1) "M:{101:1:170807:4:Tuvalu:5:1612091856899}"
@@ -582,7 +618,8 @@ db0:keys=40,memKeys=20,flashKeys=0,expires=20,avg_ttl=0
 
 (6) query data with using 'thriftserver beeline'
 After setup cluster number, start thriftserver.
-```
+
+``` bash
 cfc 1
 thriftserver restart
 ```
@@ -599,6 +636,7 @@ Like below, SparkSubmit process and executors are launched successfully, 'thrift
  ```
 
 Using 'ddl_fb_test_101.sql', create table.
+
 ``` bash
 thriftserver beeline -f ddl_fb_test_101.sql
 
@@ -619,6 +657,7 @@ OPTIONS (
 ```
 
 From now, SparkSQL is available like this.
+
 ``` bash
 select event_date, company from fb_test  where event_date > '0';
 
@@ -631,14 +670,16 @@ or
 select event_date, company, count(*) from fb_test  where event_date > '0' group by event_date, company;
 ```
 
-## FlashBase Commands
+## 7. FlashBase Commands
+
 Launch FlashBase CLI like following.
 
-``` bash 
+``` bash
 flashbase cli -h [host] -p [port]
 ```
 
 If only 'flashbase cli' is executed, FlashBase opens port randomly in current server.
+
 ``` bash
 flashbase cli
 ```
@@ -764,6 +805,7 @@ localhost:18500>
 ```
 
 Like 'info keyspace', only specified information can be checked.
+
 ``` bash
 localhost:18500> info keyspace
 # Keyspace
