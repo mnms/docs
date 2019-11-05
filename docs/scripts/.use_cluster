@@ -1,0 +1,33 @@
+#!/bin/bash
+
+## set cluster-#{NUM} path
+export PATH="/bin/:/sbin/:/usr/local/bin/:/usr/local/sbin"
+export SR2_HOME=${HOME}/tsr2/cluster_$1/tsr2-assembly-1.0.0-SNAPSHOT
+export NVKVS_MANAGER_HOME=${HOME}/tsr2/cluster_$1/nv-kvs-manager
+
+source ${HOME}/.bash_profile
+
+echo $PATH | grep ${SR2_HOME} > /dev/null
+RET=$?
+if [[ $RET -eq 1 ]]; then
+    PATH=$SR2_HOME/bin:$SR2_HOME/sbin:$PATH
+fi
+
+echo $PATH | grep ${NVKVS_MANAGER_HOME} > /dev/null
+RET=$?
+if [[ $RET -eq 1 ]]; then
+    PATH=$NVKVS_MANAGER_HOME/bin:$PATH
+fi
+
+#echo "Cluster PATH : $PATH "
+
+## source command auto-complate
+source $SR2_HOME/sbin/tsr2-helper
+
+if [ "$#" -le "1" ]; then
+    return 0
+else
+        shift
+    "$@"
+        return $?
+fi
