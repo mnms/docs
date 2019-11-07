@@ -119,11 +119,11 @@ esac
 
 - bash, unzip, ssh
 
-- JDK 1.8 or greater
+- JDK 1.8 or higher
 
-- gcc 4.8.5 or greater
+- gcc 4.8.5 or higher
 
-- glibc 2.17 or greater
+- glibc 2.17 or higher
 
 - epel-release
 
@@ -195,9 +195,9 @@ lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -> compilers_and_libraries/linux
 source /opt/intel/mkl/bin/mklvars.sh intel64
 ```
 
-- Apache hadoop 2.6.0 or greater
+- [Apache Hadoop 2.6.0](https://archive.apache.org/dist/hadoop/common/hadoop-2.6.0/) (or higher)
 
-- Apache spark 2.3 on hadoop 2.6
+- [Apache Spark 2.3 on Hadoop 2.6](https://archive.apache.org/dist/spark/spark-2.3.0/)
 
 - ntp: For clock synchronization between servers over packet-switched, variable-latency data networks.
 
