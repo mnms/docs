@@ -1,6 +1,27 @@
 site_name: FlashBase Docs
+site_author: FlashBase Team
+site_description: FlashBase is a DRAM / SSD optimized real-time in-memory DBMS.
+site_url: https://mnms.github.io/docs
+copyright: All right reserved, FlashBase Team.
+
+repo_name: source repository
+repo_url: https://github.com/mnms/docs
+
 nav:
   - Introduction: index.md
   - Get Started: get-started.md
   - Command Line Interface: command-line-interface.md
-theme: readthedocs
+
+plugins:
+  - search
+markdown_extensions:
+  - meta
+  - toc:
+      permalink: true
+
+theme:
+  name: readthedocs
+  highlightjs: true
+
+extra:
+  version: 0.1

@@ -1,1 +1,4 @@
 mkdocs
+markdown
+pygments
+pymdown-extensions
