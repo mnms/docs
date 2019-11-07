@@ -1,6 +1,6 @@
 # Get Started with FlashBase
 
-In './scripts', you can find all files that are used in this document .
+In `./scripts`, you can find all files that are used in this document .
 
 ``` bash
 -rw-r--r--  1 admin  SDomain Users   701B 11  5 10:07 .use_cluster
@@ -14,7 +14,7 @@ In './scripts', you can find all files that are used in this document .
 
 ### System Parameters
 
-(1) Edit '/etc/sysctl.conf' like following
+(1) Edit `/etc/sysctl.conf` like following
 
 ``` bash
 ...
@@ -32,9 +32,9 @@ net.core.somaxconn = 65535
 ...
 ```
 
-Notice: In case of application in runtime, use 'sudo sysctl -p'
+Notice: In case of application in runtime, use `sudo sysctl -p`
 
-(2) Edit '/etc/security/limits.conf'
+(2) Edit `/etc/security/limits.conf`
 
 ``` bash
 ...
@@ -49,11 +49,11 @@ Notice: In case of application in runtime, use 'sudo sysctl -p'
 ...
 ```
 
-Notice: In case of application in runtime, use 'ulimit -n 65535, ulimit -u 131072'
+Notice: In case of application in runtime, use `ulimit -n 65535, ulimit -u 131072`
 
-(3) Edit '/etc/fstab'
+(3) Edit `/etc/fstab`
 
-Remove SWAP Partition(Comment out SWAP partition with using '#' and reboot)
+Remove SWAP Partition (Comment out SWAP partition with using `#` and reboot)
 
 ``` bash
 ...
@@ -61,9 +61,9 @@ Remove SWAP Partition(Comment out SWAP partition with using '#' and reboot)
 ...
 ```
 
-Notice: In case of application in runtime, use 'swapoff -a'
+Notice: In case of application in runtime, use `swapoff -a`
 
-(4) '/etc/init.d/disable-transparent-hugepages'
+(4) `/etc/init.d/disable-transparent-hugepages`
 
 ``` bash
 root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
@@ -203,7 +203,7 @@ source /opt/intel/mkl/bin/mklvars.sh intel64
 
 ## 3. Session configuration files
 
-- Edit '~/.bashrc'
+- Edit `~/.bashrc`
 
 Add followings
 
@@ -229,7 +229,7 @@ export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
 alias cfc='source ~/.use_cluster'
 ```
 
-- Add '~/.use_cluster'
+- Add `~/.use_cluster`
 
 This script helps to change the path of FlasBase Cluster.
 
@@ -274,18 +274,18 @@ mkdir ~/deploy
 cp ./flashbase.xxx.bin ~/deploy/
 ```
 
-(3) Copy 'deploy-flashbase.sh'
+(3) Copy `deploy-flashbase.sh`
 
 ``` bash
 cp deploy-flashbase.sh ~/deploy/
 ```
 
-(4) Edit 'deploy-flashbase.sh'
+(4) Edit `deploy-flashbase.sh`
 
 ``` bash
 1 #nodes=("flashbase-d01" "flashbase-d02" "flashbase-d03")
 2 #nodes=("flashbase-w01" "flashbase-w02" "flashbase-w03" "flashbase-w04" "flashbase-w05" "flashbasew06")
-3 nodes=( "localhost")
+3 nodes=("localhost")
 4
 5 INSTALLER_PATH=$1
 6
@@ -337,27 +337,27 @@ cp deploy-flashbase.sh ~/deploy/
 
 ```
 
-- At 'line 3', add the names of servers that create FlashBase cluster. In case of multiple servers, use ' '(whitespace)  like 'line1' or 'line2'.
-- At 'line 17', type cluster number to deploy.(ex, in case of cluster_1, type '1'). Like 'for cluster_num in "1" "2" "3";', serveral clusters can be deployed simultaneously.
-- Finally, type './deploy-flashbase.sh [file name]' to deploy.
+- At `line 3`, add the names of servers that create FlashBase cluster. In case of multiple servers, use ` `(whitespace) like `line 1` or `line 2`.
+- At `line 17`, type cluster number to deploy.(ex, in case of `cluster_1`, type `1`). Like `for cluster_num in "1" "2" "3";`, serveral clusters can be deployed simultaneously.
+- Finally, type `./deploy-flashbase.sh [file name]` to deploy.
 
 ``` bash
 ./deploy-flashbase.sh ./flashbase.xxx.bin
 ```
 
-(5) Copy '.use_cluster'
+(5) Copy `.use_cluster`
 
 ``` bash
 cp .use_cluster ~/
 ```
 
-With '.use_cluster' like below, cluster number can be changed.
+With `.use_cluster` like below, cluster number can be changed.
 
 ``` bash
 source ~/.use_cluster 1
 ```
 
-If 'cfc' alias is already set in '.bashrc', you can use 'cfc'.
+If `cfc` alias is already set in `.bashrc`, you can use `cfc`.
 
 ``` bash
 cfc 1
@@ -387,7 +387,7 @@ matthew@fbg05 cfc 1
 matthew@fbg05 flashbase edit
 ```
 
-With using 'flashbase edit', open '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/conf/redis.properties' file.
+With using `flashbase edit`, open `~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/conf/redis.properties` file.
 
 ``` bash
 1 #!/bin/bash
@@ -410,13 +410,13 @@ With using 'flashbase edit', open '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT
 18 export SSD_COUNT=3
 ```
 
- At 'line 4~5', add hosts and ports of master redis-server.(the number of PORTs is the number of master redis-server in a server)
+ At `line 4~5`, add hosts and ports of master redis-server.(the number of PORTs is the number of master redis-server in a server)
 
- At 'line 8~9', add hosts and ports of slave redis-server.(the number of PORTs is the number of slave redis-server in a server)
+ At `line 8~9`, add hosts and ports of slave redis-server.(the number of PORTs is the number of slave redis-server in a server)
 
- At 'line 13~15', set the path to save data files(aof, rdb, db)
+ At `line 13~15`, set the path to save data files(aof, rdb, db)
 
- At 'line 18', set the count of disks. With this value, FlashBase calculates the storage path of each redis-server
+ At `line 18`, set the count of disks. With this value, FlashBase calculates the storage path of each redis-server
 
 (8) Setup configuration and features
 
@@ -424,7 +424,7 @@ With using 'flashbase edit', open '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT
 flashbase edit template
 ```
 
-If 'flashbase edit template' is executed, templates of masters and slaves will be open to modify configurations and features.
+If `flashbase edit template` is executed, templates of masters and slaves will be open to modify configurations and features.
 
 Following is example.
 
@@ -494,7 +494,7 @@ flashbase stop
 flashbase clean
 ```
 
-(4) Type 'flashbase edit template' and set required configurations
+(4) Type `flashbase edit template` and set required configurations
 
 ``` bash
 flashbase edit template
@@ -508,7 +508,7 @@ flashbase restart --reset --cluster --yes
 
 (6) In case of failure
 
-Move to '$SR2_HOME/logs/redis' and check log files
+Move to `$SR2_HOME/logs/redis` and check log files
 
 ``` bash
 cd $SR2_HOME/logs/redis
