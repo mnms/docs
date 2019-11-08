@@ -15,18 +15,18 @@ Command Line Interface(CLI) 도구에서 사용할 수 있는 명령어를 설�
 
 ## 설치
 
-```
+```bash
 $ pip install fbctl
 ```
 
 <br/>
 
-## path value
+## Path Value
 
 
 `<sr2-home>` = `<base-directory>/cluster_<cluster-number>/tsr2-assembly-1.0.0-SNAPSHOT`
 
-​
+
 `<user>` = user name of OS ($USER)
 
 
@@ -39,21 +39,10 @@ $ pip install fbctl
 `<prefix-flash-db-path>` = `SR2_FLASH_DB_PATH` of `redis.properties`
 
 
-**ssd 사용 시**
-
-
 `<sr2-redis-data>` = `<prefix-redis-data><number>/<user>`
 
 `<sr2-flash-db-path>` = `<prefix-flash-db-path><number>/<user>/db/db-<port>`
 
-
-**ssd 미사용 시**
-
-
-`<sr2-redis-data>` = `<prefix-redis-data>/<user>`
-
-​
-`<sr2-flash-db-path>` = `<prefix-flash-db-path>/<user>/db/db-<port>`
 
 
 <br/>
@@ -99,7 +88,7 @@ deploy 시 입력한 정보 이력을 저장하고 이후 deploy에서 default v
 
 **example**
 
-```
+```s
 > deploy 1
 > deploy 2 --history-save=False
 ```
@@ -269,7 +258,7 @@ redis server 실행 시 아래의 환경변수가 추가되어 실행됩니다.
 
 <br/>
 
-​
+
 ### cluster stop
 
 ***cluster stop [--force=False]***
@@ -293,7 +282,7 @@ redis process를 강제로 종료합니다. (SIGKILL)
 > cluster stop
 > cluster stop --force
 ```
-​
+
 ​
 <br/>
 ​
@@ -326,10 +315,10 @@ redis process를 강제로 종료합니다. (SIGKILL)
 > cluster create --yes
 ```
 
-​
+
 <br/>
 
-​
+
 ### cluster clean
 
 ***cluster clean [--all=False] [--logs=False]***
@@ -376,14 +365,14 @@ redis conf 삭제와 redis data 삭제는 진행하지 않습니다. `<sr2-home>
 > cluster clean --all
 > cluster clean --logs
 ```
-​
+
 ​
 ​
 ### cluster restart
 
 ***cluster restart [--force-stop=False] [--profile=False] [--reset=Flase [--cluster=False [--yes=False]]]***
 
-​
+
 cluster를 재시작합니다.
 
 <br/>​
@@ -430,7 +419,7 @@ redis process 종료 후 클러스터 초기화(`cluster clean --all`)를 한 �
 > cluster restart --reset
 > cluster restart --reset --cluster --yes
 ```
-​
+
 ​
 <br/>​
 
