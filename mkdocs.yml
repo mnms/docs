@@ -18,6 +18,8 @@ markdown_extensions:
   - meta
   - toc:
       permalink: true
+  - admonition
+  - footnotes
 
 theme:
   name: readthedocs
