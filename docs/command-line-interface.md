@@ -101,7 +101,7 @@ To-Do
 
 
 
-## 4. cluster restart​
+## 5. cluster restart​
 
 Process 'cluster stop' and then 'cluster start'.
 ​​
@@ -120,37 +120,15 @@ Process 'cluster stop' and then 'cluster start'.
 ``` bash
 --reset
 ```
-
+ 
 (3) Process 'cluster create'. This command should be called with '--reset'.
 
 ``` bash
 --cluster
 ```
 
-## 5. cluster edit
-
-cluster edit \<target> 형식입니다. target 파일을 에디터로 수정합니다.
-
-사용가능한 target은 main, template, thrift가 있으며 default value는 main입니다.
 
 
-### cluster edit main
-
-<sr2-home>/conf/redis.properties 파일을 에디터로 불러와 수정합니다.
-​
-
-### cluster edit template --master
-​
-<sr2-home>/conf/redis-master.conf.template 파일을 에디터로 불러와 수정합니다.
-
-### cluster edit template --slave
-​
-<sr2-home>/conf/redis-slave.conf.template 파일을 에디터로 불러와 수정합니다.
-​​
-
-### cluster edit thrift
-​
-<sr2-home>/conf/thriftserver.properties 파일을 에디터로 불러와 수정합니다.
 ​
 ​
 [^1]: If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.
