@@ -1,9 +1,9 @@
 !!! Note
-    This page guides how to start FlashBase automatically only for the case of **AWS EC2 Instance**.
+    This page guides how to start LightningDB automatically only for the case of **AWS EC2 Instance**.
 
 # 1. Access EC2 Instance
 
-Create EC2 Instance for FlashBase and  access with 'Public IP' or 'Public DNS'.
+Create EC2 Instance for LightningDB and  access with 'Public IP' or 'Public DNS'.
 
 '*.pem' file is also required to access EC2 Instance.
 
@@ -29,8 +29,8 @@ After 'run.sh' is completed, following jobs are done.
 - Set Spark configuration(spark-default.conf.template)
     - To optimize resource and performance, user also need to modify some features with [Spark Configuration](https://spark.apache.org/docs/2.3.0/configuration.html)
 
-# 3. Start FlashBase
+# 3. Start LightningDB
 
-FlashBase provides **fbctl** that is [Command Line Interface](command-line-interface.md#command-line-interface). With **fbctl**, user can deploy and use FlashBase.
+LightningDB provides **fbctl** that is [Commands](command-line-interface.md#command-line-interface). With **fbctl**, user can deploy and use LightningDB.
 
-FlashBase supports **Zeppelin** to provide convenience of ingestion and querying data of FlashBase. About **Zeppelin**, [Data Ingestion and Querying](data-ingestion-and-querying.md) page provides some examples.
+LightningDB supports **Zeppelin** to provide convenience of ingestion and querying data of LightningDB. About **Zeppelin**, [Data Ingestion and Querying](data-ingestion-and-querying.md) page provides some examples.

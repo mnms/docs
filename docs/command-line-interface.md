@@ -1,6 +1,3 @@
-!!! Note
-    Command Line Interface(CLI) of FlashBase supports not only deploy and start command but also many commands to access and manipulat data in FlashBase.
-​
 # 1. cluster start
 
   **Procedure**
@@ -20,6 +17,35 @@
 - Start master and slave redis-server with '${SR2_HOME}/conf/redis/redis-{port}.conf' file
 - Log files will be saved in '${SR2_HOME}/logs/redis/'
 
+``` bash
+> cluster start
+Check status of hosts ...
+OK
+Check cluster exist...
+
+...
+
+OK
+Backup redis master log in each MASTER hosts...
+
+...
+
+Starting master nodes : nodeA : 18100 ...
+
+...
+
+Starting slave nodes : nodeA : 18150|18151 ...
+
+...
+
+Wait until all redis process up...
+cur: 0 / total: 12
+
+...
+
+cur: 12 / total: 12
+Complete all redis process up.
+```
 
 **Error Handling**
 
@@ -84,7 +110,35 @@ max try error
 
 # 3. cluster create
 
-To-Do
+After checking information of the cluster, create cluster of LightningDB.
+
+``` bash
+> cluster create
+>>> Creating cluster
++-------+-------+--------+
+| HOST  | PORT  | TYPE   |
++-------+-------+--------+
+| nodeA | 18100 | MASTER |
+| nodeB | 18100 | MASTER |
+|   .       .       .    |
+|   .       .       .    |
+|   .       .       .    |
+| nodeD | 18150 | SLAVE  |
+| nodeD | 18151 | SLAVE  |
++-------+-------+--------+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+replicas: 2.00
+replicate [M] nodeA 18100 - [S] nodeA 18150
+replicate [M] nodeD 18100 - [S] nodeD 18151
+1 / 8 meet complete.
+2 / 8 meet complete.
+
+...
+
+8 / 8 meet complete.
+create cluster complete.
+```
 ​​
 
 # 4. cluster clean
@@ -95,7 +149,7 @@ To-Do
 
 (1) Remove conf files for redis-server
 
-(2) Remove all data(aof, rdb, RocksDB) of FlashBase
+(2) Remove all data(aof, rdb, RocksDB) of LightningDB
 
 
 
@@ -124,6 +178,26 @@ Process 'cluster stop' and then 'cluster start'.​​
 --cluster
 ```
 
+## 6. Check Cluster Infos
+
+
+``` bash
+cli ping --all
+```
+
+Send PING to all redis-server processes and check if all of them are healthy.
+
+``` bash
+cli cluster info
+```
+
+Check information of the cluster.
+
+``` bash
+cli cluster nodes
+```
+
+List up all redis-server processes that compose the cluster.
 
 
 ​

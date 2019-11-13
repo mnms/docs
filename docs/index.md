@@ -1,4 +1,4 @@
-# 1. FlashBase is
+# 1. LightningDB is
 
 A distributed in-memory DBMS for real-time big data analytics
 

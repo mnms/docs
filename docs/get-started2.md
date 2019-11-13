@@ -1,5 +1,5 @@
 !!! Note
-    This page guides how to start FlashBase on CentOS manually. In case of using **AWS EC2 Instance**, please use [1. Automated Installation (recommanded)](get-started1.md)
+    This page guides how to start LightningDB on CentOS manually. In case of using **AWS EC2 Instance**, please use [1. Automated Installation (recommanded)](get-started1.md)
 
 # 1. Optimizing System Parameters
 
@@ -128,7 +128,7 @@ sudo yum install boost boost-thread boost-devel
 
 - Exchange SSH Key
 
-For all servers that FlashBase will be deployed, SSH key should be exchanged.
+For all servers that LightningDB will be deployed, SSH key should be exchanged.
 
 ``` bash
 ssh-keygen -t rsa
@@ -218,15 +218,14 @@ export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
 alias cfc='source ~/.use_cluster'
 ```
 
-# 4. Install and Start FlashBase
+# 4. Install and Start LightningDB
 
-FlashBase provides **fbctl** that is [Command Line Interface](command-line-interface.md#command-line-interface).
-With **fbctl**, user can deploy and use FlashBase.
+With **fbctl** provided by LightningDB, user can deploy and use LightningDB.
 
-With Following command, install **fbctl**.
+Install **fbctl** with following command.
 
 ``` bash
 $ pip insatll fbctl
 ```
 
-After installation is completed, start **fbctl** with [Command Line Interface](command-line-interface.md#command-line-interface).
+After installation is completed, start **fbctl** with [Commands](command-line-interface.md#command-line-interface)
