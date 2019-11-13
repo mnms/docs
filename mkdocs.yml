@@ -9,8 +9,11 @@ repo_url: https://github.com/mnms/docs
 
 nav:
   - Introduction: index.md
-  - Get Started: get-started.md
-  - Command Line Interface: command-line-interface.md
+  - Get Started:
+    - 1. Automated Installation (recommanded): get-started1.md 
+    - 2. Manual Installation: get-started2.md
+  - Commands: command-line-interface.md
+  - Data Ingestion and Querying: data-ingestion-and-querying.md
 
 plugins:
   - search
@@ -18,6 +21,7 @@ markdown_extensions:
   - meta
   - toc:
       permalink: true
+      baselevel: 1
   - admonition
   - footnotes
 

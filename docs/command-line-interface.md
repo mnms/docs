@@ -1,11 +1,9 @@
-# Command Line Interface
-
-Command Line Interface(CLI) of FlashBase supports not only deploy and start command but also many commands to access and manipulat data in FlashBase.
-
+!!! Note
+    Command Line Interface(CLI) of FlashBase supports not only deploy and start command but also many commands to access and manipulat data in FlashBase.
 ​
-## 1. cluster start
+# 1. cluster start
 
-### Procedure
+  **Procedure**
 
 (1) Backup logs of the previous master/slave nodes
 
@@ -23,7 +21,7 @@ Command Line Interface(CLI) of FlashBase supports not only deploy and start comm
 - Log files will be saved in '${SR2_HOME}/logs/redis/'
 
 
-### Error Handling
+**Error Handling**
 
 (1) ErrorCode 11
 
@@ -70,11 +68,11 @@ max try error
 ```
 
 
-## 2. cluster stop
+# 2. cluster stop
 
 ​Gracefully kill all redis-servers(master/slave) with SIGINT
 ​​
-### Options
+**Options**
 
 (1) Force to kill all redis-servers(master/slave) with SIGKILL
 
@@ -84,15 +82,15 @@ max try error
 ```
 
 
-## 3. cluster create
+# 3. cluster create
 
 To-Do
 ​​
 
-## 4. cluster clean
+# 4. cluster clean
 
 
-### Procedure​
+**Procedure​**
 
 
 (1) Remove conf files for redis-server
@@ -101,12 +99,11 @@ To-Do
 
 
 
-## 5. cluster restart​
+# 5. cluster restart​
 
-Process 'cluster stop' and then 'cluster start'.
-​​
-​
-### Options
+Process 'cluster stop' and then 'cluster start'.​​
+
+**Options**
 
 
 (1) Force to kill all redis-servers(master/slave) with SIGKILL and then start again.

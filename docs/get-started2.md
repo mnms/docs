@@ -1,18 +1,7 @@
-# Get Started with FlashBase
+!!! Note
+    This page guides how to start FlashBase on CentOS manually. In case of using **AWS EC2 Instance**, please use [1. Automated Installation (recommanded)](get-started1.md)
 
-In `./scripts`, you can find all files that are used in this document .
-
-``` bash
--rw-r--r--  1 admin  SDomain Users   701B 11  5 10:07 .use_cluster
--rw-r--r--@ 1 admin  Domain Users   488B 11  5 10:08 ddl_fb_test_101.sql
--rwxr-xr-x@ 1 admin  Domain Users   1.7K 11  5 10:07 deploy-flashbase.sh
--rw-r--r--@ 1 admin  Domain Users   155B 11  5 10:08 test.json
--rw-r--r--@ 1 admin  Domain Users    17K 11  5 10:08 test_data.csv
-```
-
-## 1. Optimizing System Parameters
-
-### System Parameters
+# 1. Optimizing System Parameters
 
 (1) Edit `/etc/sysctl.conf` like following
 
@@ -115,9 +104,7 @@ esac
 [root@fbg01 ~] chkconfig --add disable-transparent-hugepages
 ```
 
-## 2. Setup Prerequisites
-
-### Install Packages
+# 2. Setup Prerequisites
 
 - bash, unzip, ssh
 
@@ -203,7 +190,7 @@ source /opt/intel/mkl/bin/mklvars.sh intel64
 
 - ntp: For clock synchronization between servers over packet-switched, variable-latency data networks.
 
-## 3. Session configuration files
+# 3. Session configuration files
 
 - Edit `~/.bashrc`
 
@@ -231,37 +218,15 @@ export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
 alias cfc='source ~/.use_cluster'
 ```
 
-- Add `~/.use_cluster`
+# 4. Install and Start FlashBase
 
-This script helps to change the path of FlasBase Cluster.
+FlashBase provides **fbctl** that is [Command Line Interface](command-line-interface.md#command-line-interface).
+With **fbctl**, user can deploy and use FlashBase.
 
-```bash
-#!/bin/bash
+With Following command, install **fbctl**.
 
-## set cluster-#{NUM} path
-export PATH="/bin/:/sbin/:/usr/local/bin/:/usr/local/sbin"
-export SR2_HOME=${HOME}/tsr2/cluster_$1/tsr2-assembly-1.0.0-SNAPSHOT
-
-source ${HOME}/.bash_profile
-
-echo $PATH | grep ${SR2_HOME} > /dev/null
-RET=$?
-if [[ $RET -eq 1 ]]; then
-    PATH=$PATH:$SR2_HOME/bin:$SR2_HOME/sbin
-fi
-
-## source command auto-complate
-source $SR2_HOME/sbin/tsr2-helper
-
-if [ "$#" -le "1" ]; then
-    return 0
-else
-    shift
-    "$@"
-    return $?
-fi
+``` bash
+$ pip insatll fbctl
 ```
 
-## 4. Install and Start FlashBase
-
-Use [Command Line Interface](command-line-interface.md#command-line-interface) of FlashBase.
+After installation is completed, start **fbctl** with [Command Line Interface](command-line-interface.md#command-line-interface).
