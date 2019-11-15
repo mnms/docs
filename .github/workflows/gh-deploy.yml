@@ -24,5 +24,5 @@ jobs:
       run: |
         git config --global user.name "GitHub Action"
         git config --global user.email "reserve.dev@gmail.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/$GITHUB_REPOSITORY
         mkdocs gh-deploy -c -m "Rebuild"
