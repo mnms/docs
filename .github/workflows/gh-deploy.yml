@@ -19,4 +19,7 @@ jobs:
         pip install -r requirements.txt
     - name: Deploy using mkdocs gh-deploy
       run: |
+        git config --global user.name "GitHub Action"
+        git config --global user.email "reserve.dev@gmail.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
         mkdocs gh-deploy -c -m "Rebuild"
