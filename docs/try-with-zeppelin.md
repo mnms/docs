@@ -13,8 +13,8 @@ $ vim $ZEPPELIN_HOME/conf/zeppelin-env.sh
 
 # /home/ec2-user/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT is a path in which LightningDB is installed using fbctl.
 # This can be different if you installed LightningDB in different path.
-export SPARK_SUBMIT_OPTIONS="--jars $(find /home/ec2-user/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/lib -name 'tsr2*' -o -name 'spark-r2*' \
--o -name '*jedis*' -o -name 'commons*' -o -name 'jdeferred*' -o -name 'geospark*' \
+export SPARK_SUBMIT_OPTIONS="--jars $(find /home/ec2-user/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT/lib -name 'tsr2*' \
+-o -name 'spark-r2*' -o -name '*jedis*' -o -name 'commons*' -o -name 'jdeferred*' -o -name 'geospark*' \
 -o -name 'gt-*' | tr '\n' ',')"
 ```
 
@@ -44,3 +44,7 @@ The tutorial runs on the spark interpreter of Zeppelin.
 Please make sure that the memory of Spark driver is at least 10GB in Spark interpreter setting.
 
 ![spark driver memory](images/spark-interpreter.png)
+
+Also, make sure that the timeout of shell command is at least 120000 ms.
+
+![Shell timeout](images/shell-timeout.png)
