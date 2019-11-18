@@ -18,6 +18,7 @@ nav:
     - Install and Upgrade: run-and-deploy-fbctl.md
     - Commands: command-line-interface.md
   - Data Ingestion and Querying: data-ingestion-and-querying.md
+  - Release Notes: release-note.md
 #  - Support:
 #    - FAQ: FAQ.md
 #    - EULA: eula.md

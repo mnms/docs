@@ -31,6 +31,6 @@ After 'run.sh' is completed, following jobs are done.
 
 # 3. Start LightningDB
 
-LightningDB provides **fbctl** that is [Commands](command-line-interface.md#command-line-interface). With **fbctl**, user can deploy and use LightningDB.
+LightningDB provides **fbctl** that is introduced in [Install and Upgrade](run-and-deploy-fbctl.md). With **fbctl**, user can deploy and use LightningDB.
 
 LightningDB supports **Zeppelin** to provide convenience of ingestion and querying data of LightningDB. About **Zeppelin**, [Data Ingestion and Querying](data-ingestion-and-querying.md) page provides some examples.
