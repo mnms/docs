@@ -2,7 +2,7 @@
 
 You can try LightningDB in Zeppelin notebook.
 
-Firstly, deploy and start the cluster of LightningDB using **fbctl** before launching Zeppelin daemon.
+Firstly, deploy and start the cluster of LightningDB using [**fbctl**](command-line-interface.md) before launching Zeppelin daemon.
 
 Secondly, in order to run LightingDB on the Spark, the jars in the LightingDB should be passed to the Spark.
 This can be done by adjusting SPARK_SUBMIT_OPTIONS in zeppllin-env.sh
@@ -24,12 +24,10 @@ $ ./zeppelin-daemon.sh start
 
 # 2. Tutorial with Zeppelin
 
-After starting zeppelin daemon, you can access zeppelin UI using browser. The url is https://your-server-ip:8080.
+After starting zeppelin daemon, you can access zeppelin UI using browser. The url is [https://your-server-ip:8080](https://your-server-ip:8080).
 
 
-There is a github page for tutorial.
-
-https://github.com/mnms/tutorials
+There is [a github page for tutorial](https://github.com/mnms/tutorials).
 
 The repository includes a tool for generating sample data and a notebook for tutorial.
 
