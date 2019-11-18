@@ -1,0 +1,28 @@
+name: gh-pages deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Deploy using mkdocs gh-deploy
+      run: |
+        git config --global user.name "GitHub Action"
+        git config --global user.email "reserve.dev@gmail.com"
+        git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_TOKEN }}@github.com/$GITHUB_REPOSITORY
+        mkdocs gh-deploy -c -m "Rebuild"
