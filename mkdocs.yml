@@ -10,7 +10,7 @@ repo_url: https://github.com/mnms/docs
 nav:
   - Introduction: index.md
   - Get Started:
-    - Automated Installation (recommanded): get-started1.md 
+    - Automated Installation (recommended): get-started1.md 
     - Manual Installation: get-started2.md
   - FBCTL:
     - Install and Upgrade: run-and-deploy-fbctl.md
