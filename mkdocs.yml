@@ -13,6 +13,7 @@ nav:
   - Get Started:
     - Automated Installation (recommanded): get-started-with-aws.md
     - Manual Installation: get-started-with-scratch.md
+    - Try out with Zeppelin: try-with-zeppelin.md 
   - FBCTL:
     - Install and Upgrade: run-and-deploy-fbctl.md
     - Commands: command-line-interface.md
