@@ -269,7 +269,311 @@ Process 'cluster stop' and then 'cluster start'.​​
 --cluster
 ```
 
-## (7) Check Cluster Infos
+## (7) cluster ls
+
+List up the deployed clusters.
+
+``` bash
+ec2-user@flashbase:2> cluster ls
+[1, 2]
+```
+
+## (8) cluster use
+
+Change the cluster to use FBCTL. Use 'cluster use' or 'c' commands.
+
+``` bash
+ec2-user@flashbase:2> cluster use 1
+Cluster '1' selected.
+ec2-user@flashbase:1> c 2
+Cluster '2' selected.
+```
+
+
+## (9) cluster add_slave
+
+You can add a slave to a cluster that is configured only with master without redundancy.
+
+- create cluster only with master
+    - Procedure for configuring the test environment. If cluster with only master already exists, go to the **add slave info**.
+
+- Proceed with the deploy.
+    - Enter 0 in replicas as shown below when deploy.
+
+``` bash
+ec2-user@flashbase:2> deploy 3
+Select installer
+
+    [ INSTALLER LIST ]
+    (1) flashbase.dev.master.5a6a38.bin
+
+Please enter the number, file path or url of the installer you want to use.
+you can also add file in list by copy to '$FBPATH/releases/'
+https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.5a6a38.bin
+Downloading flashbase.dev.master.5a6a38.bin
+[==================================================] 100%
+OK, flashbase.dev.master.5a6a38.bin
+Please type host list separated by comma(,) [127.0.0.1]
+
+OK, ['127.0.0.1']
+How many masters would you like to create on each host? [5]
+
+OK, 5
+Please type ports separate with comma(,) and use hyphen(-) for range. [18300-18304]
+
+OK, ['18300-18304']
+How many replicas would you like to create on each master? [0]
+
+OK, 0
+How many ssd would you like to use? [3]
+
+OK, 3
+Type prefix of db path [~/sata_ssd/ssd_]
+
+OK, ~/sata_ssd/ssd_
++--------------+---------------------------------+
+| NAME         | VALUE                           |
++--------------+---------------------------------+
+| installer    | flashbase.dev.master.5a6a38.bin |
+| hosts        | 127.0.0.1                       |
+| master ports | 18300-18304                     |
+| ssd count    | 3                               |
+| db path      | ~/sata_ssd/ssd_                 |
++--------------+---------------------------------+
+Do you want to proceed with the deploy accroding to the above information? (y/n)
+y
+Check status of hosts...
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Checking for cluster exist...
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | CLEAN  |
++-----------+--------+
+OK
+Transfer installer and execute...
+ - 127.0.0.1
+Sync conf...
+Complete to deploy cluster 3.
+Cluster '3' selected.
+```
+
+- When the deploy is complete, start and create the cluster.
+
+``` bash
+ec2-user@flashbase:3> cluster start
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+create redis data directory in each MASTER hosts
+ - 127.0.0.1
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Starting master nodes : 127.0.0.1 : 18300|18301|18302|18303|18304 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
+ec2-user@flashbase:3> cluster create
+Check status of hosts...
+OK
+>>> Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18300 | MASTER |
+| 127.0.0.1 | 18301 | MASTER |
+| 127.0.0.1 | 18302 | MASTER |
+| 127.0.0.1 | 18303 | MASTER |
+| 127.0.0.1 | 18304 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18300
+ - 127.0.0.1:18303
+ - 127.0.0.1:18304
+ - 127.0.0.1:18301
+ - 127.0.0.1:18302
+Adding slots...
+ - 127.0.0.1:18300, 3280
+ - 127.0.0.1:18303, 3276
+ - 127.0.0.1:18304, 3276
+ - 127.0.0.1:18301, 3276
+ - 127.0.0.1:18302, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
+ec2-user@flashbase:3>
+```
+
+- add slave info
+
+Open conf file.
+
+``` bash
+ec2-user@flashbase:3> conf cluster
+```
+
+You can modify redis.properties by entering the command as shown above.
+
+``` bash
+#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( "127.0.0.1" )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18300 18304) )
+
+## Slave hosts and ports (optional)
+#export SR2_REDIS_SLAVE_HOSTS=( "127.0.0.1" )
+#export SR2_REDIS_SLAVE_PORTS=( $(seq 18600 18609) )
+
+## only single data directory in redis db and flash db
+## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
+#export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+#export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+#export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+
+## multiple data directory in redis db and flash db
+export SSD_COUNT=3
+#export HDD_COUNT=3
+export SR2_REDIS_DATA="~/sata_ssd/ssd_"
+export SR2_REDIS_DB_PATH="~/sata_ssd/ssd_"
+export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
+
+#######################################################
+# Example : only SSD data directory
+#export SSD_COUNT=3
+#export SR2_REDIS_DATA="/ssd_"
+#export SR2_REDIS_DB_PATH="/ssd_"
+#export SR2_FLASH_DB_PATH="/ssd_"
+#######################################################
+```
+
+Modify SR2_REDIS_SLAVE_HOSTS and SR2_REDIS_SLAVE_PORTS as shown below.
+
+``` bash
+#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( "127.0.0.1" )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18300 18304) )
+
+## Slave hosts and ports (optional)
+export SR2_REDIS_SLAVE_HOSTS=( "127.0.0.1" )
+export SR2_REDIS_SLAVE_PORTS=( $(seq 18350 18354) )
+
+## only single data directory in redis db and flash db
+## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
+#export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+#export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+#export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+
+## multiple data directory in redis db and flash db
+export SSD_COUNT=3
+#export HDD_COUNT=3
+export SR2_REDIS_DATA="~/sata_ssd/ssd_"
+export SR2_REDIS_DB_PATH="~/sata_ssd/ssd_"
+export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
+
+#######################################################
+# Example : only SSD data directory
+#export SSD_COUNT=3
+#export SR2_REDIS_DATA="/ssd_"
+#export SR2_REDIS_DB_PATH="/ssd_"
+#export SR2_FLASH_DB_PATH="/ssd_"
+#######################################################
+```
+
+Save the modification and exit.
+
+``` bash
+ec2-user@flashbase:3> conf cluster
+Check status of hosts...
+OK
+sync conf
+OK
+Complete edit
+```
+
+- execute command add-slave
+
+``` bash
+ec2-user@flashbase:3> cluster add-slave
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+clean redis conf, node conf, db data of master
+clean redis conf, node conf, db data of slave
+ - 127.0.0.1
+Backup redis slave log in each SLAVE hosts...
+ - 127.0.0.1
+create redis data directory in each SLAVE hosts
+ - 127.0.0.1
+sync conf
+OK
+Starting slave nodes : 127.0.0.1 : 18350|18351|18352|18353|18354 ...
+Wait until all redis process up...
+cur: 10 / total: 10
+Complete all redis process up
+replicate [M] 127.0.0.1 18300 - [S] 127.0.0.1 18350
+replicate [M] 127.0.0.1 18301 - [S] 127.0.0.1 18351
+replicate [M] 127.0.0.1 18302 - [S] 127.0.0.1 18352
+replicate [M] 127.0.0.1 18303 - [S] 127.0.0.1 18353
+replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
+1 / 5 meet complete.
+2 / 5 meet complete.
+3 / 5 meet complete.
+4 / 5 meet complete.
+5 / 5 meet complete.
+```
+
+- check configuration information
+
+``` bash
+ec2-user@flashbase:3> cli cluster nodes
+0549ec03031213f95121ceff6c9c13800aef848c 127.0.0.1:18303 master - 0 1574132251126 3 connected 3280-6555
+1b09519d37ebb1c09095158b4f1c9f318ddfc747 127.0.0.1:18352 slave a6a8013cf0032f0f36baec3162122b3d993dd2c8 0 1574132251025 6 connected
+c7dc4815e24054104dff61cac6b13256a84ac4ae 127.0.0.1:18353 slave 0549ec03031213f95121ceff6c9c13800aef848c 0 1574132251126 3 connected
+0ab96cb79165ddca7d7134f80aea844bd49ae2e1 127.0.0.1:18351 slave 7e97f8a8799e1e28feee630b47319e6f5e1cfaa7 0 1574132250724 4 connected
+7e97f8a8799e1e28feee630b47319e6f5e1cfaa7 127.0.0.1:18301 master - 0 1574132250524 4 connected 9832-13107
+e67005a46984445e559a1408dd0a4b24a8c92259 127.0.0.1:18304 master - 0 1574132251126 5 connected 6556-9831
+a6a8013cf0032f0f36baec3162122b3d993dd2c8 127.0.0.1:18302 master - 0 1574132251126 2 connected 13108-16383
+492cdf4b1dedab5fb94e7129da2a0e05f6c46c4f 127.0.0.1:18350 slave 83b7ef98b80a05a4ee795ae6b399c8cde54ad04e 0 1574132251126 6 connected
+f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e559a1408dd0a4b24a8c92259 0 1574132250724 5 connected
+83b7ef98b80a05a4ee795ae6b399c8cde54ad04e 127.0.0.1:18300 myself,master - 0 1574132250000 1 connected 0-3279
+
+```
+
+
+## (10) cluster rowcount
+
+Check the count of records that are stored in the cluster.
+
+``` bash
+ec2-user@flashbase:1> cluster rowcount
+0
+```
+
+
+## (11) Check status of cluster
 
 With the following commands, you can check the status of the cluster.
 
@@ -282,7 +586,23 @@ With the following commands, you can check the status of the cluster.
 - Check the status of the cluster
 
 ``` bash
-> cli cluster info
+ec2-user@flashbase:1> cli cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:5
+cluster_size:5
+cluster_current_epoch:4
+cluster_my_epoch:2
+cluster_stats_messages_ping_sent:12
+cluster_stats_messages_pong_sent:14
+cluster_stats_messages_sent:26
+cluster_stats_messages_ping_received:10
+cluster_stats_messages_pong_received:12
+cluster_stats_messages_meet_received:4
+cluster_stats_messages_received:26
 ```
 
 - Check the list of the nodes those are organizing the cluster.
@@ -296,5 +616,153 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
 ```
 
-​
+# 2. Thrift Server Commands
+
+If you want to see the list of Thrift Server commands, use the 'thriftserver' command without any option.
+
+``` bash
+NAME
+    fbctl thriftserver
+
+SYNOPSIS
+    fbctl thriftserver COMMAND
+
+COMMANDS
+    COMMAND is one of the following:
+
+     beeline
+       Connect to thriftserver command line
+
+     monitor
+       Show thriftserver log
+
+     restart
+       Thriftserver restart
+
+     start
+       Start thriftserver
+
+     stop
+       Stop thriftserver
+```
+
+## (1) thriftserver beeline
+
+Connect to the thrift server
+
+``` bash
+ec2-user@flashbase:1> thriftserver beeline
+Connecting...
+Connecting to jdbc:hive2://localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Resolved authority: localhost:13000
+19/11/19 04:45:18 INFO jdbc.HiveConnection: Will try to open client transport with JDBC Uri: jdbc:hive2://localhost:13000
+Connected to: Spark SQL (version 2.3.1)
+Driver: Hive JDBC (version 1.2.1.spark2)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.2.1.spark2 by Apache Hive
+0: jdbc:hive2://localhost:13000> show tables;
++-----------+------------+--------------+--+
+| database  | tableName  | isTemporary  |
++-----------+------------+--------------+--+
++-----------+------------+--------------+--+
+No rows selected (0.55 seconds)
+```
+
+Default value of db url to connect is jdbc:hive2://$HIVE_HOST:$HIVE_PORT
+
+You can modify $HIVE_HOST and $HIVE_PORT by command conf ths
+
+## (2) thriftserver monitor
+
+You can view the logs of the thrift server in real time.
+
+``` bash
+ec2-user@flashbase:1> thriftserver monitor
+Press Ctrl-C for exit.
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
+19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager 
+...
+```
+
+## (3) thriftserver restart
+
+Restart the thrift server.
+
+``` bash
+ec2-user@flashbase:1> thriftserver restart
+no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
+```
+
+## (4) start thriftserver
+
+Run the thrift server.
+
+``` bash
+ec2-user@flashbase:1> thriftserver start
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
+```
+
+You can view the logs through the command **monitor**.
+
+## (5) stop thriftserver
+
+Shut down the thrift server.
+
+``` bash
+ec2-user@flashbase:1> thriftserver stop
+stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
+```
+
+## (6) conf thriftserver
+
+
+``` bash
+ec2-user@flashbase:1> conf thriftserver
+
+#!/bin/bash
+###############################################################################
+# Common variables
+SPARK_CONF=${SPARK_CONF:-$SPARK_HOME/conf}
+SPARK_BIN=${SPARK_BIN:-$SPARK_HOME/bin}
+SPARK_SBIN=${SPARK_SBIN:-$SPARK_HOME/sbin}
+SPARK_LOG=${SPARK_LOG:-$SPARK_HOME/logs}
+
+SPARK_METRICS=${SPARK_CONF}/metrics.properties
+SPARK_UI_PORT=${SPARK_UI_PORT:-14050}
+EXECUTERS=12
+EXECUTER_CORES=32
+
+HIVE_METASTORE_URL=''
+HIVE_HOST=${HIVE_HOST:-localhost}
+HIVE_PORT=${HIVE_PORT:-13000}
+
+COMMON_CLASSPATH=$(find $SR2_LIB -name 'tsr2*' -o -name 'spark-r2*' -o -name '*jedis*' -o -name 'commons*' -o -name 'jdeferred*' \
+-o -name 'geospark*' -o -name 'gt-*' | tr '\n' ':')
+
+###############################################################################
+# Driver
+DRIVER_MEMORY=6g
+DRIVER_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Execute
+EXECUTOR_MEMORY=2g
+EXECUTOR_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Thrift Server logs
+EVENT_LOG_ENABLED=false
+EVENT_LOG_DIR=/nvdrive0/thriftserver-event-logs
+EVENT_LOG_ROLLING_DIR=/nvdrive0/thriftserver-event-logs-rolling
+EVENT_LOG_SAVE_MIN=60
+EXTRACTED_EVENT_LOG_SAVE_DAY=5
+SPARK_LOG_SAVE_MIN=2000
+##############
+```
+
+
+
 [^1]: If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.
