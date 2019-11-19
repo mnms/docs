@@ -3,6 +3,13 @@
 ​
 # 1. How to run fbctl
 
+If you try to use fbctl for the first time after EC2 instance was created, please update fbctl like below.
+
+``` bash
+pip install fbctl --upgrade --user
+```
+
+
 ## (1) Run
 
 To run fbctl, ${FBPATH} should be set. If not, following error messages will be shown.
@@ -102,6 +109,8 @@ OK, flashbase.dev.master.dbcb9e.bin
 ```
 
 With only URL, instead of file path, LightningDB can be installed like below.
+
+To copy the link of the recommended FlashBase version, use [Release Notes](release-note.md).
 
 ``` bash
 https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.dbcb9e.bin 
