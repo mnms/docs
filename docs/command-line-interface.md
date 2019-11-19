@@ -147,6 +147,8 @@ max try error
 
 After checking information of the cluster, create cluster of LightningDB.
 
+Case 1) When redis-server processes are running, create cluster only.
+
 ``` bash
 ec2-user@flashbase:1> cluster create
 Check status of hosts...
@@ -177,6 +179,58 @@ Adding slots...
  - 127.0.0.1:18104, 3276
  - 127.0.0.1:18101, 3276
  - 127.0.0.1:18102, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
+```
+
+Case 2) When redis-server processes are not running, create cluster after launching redis-server processes with 'cluster start' command.
+
+``` bash
+ec2-user@flashbase:4> cluster create
+Check status of hosts...
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+create redis data directory in each MASTER hosts
+ - 127.0.0.1
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
+>>> Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18100 | MASTER |
+| 127.0.0.1 | 18101 | MASTER |
+| 127.0.0.1 | 18102 | MASTER |
+| 127.0.0.1 | 18103 | MASTER |
+| 127.0.0.1 | 18104 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18103
+ - 127.0.0.1:18104
+ - 127.0.0.1:18101
+ - 127.0.0.1:18102
+ - 127.0.0.1:18100
+Adding slots...
+ - 127.0.0.1:18103, 3280
+ - 127.0.0.1:18104, 3276
+ - 127.0.0.1:18101, 3276
+ - 127.0.0.1:18102, 3276
+ - 127.0.0.1:18100, 3276
 Check cluster state and asign slot...
 Ok
 create cluster complete.
@@ -581,7 +635,21 @@ With the following commands, you can check the status of the cluster.
 - Send PING
 
 ``` bash
-> cli ping --all
+ec2-user@flashbase:1> cli ping --all
++-----------------+--------+
+| addr            | stdout |
++-----------------+--------+
+| 127.0.0.1:18100 | PONG   |
+|                 |        |
+| 127.0.0.1:18101 | PONG   |
+|                 |        |
+| 127.0.0.1:18102 | PONG   |
+|                 |        |
+| 127.0.0.1:18103 | PONG   |
+|                 |        |
+| 127.0.0.1:18104 | PONG   |
+|                 |        |
++-----------------+--------+
 ```
 
 - Check the status of the cluster

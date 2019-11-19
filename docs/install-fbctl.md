@@ -293,36 +293,27 @@ If localhost(127.0.0.1) is not included in host information, this error occurs. 
 
 # 3. Start LightningDB
 
-Start redis-server process with using 'cluster start' command.
-
-``` bash
-ec2-user@flashbase:1> cluster start
-Check status of hosts...
-OK
-Check cluster exist...
- - 127.0.0.1
-OK
-Backup redis master log in each MASTER hosts...
- - 127.0.0.1
-Generate redis configuration files for master hosts
-sync conf
-+-----------+--------+
-| HOST      | STATUS |
-+-----------+--------+
-| 127.0.0.1 | OK     |
-+-----------+--------+
-Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
-Wait until all redis process up...
-cur: 5 / total: 5
-Complete all redis process up
-```
-
 Create cluster of LightningDB with using 'cluster create' command.
 
 ``` bash
 ec2-user@flashbase:1> cluster create
 Check status of hosts...
 OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+create redis data directory in each MASTER hosts
+ - 127.0.0.1
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
 >>> Creating cluster
 +-----------+-------+--------+
 | HOST      | PORT  | TYPE   |
@@ -338,7 +329,7 @@ replicas: 0
 Do you want to proceed with the create according to the above information? (y/n)
 y
 Cluster meet...
- - 127.0.0.1:18100docs/index.md
+ - 127.0.0.1:18100
  - 127.0.0.1:18103
  - 127.0.0.1:18104
  - 127.0.0.1:18101
@@ -352,6 +343,22 @@ Adding slots...
 Check cluster state and asign slot...
 Ok
 create cluster complete.
+ec2-user@flashbase:1> cli ping --all
++-----------------+--------+
+| addr            | stdout |
++-----------------+--------+
+| 127.0.0.1:18100 | PONG   |
+|                 |        |
+| 127.0.0.1:18101 | PONG   |
+|                 |        |
+| 127.0.0.1:18102 | PONG   |
+|                 |        |
+| 127.0.0.1:18103 | PONG   |
+|                 |        |
+| 127.0.0.1:18104 | PONG   |
+|                 |        |
++-----------------+--------+
+ec2-user@flashbase:1>
 ```
 
 From now, you can try ingestion and querying in LightningDB with [Zeppelin](try-with-zeppelin.md) . And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
