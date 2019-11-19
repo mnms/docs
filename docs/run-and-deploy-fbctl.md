@@ -20,12 +20,12 @@ export FBPATH=$HOME/.flashbase
 Run **fbctl** by typing 'fbctl'
 
 ``` bash
-$ fbcli
+$ fbctl
 ```
 
 When fbctl starts at the first time, user needs to confirm 'base_directory'. 
 
-[~/tsr2][^1]] is default value.
+[~/tsr2][^1] is default value.
 
 ``` bash
 Type base directory of flashbase [~/tsr2]
@@ -54,7 +54,7 @@ root@flashbase:1>
 
 ## (2) Log messages
 
-Log messages of fbctl will be saved in '$FBPATH/logs/fb-roate.log'.
+Log messages of fbctl will be saved in '${FBPATH}/logs/fb-roate.log'.
 
 Its max-file-size is 1GiB and **rolling update** will be done in case of exceed of size limit.
 
@@ -76,7 +76,7 @@ After deploy command, user should type the following information that provides i
 - number of masters
 - replicas
 - number of ssd(disk)
-- prefix of (redis data / redis db path / flash db path)
+- prefix of db path
 
 
 Use below option not to save last used value.
@@ -110,7 +110,7 @@ Downloading flashbase.dev.master.dbcb9e.bin
 [=======                                           ] 15%
 ```
 
-As shown below, if the list is empty, you can select the installer only by entering the file path or by entering url. To add an installer to the list, copy it under '${FBPATH}/releases/'
+If the list is empty like below, you can select the installer only by entering the file path or by entering url. To add an installer to the list, copy it under '${FBPATH}/releases/'
 
 ``` bash
 Select installer
@@ -166,7 +166,7 @@ Define how many slave processes will be created for a master process.
 ## (5) Type the count of SSD(disk) and the path of DB files
 
 ``` bash
-How many sdd would you like to use? [3]
+How many ssd would you like to use? [3]
 3
 OK, 3
 
