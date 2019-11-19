@@ -1,5 +1,5 @@
 !!! Note
-    This page guides how to start LightningDB on CentOS manually. In case of using **AWS EC2 Instance**, please use [1. Automated Installation (recommanded)](get-started1.md)
+    This page guides how to start LightningDB on CentOS manually. In case of using **AWS EC2 Instance**, please use [Installation](install-fbctl.md)
 
 # 1. Optimizing System Parameters
 
