@@ -271,7 +271,7 @@ Process 'cluster stop' and then 'cluster start'.​​
 
 ## (7) cluster addslaves
 
-You can add slave to a cluster that is configured only with master. You must add the slave information by command `conf cluster` before running the command. For more detail, see the [Add Slave](run-and-deploy-fbctl.md#4-add-slave).
+You can add slave to a cluster that is configured only with master. You must add the slave information by command [conf cluster](#1-conf-cluster) before running the command. For more detail, see the [Add Slave](run-and-deploy-fbctl.md#4-add-slave).
 
 ``` bash
 ec2-user@flashbase:1> conf cluster
@@ -331,5 +331,39 @@ Cluster '1' selected.
 ec2-user@flashbase:1>
 ```
 
+
+# 2. Conf Commands
+
+## (1) conf cluster
+
+Edit props of redis.
+
+``` bash
+ec2-user@flashbase:1> conf cluster
+```
+
+## (2) conf master
+
+Edit redis master template.
+
+``` bash
+ec2-user@flashbase:1> conf master
+```
+
+## (3) conf slave
+
+Edit redis slave template.
+
+``` bash
+ec2-user@flashbase:1> conf slave
+```
+
+## (4) conf thriftserver
+
+Edit props of thriftserver.
+
+``` bash
+ec2-user@flashbase:1> conf thriftserver
+```
 ​
 [^1]: If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.
