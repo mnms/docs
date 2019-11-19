@@ -101,13 +101,25 @@ you can also add file in list by copy to '$FBPATH/releases/'
 OK, flashbase.dev.master.dbcb9e.bin
 ```
 
-With only URL, instead of file path, LightningDB can be installed like below.
+With only URL, instead of file path, LightningDB can be installed like below. The downloaded file is stored under '${FBPATH}/releases/'
 
 ``` bash
 https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.dbcb9e.bin 
 
 Downloading flashbase.dev.master.dbcb9e.bin
 [=======                                           ] 15%
+```
+
+As shown below, if the list is empty, you can select the installer only by entering the file path or by entering url. To add an installer to the list, copy it under '${FBPATH}/releases/'
+
+``` bash
+Select installer
+
+    [ INSTALLER LIST ]
+    (empty)
+
+Please enter file path or url of the installer you want to use
+you can also add file in list by copy to '$FBPATH/releases/'
 ```
 
 ## (2) Type Hosts
