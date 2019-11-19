@@ -220,12 +220,12 @@ alias cfc='source ~/.use_cluster'
 
 # 4. Install and Start LightningDB
 
-With **fbctl** provided by LightningDB, user can deploy and use LightningDB.
+With FBCTL provided by LightningDB, user can deploy and use LightningDB.
 
-Install **fbctl** with following command.
+Install FBCTL with following command.
 
 ``` bash
 $ pip insatll fbctl
 ```
 
-After installation is completed, start **fbctl** with [Commands](command-line-interface.md#command-line-interface)
+After installation is completed, start FBCTL with [Commands](command-line-interface.md#command-line-interface)

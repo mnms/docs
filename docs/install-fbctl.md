@@ -1,7 +1,7 @@
 
-# 1. How to run fbctl
+# 1. How to run FBCTL
 
-If you try to use fbctl for the first time after EC2 instance was created, please update fbctl like below.
+If you try to use FBCTL for the first time after EC2 instance was created, please update FBCTL like below.
 
 ``` bash
 pip install fbctl --upgrade --user
@@ -10,10 +10,10 @@ pip install fbctl --upgrade --user
 
 **(1) Run**
 
-To run fbctl, ${FBPATH} should be set. If not, following error messages will be shown.
+To run FBCTL, ${FBPATH} should be set. If not, following error messages will be shown.
 
 ``` bash
-To start using fbctl, you should set env FBPATH
+To start using FBCTL, you should set env FBPATH
 ex)
 export FBPATH=$HOME/.flashbase
 ```
@@ -22,13 +22,13 @@ export FBPATH=$HOME/.flashbase
     In case of EC2 Instance, this path is set automatically.
 
 
-Run **fbctl** by typing 'fbctl'
+Run FBCTL by typing 'fbctl'
 
 ``` bash
 $ fbctl
 ```
 
-When fbctl starts at the first time,  you needs to confirm 'base_directory'.
+When FBCTL starts at the first time,  you needs to confirm 'base_directory'.
 
 [~/tsr2][^1]] is default value.
 
@@ -40,7 +40,7 @@ OK, ~/tsr2
 
 In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.
 
-If you logs in fbctl normally, fbctl starts on last visited cluster.
+If you logs in FBCTL normally, FBCTL starts on last visited cluster.
 In case of first login, '-' is shown instead of cluster number.
 
 
@@ -54,12 +54,12 @@ root@flashbase:1>
 ```
 
 !!! Tip
-    In this page, '$' means that you are in Centos and '>' means that you are in fbctl.
+    In this page, '$' means that you are in Centos and '>' means that you are in FBCTL.
 
 
 **(2) Log messages**
 
-Log messages of fbctl will be saved in '$FBPATH/logs/fb-roate.log'.
+Log messages of FBCTL will be saved in '$FBPATH/logs/fb-roate.log'.
 
 Its max-file-size is 1GiB and **rolling update** will be done in case of exceed of size limit.
 
@@ -195,7 +195,7 @@ y
 
 **(7) Deploy cluster**
 
-After deploying is completed, following messages are shown and fbctl of the cluster is activated.
+After deploying is completed, following messages are shown and FBCTL of the cluster is activated.
 
 ``` bash
 Check status of hosts...
@@ -338,7 +338,7 @@ replicas: 0
 Do you want to proceed with the create according to the above information? (y/n)
 y
 Cluster meet...
- - 127.0.0.1:18100
+ - 127.0.0.1:18100docs/index.md
  - 127.0.0.1:18103
  - 127.0.0.1:18104
  - 127.0.0.1:18101
@@ -354,5 +354,5 @@ Ok
 create cluster complete.
 ```
 
-From now, you can use LightningDB. With [Command Line](command-line-interface.md), you can get more commands of LightningDB.
+From now, you can try ingestion and querying in LightningDB with [Zeppelin](try-with-zeppelin.md) . And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
 

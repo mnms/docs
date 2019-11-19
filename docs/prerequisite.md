@@ -25,6 +25,6 @@ When you access EC2 Instance, following jobs are already done.
 
 # 3. Start LightningDB
 
-LightningDB provides **fbctl** that is introduced in [Installation](install-fbctl.md). With **fbctl**, you can deploy and use LightningDB.
+LightningDB provides FBCTL that is introduced in [Installation](install-fbctl.md). With FBCTL, you can deploy and use LightningDB.
 
-LightningDB supports **Zeppelin** to provide convenience of ingestion and querying data of LightningDB. About **Zeppelin**, [Try out with Zeppelin](try-with-zeppelin.md) page provides some guides.
+LightningDB supports Zeppelin to provide convenience of ingestion and querying data of LightningDB. About Zeppelin, [Try out with Zeppelin](try-with-zeppelin.md) page provides some guides.

@@ -1,6 +1,6 @@
 # 1. Recommended Versions
 
-[LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.5a6a38.bin)
+[LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.5a6a38.bin)[^1]
 
 # 2. Release Notes
 
@@ -13,3 +13,6 @@
     - Initial version
     - Support FBCTL
     - Support geoSpatial functions
+
+
+[^1]: Copy link address with Right-Clicking and paste when you  try to deploy LightningDB in FBCTL.
