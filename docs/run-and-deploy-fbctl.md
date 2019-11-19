@@ -223,7 +223,7 @@ Checking for cluster exist...
 | nodeD     | CLEAN  |
 +-----------+--------+
 OK
-Transfer install and execute...
+Transfer installer and execute...
  - nodeA
  - nodeB
  - nodeC
@@ -400,3 +400,166 @@ Cluster 1 selected.
 
 After restart, new version will be applied.
 
+
+# 4. Add Slave
+
+You can add a slave to a cluster that is configured only with master
+
+## (1) create cluster only with master
+
+(Procedure for configuring the test environment. If cluster with only master already exists, go to the [add slave info](#2-add-slave-info).
+
+Proceed with the deploy.
+
+``` bash
+> deploy 1
+```
+
+Enter 0 in replicas as shown below when deploy.
+
+
+``` bash
+Select installer
+
+    [ INSTALLER LIST ]
+    (1) tsr2-installer.bin.flashbase_v1.1.10.centos
+
+Please enter the number, file path or url of the installer you want to use.
+you can also add file in list by copy to '$FBPATH/releases/'
+1
+OK, tsr2-installer.bin.flashbase_v1.1.10.centos
+Please type host list separated by comma(,) [127.0.0.1]
+127.0.0.1
+OK, ['127.0.0.1']
+How many masters would you like to create on each host? [1]
+1
+OK, 1
+Please type ports separate with comma(,) and use hyphen(-) for range. [18100]
+18300
+OK, ['18100']
+
+*-----------------------------------------------------------------*
+| How many replicas would you like to create on each master? [2]  |
+| 0                                                               |
+| OK, 0                                                           |
+*-----------------------------------------------------------------*
+ ↳ (a border just for emphasis)
+
+How many ssd would you like to use? [3]
+3
+OK, 3
+Type prefix of db path [~/sata_ssd/ssd_]
+~/sata_ssd/ssd_
+OK, /sata_ssd/ssd_
++-------------------+---------------------------------------------+
+| NAME              | VALUE                                       |
++-------------------+---------------------------------------------+
+| installer         | tsr2-installer.bin.flashbase_v1.1.10.centos |
+| hosts             | 127.0.0.1                                   |
+| master ports      | 18100                                       |
+| ssd count         | 3                                           |
+| prefix_of_db_path | ~/sata_ssd/ssd_                              |
++-------------------+---------------------------------------------+
+Do you want to proceed with the deploy accroding to the above information? (y/n)
+y
+```
+
+When the deploy is complete, start and create the cluster.
+
+``` bash
+> cluster start
+...
+> cluster create
+...
+```
+
+## (2) add slave info
+
+You can modify `redis.properties` by entering the command `conf cluster`.
+
+``` bash
+> conf cluster
+```
+
+Toggle and modify commented `SR2_REDIS_SLAVE_HOSTS` and `SR2_REDIS_SLAVE_PORTS` as shown below.
+
+``` bash
+  1 #!/bin/bash
+  2
+  3 ## Master hosts and ports
+  4 export SR2_REDIS_MASTER_HOSTS=( "127.0.0.1" )
+  5 export SR2_REDIS_MASTER_PORTS=( 18100 )
+  6
+  7 ## Slave hosts and ports (optional)
+  8 export SR2_REDIS_SLAVE_HOSTS=( "127.0.0.1" )
+  9 export SR2_REDIS_SLAVE_PORTS=( $(seq 18150 18151) )
+ 10
+ 11 ## only single data directory in redis db and flash db
+ 12 ## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
+ 13 #export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+ 14 #export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+ 15 #export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+ 16
+ 17 ## multiple data directory in redis db and flash db
+ 18 export SSD_COUNT=3
+ 19 #export HDD_COUNT=3
+ 20 export SR2_REDIS_DATA="~/sata_ssd/ssd_"
+ 21 export SR2_REDIS_DB_PATH="~/sata_ssd/ssd_"
+ 22 export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
+ 23
+ 24 #######################################################
+ 25 # Example : only SSD data directory.
+ 26 #export SSD_COUNT=3
+ 27 #export SR2_REDIS_DATA="/ssd_"
+ 28 #export SR2_REDIS_DB_PATH="/ssd_"
+ 29 #export SR2_FLASH_DB_PATH="/ssd_"
+ 30 #######################################################
+```
+
+## (3) execute command cluster addslaves
+
+``` bash
+> cluster addslaves
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+clean redis conf, node conf, db data of slave
+ - 127.0.0.1
+Backup redis slave log in each SLAVE hosts...
+ - 127.0.0.1
+Generate redis configuration files for slave hosts
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+Starting slave nodes : 127.0.0.1 : 18150|18151 ...
+Wait until all redis process up...
+cur: 3 / total: 3
+Complete all redis process up
+replicate [M] 127.0.0.1 18100 - [S] 127.0.0.1 18150
+replicate [M] 127.0.0.1 18100 - [S] 127.0.0.1 18151
+1 / 2 meet complete.
+2 / 2 meet complete.
+```
+
+## (4) check configuration information
+
+``` bash
+> cli cluster nodes
+fc7d8c... 127.0.0.1:18100 myself,master - 0 15736... 0 connected 0-16383
+f9dbb3... 127.0.0.1:18151 slave fc7d8c... 0 15736... 1 connected
+60c723... 127.0.0.1:18150 slave fc7d8c... 0 15736... 1 connected
+```
+
+``` bash
+> cli cluster slots
++-------+-------+-----------+--------+-----------+----------+-----------+----------+
+| start | end   | m_ip      | m_port | s_ip_0    | s_port_0 | s_ip_1    | s_port_1 |
++-------+-------+-----------+--------+-----------+----------+-----------+----------+
+| 0     | 16383 | 127.0.0.1 | 18100  | 127.0.0.1 | 18151    | 127.0.0.1 | 18150    |
++-------+-------+-----------+--------+-----------+----------+-----------+----------+
+```
