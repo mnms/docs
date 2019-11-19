@@ -21,5 +21,6 @@ Spark with Redis/Rocksdb key value stores
 - Extreme partitioning (up-to 2 billion partitions for a single node)
 - Real-time query performance by using fine-grained partitions and filter acceleration (vector processing by exploiting XEON SIMD instructions)
 - Column-store / row-store support
-- DRAM - SSD - HDD Tiering •High  compression  ratio  and  compression  speed  (Gzip  level  compression ratio w/ LZ4 level speed)
+- DRAM - SSD - HDD Tiering
+- High  compression  ratio  and  compression  speed  (Gzip  level  compression ratio w/ LZ4 level speed)
 - Low Write Amplification for SSD life time

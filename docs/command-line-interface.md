@@ -1,4 +1,7 @@
 
+!!! Note
+    Command Line Interface(CLI) of LightningDB supports not only deploy and start command but also many commands to access and manipulate data in LightningDB.
+
 # 1. Cluster Commands
 
 If you want to see the list of cluster commands, use the 'cluster' command without any option.
@@ -52,7 +55,7 @@ COMMANDS
        Change selected cluster
 ```
 
-## (1) cluster configure
+**(1) cluster configure**
 
 redis-{port}.conf is generated with using redis-{master/slave}.conf.template and redis.properties.
 
@@ -60,7 +63,7 @@ redis-{port}.conf is generated with using redis-{master/slave}.conf.template and
 > cluster configure
 ```
 
-## (2) cluster start
+**(2) cluster start**
 
 - Backup logs of the previous master/slave nodes
     - All log files of previous master/slave nodes in '${SR2_HOME}[^1]/logs/redis/' will be moved to '${SR2_HOME}/logs/redis/backup/'.
@@ -140,7 +143,7 @@ $ cluster start
 max try error
 ```
 
-## (3) cluster create
+**(3) cluster create**
 
 After checking information of the cluster, create cluster of LightningDB.
 
@@ -179,8 +182,6 @@ Ok
 create cluster complete.
 ```
 
-
-
 **Errors**
 
 When redis servers are not running, this error(Errno 111) will occur. To solve this error, use 'cluster start' command previously.
@@ -207,7 +208,7 @@ y
 ```
 
 ​​
-## (4) cluster stop
+**(4) cluster stop**
 
 ​Gracefully kill all redis-servers(master/slave) with SIGINT
 ​​
@@ -230,7 +231,7 @@ Complete all redis process down
 --force
 ```
 
-## (5) cluster clean
+**(5) cluster clean**
 
 Remove conf files for redis-server and all data(aof, rdb, RocksDB) of LightningDB
 
@@ -244,7 +245,7 @@ Removing master node configuration
  - 127.0.0.1
 ```
 
-## (6) cluster restart​
+**(6) cluster restart​**
 
 Process 'cluster stop' and then 'cluster start'.​​
 
@@ -269,7 +270,7 @@ Process 'cluster stop' and then 'cluster start'.​​
 --cluster
 ```
 
-## (7) cluster ls
+**(7) cluster ls**
 
 List up the deployed clusters.
 
@@ -278,7 +279,7 @@ ec2-user@flashbase:2> cluster ls
 [1, 2]
 ```
 
-## (8) cluster use
+**(8) cluster use**
 
 Change the cluster to use FBCTL. Use 'cluster use' or 'c' commands.
 
@@ -290,7 +291,7 @@ Cluster '2' selected.
 ```
 
 
-## (9) cluster add_slave
+**(9) cluster add_slave**
 
 You can add a slave to a cluster that is configured only with master without redundancy.
 
@@ -563,7 +564,7 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 ```
 
 
-## (10) cluster rowcount
+**(10) cluster rowcount**
 
 Check the count of records that are stored in the cluster.
 
@@ -573,7 +574,7 @@ ec2-user@flashbase:1> cluster rowcount
 ```
 
 
-## (11) Check status of cluster
+**(11) Check status of cluster**
 
 With the following commands, you can check the status of the cluster.
 
@@ -646,7 +647,7 @@ COMMANDS
        Stop thriftserver
 ```
 
-## (1) thriftserver beeline
+**(1) thriftserver beeline**
 
 Connect to the thrift server
 
@@ -673,7 +674,7 @@ Default value of db url to connect is jdbc:hive2://$HIVE_HOST:$HIVE_PORT
 
 You can modify $HIVE_HOST and $HIVE_PORT by command conf ths
 
-## (2) thriftserver monitor
+**(2) thriftserver monitor**
 
 You can view the logs of the thrift server in real time.
 
@@ -686,7 +687,7 @@ Press Ctrl-C for exit.
 ...
 ```
 
-## (3) thriftserver restart
+**(3) thriftserver restart**
 
 Restart the thrift server.
 
@@ -696,7 +697,7 @@ no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
-## (4) start thriftserver
+**(4) start thriftserver**
 
 Run the thrift server.
 
@@ -705,9 +706,11 @@ ec2-user@flashbase:1> thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
-You can view the logs through the command **monitor**.
+You can view the logs through the command 
 
-## (5) stop thriftserver
+**monitor**.
+
+**(5) stop thriftserver**
 
 Shut down the thrift server.
 
@@ -716,7 +719,7 @@ ec2-user@flashbase:1> thriftserver stop
 stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 ```
 
-## (6) conf thriftserver
+**(6) conf thriftserver**
 
 
 ``` bash

@@ -1,6 +1,4 @@
-!!! Note
-    Command Line Interface(CLI) of LightningDB supports not only deploy and start command but also many commands to access and manipulate data in LightningDB.
-​
+
 # 1. How to run fbctl
 
 If you try to use fbctl for the first time after EC2 instance was created, please update fbctl like below.
@@ -10,7 +8,7 @@ pip install fbctl --upgrade --user
 ```
 
 
-## (1) Run
+**(1) Run**
 
 To run fbctl, ${FBPATH} should be set. If not, following error messages will be shown.
 
@@ -27,10 +25,10 @@ export FBPATH=$HOME/.flashbase
 Run **fbctl** by typing 'fbctl'
 
 ``` bash
-$ fbcli
+$ fbctl
 ```
 
-When fbctl starts at the first time, user needs to confirm 'base_directory'. 
+When fbctl starts at the first time,  you needs to confirm 'base_directory'.
 
 [~/tsr2][^1]] is default value.
 
@@ -40,9 +38,9 @@ Type base directory of flashbase [~/tsr2]
 OK, ~/tsr2
 ```
 
-In '${FBPATH}/.flashbase/config', user can modify 'base_directory'.
+In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.
 
-If user logs in fbctl normally, fbctl starts on last visited cluster.
+If you logs in fbctl normally, fbctl starts on last visited cluster.
 In case of first login, '-' is shown instead of cluster number.
 
 
@@ -56,10 +54,10 @@ root@flashbase:1>
 ```
 
 !!! Tip
-    In this page, '$' means that user is in Centos and '>' means that user is in fbctl.
+    In this page, '$' means that you are in Centos and '>' means that you are in fbctl.
 
 
-## (2) Log messages
+**(2) Log messages**
 
 Log messages of fbctl will be saved in '$FBPATH/logs/fb-roate.log'.
 
@@ -68,15 +66,15 @@ Its max-file-size is 1GiB and **rolling update** will be done in case of exceed 
 
 # 2. Deploy LightningDB
 
-**Deploy** is the procedure that LightningDB is installed with the specified cluster number.
+Deploy is the procedure that LightningDB is installed with the specified cluster number.
 
-User could make LightningDB cluster with the following command.
+You could make LightningDB cluster with the following command.
 
 ``` bash
 > deploy 1
 ```
 
-After deploy command, user should type the following information that provides its last used value.
+After deploy command, you should type the following information that provides its last used value.
 
 - installer
 - host
@@ -92,7 +90,7 @@ Use below option not to save last used value.
 > deploy --history-save=False
 ```
 
-## (1) Select installer
+**(1) Select installer**
 
 ``` bash
 Select installer
@@ -119,7 +117,7 @@ Downloading flashbase.dev.master.dbcb9e.bin
 [=======                                           ] 15%
 ```
 
-## (2) Type Hosts
+**(2) Type Hosts**
 
 IP address or hostname can be used. In case of several hosts, list can be seperated by comma(',').
 
@@ -129,7 +127,7 @@ nodeA, nodeB, nodeC, nodeD
 OK, ['nodeA', 'nodeB', 'nodeC', 'nodeD']
 ```
 
-## (3) Type Masters
+**(3) Type Masters**
 
 
 ``` bash
@@ -143,7 +141,7 @@ OK, ['18100']
 
 Define how many master processes will be created in the cluster per server.
 
-## (4) Type information of slave
+**(4) Type information of slave**
 
 ``` bash
 How many replicas would you like to create on each master? [2]
@@ -158,9 +156,9 @@ Define how many slave processes will be created for a master process.
 
 
 
-[^1]: If user types 'enter' without any text, the default value is applied. In some case, default value will not provided.
+[^1]: If you type 'enter' without any text, the default value is applied. In some case, default value will not provided.
 
-## (5) Type the count of SSD(disk) and the path of DB files
+**(5) Type the count of SSD(disk) and the path of DB files**
 
 ``` bash
 How many sdd would you like to use? [3]
@@ -172,7 +170,8 @@ OK, ~/sata_ssd/ssd_
 
 ```
 
-## (6) Check all settings finally
+**(6) Check all settings finally**
+
 Finally all settings will be shown and confirmation will be requested like below.
 
 
@@ -194,8 +193,7 @@ Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 ```
 
-## (7) Deploy cluster
-
+**(7) Deploy cluster**
 
 After deploying is completed, following messages are shown and fbctl of the cluster is activated.
 
@@ -231,6 +229,8 @@ Cluster 1 selected.
 ```
 
 When an error occurs during deploying, error messages will be shown like below.
+
+**(8) Errors**
 
 **Host connection error**
 
@@ -291,109 +291,68 @@ Cluster information exist on some hosts.
 
 If localhost(127.0.0.1) is not included in host information, this error occurs. Please add localhost in host list in this case.
 
-From now, user can start and manage clusters of LightningDB with [Commands](command-line-interface.md).
+# 3. Start LightningDB
 
-
-# 3. LightningDB Version Update
-
-In case of version update, 'deploy' command is used.
+Start redis-server process with using 'cluster start' command.
 
 ``` bash
-> c 1 // alias of 'cluster use 1'
-> deploy
-(Watch out) Cluster 1 is already deployed. Do you want to deploy again? (y/n) [n]
-y
-```
-
-## (1) Select installer
-
-``` bash
-Select installer
-
-    [ INSTALLER LIST ]
-    (1) flashbase.dev.master.dbcb9e.bin
-    (2) flashbase.trial.master.dbcb9e-dirty.bin
-    (3) flashbase.trial.master.dbcb9e.bin
-
-Please enter the number, file path or url of the installer you want to use.
-you can also add file in list by copy to '$FBPATH/releases/'
-1
-OK, flashbase.dev.master.dbcb9e.bin
-```
-
-
-## (2) Restore
-
-``` bash
-Do you want to restore conf? (y/n)
-y
-```
-
-If the current settings will be reused, type 'y'.
-
-## (3) Check all settings finally
-
-``` bash
-+-----------------+---------------------------------------------+
-| NAME            | VALUE                                       |
-+-----------------+---------------------------------------------+
-| installer       | flashbase.dev.master.dbcb9e.bin             |
-| nodes           | nodeA                                       |
-|                 | nodeB                                       |
-|                 | nodeC                                       |
-|                 | nodeD                                       |
-| master ports    | 18100                                       |
-| slave ports     | 18150-18151                                 |
-| ssd count       | 3                                           |
-| redis data path | ~/sata_ssd/ssd_                             |
-| redis db path   | ~/sata_ssd/ssd_                             |
-| flash db path   | ~/sata_ssd/ssd_                             |
-+-----------------+---------------------------------------------+
-Do you want to proceed with the deploy accroding to the above information? (y/n)
-y
+ec2-user@flashbase:1> cluster start
 Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+Generate redis configuration files for master hosts
+sync conf
 +-----------+--------+
 | HOST      | STATUS |
 +-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
+| 127.0.0.1 | OK     |
 +-----------+--------+
-Checking for cluster exist...
-+------+--------+
-| HOST | STATUS |
-+------+--------+
-Backup conf of cluster 1...
-OK, cluster_1_conf_bak_<time-stamp>
-Backup info of cluster 1 at nodeA...
-OK, cluster_1_bak_<time-stamp>
-Backup info of cluster 1 at nodeB...
-OK, cluster_1_bak_<time-stamp>
-Backup info of cluster 1 at nodeC...
-OK, cluster_1_bak_<time-stamp>
-Backup info of cluster 1 at nodeD...
-OK, cluster_1_bak_<time-stamp>
-Transfer installer and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
-Sync conf...
-Complete to deploy cluster 1.
-Cluster 1 selected.
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
 ```
 
-- Backup path of cluster: ${base-directory}/backup/cluster\_${cluster-id}\_bak\_${time-stamp}
-- Backup path of conf files: $FBAPTH/conf_backup/cluster_${cluster-id}\_conf_bak\_${time-stamp}
-
-
-## (4) Restart
-
+Create cluster of LightningDB with using 'cluster create' command.
 
 ``` bash
-> cluster restart
+ec2-user@flashbase:1> cluster create
+Check status of hosts...
+OK
+>>> Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18100 | MASTER |
+| 127.0.0.1 | 18101 | MASTER |
+| 127.0.0.1 | 18102 | MASTER |
+| 127.0.0.1 | 18103 | MASTER |
+| 127.0.0.1 | 18104 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18100
+ - 127.0.0.1:18103
+ - 127.0.0.1:18104
+ - 127.0.0.1:18101
+ - 127.0.0.1:18102
+Adding slots...
+ - 127.0.0.1:18100, 3280
+ - 127.0.0.1:18103, 3276
+ - 127.0.0.1:18104, 3276
+ - 127.0.0.1:18101, 3276
+ - 127.0.0.1:18102, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
 ```
 
-After restart, new version will be applied.
+From now, you can use LightningDB. With [Command Line](command-line-interface.md), you can get more commands of LightningDB.
 
