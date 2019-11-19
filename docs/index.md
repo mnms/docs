@@ -13,7 +13,7 @@ Spark with Redis/Rocksdb key value stores
 - No I/O bottleneck due to redis in DRAM and rocksdb in SSDs due to the small sized key/value I/O and DRAM/SSDs’ short latency (~200us)
 - Filter predicates push down to redis and only associated partitions are chosen to be scanned
 
-![flashbase-architecture2](./images/LightningDB_archi.png)
+![flashbase-architecture2](./images/lightningdb_architecture.png)
 
 # 3. Features
 
