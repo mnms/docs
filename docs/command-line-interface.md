@@ -19,7 +19,7 @@ DESCRIPTION
 COMMANDS
     COMMAND is one of the following:
 
-     add_slave
+     addslaves
        Add slaves to cluster additionally
 
      clean
@@ -269,31 +269,66 @@ Process 'cluster stop' and then 'cluster start'.​​
 --cluster
 ```
 
-## (7) Check Cluster Infos
+## (7) cluster addslaves
 
-With the following commands, you can check the status of the cluster.
-
-- Send PING
+You can add slave to a cluster that is configured only with master. You must add the slave information by command `conf cluster` before running the command. For more detail, see the [Add Slave](run-and-deploy-fbctl.md#4-add-slave).
 
 ``` bash
-> cli ping --all
+ec2-user@flashbase:1> conf cluster
+
+(edit cluster conf)
+
+ec2-user@flashbase:1> cluster addslaves
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+clean redis conf, node conf, db data of slave
+ - 127.0.0.1
+Backup redis slave log in each SLAVE hosts...
+ - 127.0.0.1
+Generate redis configuration files for slave hosts
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+Starting slave nodes : 127.0.0.1 : 18150|18151|18152|18153|18154 ...
+Wait until all redis process up...
+cur: 10 / total: 10
+Complete all redis process up
+replicate [M] 127.0.0.1 18100 - [S] 127.0.0.1 18150
+replicate [M] 127.0.0.1 18101 - [S] 127.0.0.1 18151
+replicate [M] 127.0.0.1 18102 - [S] 127.0.0.1 18152
+replicate [M] 127.0.0.1 18103 - [S] 127.0.0.1 18153
+replicate [M] 127.0.0.1 18104 - [S] 127.0.0.1 18154
+1 / 5 meet complete.
+2 / 5 meet complete.
+3 / 5 meet complete.
+4 / 5 meet complete.
+5 / 5 meet complete.
 ```
 
-- Check the status of the cluster
+## (8) cluster ls
+
+Shows a list of cluster.
 
 ``` bash
-> cli cluster info
+ec2-user@flashbase:1> cluster ls 
+[1, 2, 10]
 ```
 
-- Check the list of the nodes those are organizing the cluster.
+
+## (9) cluster use
+
+Select the cluster number to use.
 
 ``` bash
-ec2-user@flashbase:1> cli cluster nodes
-559af5e90c3f2c92f19c927c29166c268d938e8f 127.0.0.1:18104 master - 0 1574127926000 4 connected 6556-9831
-174e2a62722273fb83814c2f12e2769086c3d185 127.0.0.1:18101 myself,master - 0 1574127925000 3 connected 9832-13107
-35ab4d3f7f487c5332d7943dbf4b20d5840053ea 127.0.0.1:18100 master - 0 1574127926000 1 connected 0-3279
-f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 1574127927172 0 connected 3280-6555
-9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
+ec2-user@flashbase:-> cluster use 1
+Cluster '1' selected. 
+ec2-user@flashbase:1>
 ```
 
 ​
