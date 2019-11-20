@@ -17,6 +17,21 @@ When you access EC2 Instance, following jobs are already done.
 
 - Create and exchange SSH KEY for user authentication
 - Mount disks
+
+!!! Warning
+    Before starting LightningDB, please check if disk mount is completed with using 'lsblk' like below.
+
+``` bash
+[ec2-user@ip-172-31-34-115 ~]$ lsblk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0   10G  0 disk
+└─xvda1 202:1    0   10G  0 part /
+nvme0n1 259:0    0  1.7T  0 disk /nvme/data_01
+nvme1n1 259:1    0  1.7T  0 disk /nvme/data_02
+nvme3n1 259:2    0  1.7T  0 disk /nvme/data_03
+nvme2n1 259:3    0  1.7T  0 disk /nvme/data_04
+```
+
 - Set Hadoop configurations(core-site.xml, hdfs-site.xml, yarn-site.xml).
     - This settings is default value for starter of Hadoop. 
     - To optimize resource or performance, user needs to modify some features with [Hadoop Get Started](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html)
