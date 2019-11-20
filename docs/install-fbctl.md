@@ -111,10 +111,17 @@ With only URL, instead of file path, LightningDB can be installed like below.
 To copy the link of the recommended FlashBase version, use [Release Notes](release-note.md).
 
 ``` bash
-https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.dbcb9e.bin 
+Select installer
 
-Downloading flashbase.dev.master.dbcb9e.bin
-[=======                                           ] 15%
+    [ INSTALLER LIST ]
+    (empty)
+
+Please enter file path or url of the installer you want to use
+you can also add file in list by copy to '$FBPATH/releases/'
+https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin
+Downloading flashbase.dev.master.5a6a38.bin
+[==================================================] 100%
+OK, flashbase.dev.master.5a6a38.bin
 ```
 
 **(2) Type Hosts**
@@ -123,51 +130,46 @@ IP address or hostname can be used. In case of several hosts, list can be sepera
 
 ``` bash
 Please type host list separated by comma(,) [127.0.0.1]
-nodeA, nodeB, nodeC, nodeD
-OK, ['nodeA', 'nodeB', 'nodeC', 'nodeD']
+
+OK, ['127.0.0.1']
 ```
 
 **(3) Type Masters**
 
 
 ``` bash
-How many masters would you like to create on each host? [1]
-1
-OK, 1
-Please type ports separate with comma(,) and use hyphen(-) for range. [18100]
-18100
-OK, ['18100']
+How many masters would you like to create on each host? [10]
+
+OK, 10
+Please type ports separate with comma(,) and use hyphen(-) for range. [18100-18109]
+
+OK, ['18100-18109']
 ```
 
 Define how many master processes will be created in the cluster per server.
 
+!!! Tip
+    To create cluster, 3 master processes should be included at least.
+
 **(4) Type information of slave**
 
 ``` bash
-How many replicas would you like to create on each master? [2]
-2
-OK, 2
-Please type ports separate with comma(,) and use hyphen(-) for range. [18150-18151]
-18150-18151
-OK, ['18150-18151']
+How many replicas would you like to create on each master? [0]
+
+OK, 0
 ```
 
 Define how many slave processes will be created for a master process.
 
-
-
-[^1]: If you type 'enter' without any text, the default value is applied. In some case, default value will not provided.
-
 **(5) Type the count of SSD(disk) and the path of DB files**
 
 ``` bash
-How many sdd would you like to use? [3]
-3
-OK, 3
+How many ssd would you like to use? [4]
 
-Type prefix of db path [~/sata_ssd/ssd_]
-OK, ~/sata_ssd/ssd_
+OK, 4
+Type prefix of db path [/nvme/data_]
 
+OK, /nvme/data_
 ```
 
 **(6) Check all settings finally**
@@ -176,19 +178,15 @@ Finally all settings will be shown and confirmation will be requested like below
 
 
 ``` bash
-+-----------------+---------------------------------------------+
-| NAME            | VALUE                                       |
-+-----------------+---------------------------------------------+
-| installer       | flashbase.dev.master.dbcb9e.bin             |
-| nodes           | nodeA                                       |
-|                 | nodeB                                       |
-|                 | nodeC                                       |
-|                 | nodeD                                       |
-| master ports    | 18100                                       |
-| slave ports     | 18150-18151                                 |
-| ssd count       | 3                                           |
-| db path         | ~/sata_ssd/ssd_                             |
-+-----------------+---------------------------------------------+
++--------------+---------------------------------+
+| NAME         | VALUE                           |
++--------------+---------------------------------+
+| installer    | flashbase.dev.master.5a6a38.bin |
+| hosts        | 127.0.0.1                       |
+| master ports | 18100-18109                     |
+| ssd count    | 4                               |
+| db path      | /nvme/data_                     |
++--------------+---------------------------------+
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 ```
@@ -202,30 +200,21 @@ Check status of hosts...
 +-----------+--------+
 | HOST      | STATUS |
 +-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
+| 127.0.0.1 | OK     |
 +-----------+--------+
 OK
 Checking for cluster exist...
 +-----------+--------+
 | HOST      | STATUS |
 +-----------+--------+
-| nodeA     | CLEAN  |
-| nodeB     | CLEAN  |
-| nodeC     | CLEAN  |
-| nodeD     | CLEAN  |
+| 127.0.0.1 | CLEAN  |
 +-----------+--------+
 OK
-Transfer install and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
+Transfer installer and execute...
+ - 127.0.0.1
 Sync conf...
-Complete to deploy cluster 1
-Cluster 1 selected.
+Complete to deploy cluster 1.
+Cluster '1' selected.
 ```
 
 When an error occurs during deploying, error messages will be shown like below.
@@ -310,9 +299,9 @@ sync conf
 | 127.0.0.1 | OK     |
 +-----------+--------+
 OK
-Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104|18105|18106|18107|18108|18109 ...
 Wait until all redis process up...
-cur: 5 / total: 5
+cur: 10 / total: 10
 Complete all redis process up
 >>> Creating cluster
 +-----------+-------+--------+
@@ -323,23 +312,38 @@ Complete all redis process up
 | 127.0.0.1 | 18102 | MASTER |
 | 127.0.0.1 | 18103 | MASTER |
 | 127.0.0.1 | 18104 | MASTER |
+| 127.0.0.1 | 18105 | MASTER |
+| 127.0.0.1 | 18106 | MASTER |
+| 127.0.0.1 | 18107 | MASTER |
+| 127.0.0.1 | 18108 | MASTER |
+| 127.0.0.1 | 18109 | MASTER |
 +-----------+-------+--------+
 replicas: 0
 
 Do you want to proceed with the create according to the above information? (y/n)
 y
 Cluster meet...
+ - 127.0.0.1:18107
+ - 127.0.0.1:18106
+ - 127.0.0.1:18101
  - 127.0.0.1:18100
  - 127.0.0.1:18103
- - 127.0.0.1:18104
- - 127.0.0.1:18101
+ - 127.0.0.1:18109
  - 127.0.0.1:18102
+ - 127.0.0.1:18108
+ - 127.0.0.1:18105
+ - 127.0.0.1:18104
 Adding slots...
- - 127.0.0.1:18100, 3280
- - 127.0.0.1:18103, 3276
- - 127.0.0.1:18104, 3276
- - 127.0.0.1:18101, 3276
- - 127.0.0.1:18102, 3276
+ - 127.0.0.1:18107, 1642
+ - 127.0.0.1:18106, 1638
+ - 127.0.0.1:18101, 1638
+ - 127.0.0.1:18100, 1638
+ - 127.0.0.1:18103, 1638
+ - 127.0.0.1:18109, 1638
+ - 127.0.0.1:18102, 1638
+ - 127.0.0.1:18108, 1638
+ - 127.0.0.1:18105, 1638
+ - 127.0.0.1:18104, 1638
 Check cluster state and asign slot...
 Ok
 create cluster complete.
@@ -357,9 +361,20 @@ ec2-user@flashbase:1> cli ping --all
 |                 |        |
 | 127.0.0.1:18104 | PONG   |
 |                 |        |
+| 127.0.0.1:18105 | PONG   |
+|                 |        |
+| 127.0.0.1:18106 | PONG   |
+|                 |        |
+| 127.0.0.1:18107 | PONG   |
+|                 |        |
+| 127.0.0.1:18108 | PONG   |
+|                 |        |
+| 127.0.0.1:18109 | PONG   |
+|                 |        |
 +-----------------+--------+
 ec2-user@flashbase:1>
 ```
 
 From now, you can try ingestion and querying in LightningDB with [Zeppelin](try-with-zeppelin.md) . And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
 
+[^1]: If you type 'enter' without any text, the default value is applied. In some case, default value will not provided.

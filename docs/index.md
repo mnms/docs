@@ -17,6 +17,7 @@ Spark with Redis/Rocksdb key value stores
 
 # 3. Features
 
+
 - Ingestion performance (500,000 records/sec/node)
 - Extreme partitioning (up-to 2 billion partitions for a single node)
 - Real-time query performance by using fine-grained partitions and filter acceleration (vector processing by exploiting XEON SIMD instructions)

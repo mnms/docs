@@ -23,8 +23,19 @@ When you access EC2 Instance, following jobs are already done.
 - Set Spark configuration(spark-default.conf.template)
     - To optimize resource and performance, user also need to modify some features with [Spark Configuration](https://spark.apache.org/docs/2.3.0/configuration.html)
 
+!!! Tip
+    To launch Spark application on YARN, start YARN with running 'start-dfs.sh' and 'start-yarn.sh' in order.
+
 # 3. Start LightningDB
 
 LightningDB provides FBCTL that is introduced in [Installation](install-fbctl.md). With FBCTL, you can deploy and use LightningDB.
 
 LightningDB supports Zeppelin to provide convenience of ingestion and querying data of LightningDB. About Zeppelin, [Try out with Zeppelin](try-with-zeppelin.md) page provides some guides.
+
+!!! Tip
+    To use Web UI of HDFS, YARN, Spark and Zeppelin, you should add the following ports to 'Edit inbound rules' of 'Security groups' in EC2 Instance.
+
+    - HDFS: 50070
+    - YARN: 8088
+    - Spark: 4040
+    - Zeppelin: 8080
