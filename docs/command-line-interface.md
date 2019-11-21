@@ -125,7 +125,6 @@ We estimate that redis process is <alive-redis-count>.
 - Conf file not exist
 
 Conf file is not found. To resove this error, use 'cluster configure' and then 'cluster start'.
-cluster configure 명령어를 실행시킨 후 cluster start를 진행하세요.
 
 ``` bash
 $ cluster start
@@ -140,7 +139,8 @@ For detail information, please check log files.
 ``` bash
 $ cluster start
 ...
-max try error
+ClusterRedisError: Fail to start redis: max try exceed
+Recommendation Command: 'monitor'
 ```
 
 **(3) cluster create**
@@ -740,7 +740,7 @@ No rows selected (0.55 seconds)
 
 Default value of db url to connect is jdbc:hive2://$HIVE_HOST:$HIVE_PORT
 
-You can modify $HIVE_HOST and $HIVE_PORT by command conf ths
+You can modify $HIVE_HOST and $HIVE_PORT by command 'conf ths'
 
 **(2) thriftserver monitor**
 
@@ -774,9 +774,7 @@ ec2-user@flashbase:1> thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
-You can view the logs through the command 
-
-**monitor**.
+You can view the logs through the command 'monitor'.
 
 **(5) stop thriftserver**
 

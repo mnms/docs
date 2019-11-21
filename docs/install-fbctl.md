@@ -30,7 +30,7 @@ $ fbctl
 
 When FBCTL starts at the first time,  you needs to confirm 'base_directory'.
 
-[~/tsr2][^1]] is default value.
+[~/tsr2][^1] is default value.
 
 ``` bash
 Type base directory of flashbase [~/tsr2]
@@ -81,7 +81,7 @@ After deploy command, you should type the following information that provides it
 - number of masters
 - replicas
 - number of ssd(disk)
-- prefix of (redis data / redis db path / flash db path)
+- prefix of db path (used for redis data /redis db path / flash db path )
 
 
 Use below option not to save last used value.
