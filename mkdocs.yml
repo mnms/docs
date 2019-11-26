@@ -19,6 +19,7 @@ nav:
     - Try out with Zeppelin: try-with-zeppelin.md 
   - Interface:
     - Command Line: command-line-interface.md
+    - Data Ingestion and querying: data-ingestion-and-querying.md
   - Operation:
     - Version update:  version-update.md   
   - Additional Resources:
