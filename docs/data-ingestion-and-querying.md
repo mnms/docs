@@ -29,16 +29,20 @@ OPTIONS (
 
 There are various options used to describe storage properties.
 
-- table : Positive Integer. The identification of table. Redis indentifies a table with this value.
-- host/port : The host/port of representative Redis Node. Using this host and port, Spark builds a Redis cluster client that retrieves and inserts data to the Redis cluster.
-- partitions : The partitions columns. The partition column values are used to distribute data in Redis cluster. That is, the partition column values are concatenated with a colon(:) and used as KEY of Redis which is the criteria distributing data. For more information, you can refer [Keys distribution model page](https://redis.io/topics/cluster-spec#keys-distribution-model) in Redis.
+- **table** : Positive Integer. The identification of table. Redis indentifies a table with this value.
 
-   !!!Tip
-        Deciding a partition column properly is a crucial factor for performance because it is related to sharding data to multiple Redis nodes. It is important to try distribute KEYs to 16384 slots of REDIS evenly and to try to map at least 200 rows for each KEYs.
+- **host/port** : The host/port of representative Redis Node. Using this host and port, Spark builds a Redis cluster client that retrieves and inserts data to the Redis cluster.
 
-- mode : 'nvkvs' for this field
-- at_least_one_partition_enabled : yes or no. If yes, the queries which do not have partition filter are not permitted.
-- rowstore : true or false. If yes, all columns are merged and stored in RockDB as one column. It enhances ingesting performance. However, the query performance can be dropped because there is overhead for parsing columns in Redis layer when retrieving data from RockDB.
+- **partitions** : The partitions columns. The partition column values are used to distribute data in Redis cluster. That is, the partition column values are concatenated with a colon(:) and used as KEY of Redis which is the criteria distributing data. For more information, you can refer [Keys distribution model page](https://redis.io/topics/cluster-spec#keys-distribution-model) in Redis.
+
+!!!Tip
+    Deciding a partition column properly is a crucial factor for performance because it is related to sharding data to multiple Redis nodes. It is important to try distribute KEYs to 16384 slots of REDIS evenly and to try to map at least 200 rows for each KEYs.
+
+- **mode** : 'nvkvs' for this field
+
+- **at_least_one_partition_enabled** : yes or no. If yes, the queries which do not have partition filter are not permitted.
+
+- **rowstore** : true or false. If yes, all columns are merged and stored in RockDB as one column. It enhances ingesting performance. However, the query performance can be dropped because there is overhead for parsing columns in Redis layer when retrieving data from RockDB.
 
 !!!Tip
     The metastore of LightningDB only contains metadata / schema of tables.
