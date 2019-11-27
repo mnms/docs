@@ -96,15 +96,19 @@ Use below option not to save last used value.
 Select installer
 
     [ INSTALLER LIST ]
-    (1) flashbase.dev.master.dbcb9e.bin
-    (2) flashbase.trial.master.dbcb9e-dirty.bin
-    (3) flashbase.trial.master.dbcb9e.bin
+    (1) [DOWNLOAD] flashbase.dev.master.dbcb9e.bin
+    (2) [LOCAL] flashbase.dev.master.dbcb9e.bin
+    (3) [LOCAL] flashbase.trial.master.dbcb9e-dirty.bin
+    (4) [LOCAL] flashbase.trial.master.dbcb9e.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
 1
 OK, flashbase.dev.master.dbcb9e.bin
 ```
+!!! Tip
+    LOCAL means installer file under path '$FBPATH/releases/' on your local.
+    DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended FlashBase version, use [Release Notes](release-note.md)
 
 With only URL, instead of file path, LightningDB can be installed like below.
 
