@@ -593,10 +593,6 @@ replicate [M] 127.0.0.1 18301 - [S] 127.0.0.1 18351
 replicate [M] 127.0.0.1 18302 - [S] 127.0.0.1 18352
 replicate [M] 127.0.0.1 18303 - [S] 127.0.0.1 18353
 replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
-1 / 5 meet complete.
-2 / 5 meet complete.
-3 / 5 meet complete.
-4 / 5 meet complete.
 5 / 5 meet complete.
 ```
 

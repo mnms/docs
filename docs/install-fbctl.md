@@ -110,9 +110,7 @@ OK, flashbase.dev.master.dbcb9e.bin
     LOCAL means installer file under path '$FBPATH/releases/' on your local.
     DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended FlashBase version, use [Release Notes](release-note.md)
 
-With only URL, instead of file path, LightningDB can be installed like below.
-
-To copy the link of the recommended FlashBase version, use [Release Notes](release-note.md).
+Select a number to use that file. Type DOWNLOAD will be used after downloading. The downloaded file is saved in path '$FBPATH/releases'.
 
 ``` bash
 Select installer
@@ -127,6 +125,9 @@ Downloading flashbase.dev.master.5a6a38.bin
 [==================================================] 100%
 OK, flashbase.dev.master.5a6a38.bin
 ```
+
+If installer list is empty like above, you can also use file path or url. If you enter url, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.
+
 
 **(2) Type Hosts**
 
