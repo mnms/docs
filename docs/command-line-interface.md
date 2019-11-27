@@ -347,6 +347,10 @@ Cluster '2' selected.
 
 **(9) cluster add_slave**
 
+!!! Warning
+    Before using 'add-slave' command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be availabe again.
+
+
 You can add a slave to a cluster that is configured only with master without redundancy.
 
 - create cluster only with master
