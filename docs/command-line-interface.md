@@ -4,8 +4,7 @@
 
 # 1. Cluster Commands
 
-If you want to see the list of cluster commands, use the 'cluster' command without any option.
-
+If you want to see the list of cluster commands, use the `cluster` command without any option.
 
 ``` bash
 ec2-user@flashbase:1> cluster
@@ -57,7 +56,7 @@ COMMANDS
 
 **(1) cluster configure**
 
-redis-{port}.conf is generated with using redis-{master/slave}.conf.template and redis.properties.
+`redis-{port}.conf` is generated with using `redis-{master/slave}.conf.template` and `redis.properties` files.
 
 ``` bash
 > cluster configure
@@ -66,14 +65,12 @@ redis-{port}.conf is generated with using redis-{master/slave}.conf.template and
 **(2) cluster start**
 
 - Backup logs of the previous master/slave nodes
-    - All log files of previous master/slave nodes in '${SR2_HOME}[^1]/logs/redis/' will be moved to '${SR2_HOME}/logs/redis/backup/'.
-
+    - All log files of previous master/slave nodes in `${SR2_HOME}/logs/redis/`[^1] will be moved to `${SR2_HOME}/logs/redis/backup/`.
 - Generate directories to save data
-    - Save aof and rdb files of redis-server and RocksDB files in '${SR2_REDIS_DATA}'
-
+    - Save aof and rdb files of redis-server and RocksDB files in `${SR2_REDIS_DATA}`
 - Start redis-server process
-    - Start master and slave redis-server with '${SR2_HOME}/conf/redis/redis-{port}.conf' file
-- Log files will be saved in '${SR2_HOME}/logs/redis/'
+    - Start master and slave redis-server with `${SR2_HOME}/conf/redis/redis-{port}.conf` file
+- Log files will be saved in `${SR2_HOME}/logs/redis/`
 
 ``` bash
 ec2-user@flashbase:1> cluster start
@@ -101,7 +98,7 @@ Complete all redis process up
 
 - ErrorCode 11
 
-Redis-server(master) process with same port is already running. To resolve this error, use 'cluster stop' or 'kill {pid of the process}'.
+Redis-server(master) process with same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
 
 ``` bash
 $ cluster start
@@ -113,7 +110,7 @@ We estimate that redis process is <alive-redis-count>.
 
 - ErrorCode 12
 
-Redis-server(slave) process with same port is already running. To resolve this error, use 'cluster stop' or 'kill {pid of the process}'.
+Redis-server(slave) process with same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
 
 ``` bash
 $ cluster start
@@ -124,7 +121,7 @@ We estimate that redis process is <alive-redis-count>.
 
 - Conf file not exist
 
-Conf file is not found. To resove this error, use 'cluster configure' and then 'cluster start'.
+Conf file is not found. To resove this error, use `cluster configure` and then `cluster start`.
 
 ``` bash
 $ cluster start
@@ -147,11 +144,10 @@ Recommendation Command: 'monitor'
 
 After checking information of the cluster, create cluster of LightningDB.
 
-Case 1) When redis-server processes are running, create cluster only.
+**Case 1)** When redis-server processes are running, create cluster only.
 
 ``` bash
-ec2-user@flashbase:1> cluster create
-Check status of hosts...
+ec2-user@flashbase:1>`cluster create`Check status of hosts...
 OK
 >>> Creating cluster
 +-----------+-------+--------+
@@ -184,11 +180,10 @@ Ok
 create cluster complete.
 ```
 
-Case 2) When redis-server processes are not running, create cluster after launching redis-server processes with 'cluster start' command.
+**Case 2)** When redis-server processes are not running, create cluster after launching redis-server processes with `cluster start` command.
 
 ``` bash
-ec2-user@flashbase:4> cluster create
-Check status of hosts...
+ec2-user@flashbase:4>`cluster create`Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
  - 127.0.0.1
@@ -238,11 +233,10 @@ create cluster complete.
 
 **Errors**
 
-When redis servers are not running, this error(Errno 111) will occur. To solve this error, use 'cluster start' command previously.
+When redis servers are not running, this error(Errno 111) will occur. To solve this error, use `cluster start` command previously.
 
 ``` bash
-ec2-user@flashbase:1> cluster create
-Check status of hosts...
+ec2-user@flashbase:1>`cluster create`Check status of hosts...
 OK
 >>> Creating cluster
 +-----------+-------+--------+
@@ -261,7 +255,6 @@ y
 127.0.0.1:18100 - [Errno 111] Connection refused
 ```
 
-​​
 **(4) cluster stop**
 
 ​Gracefully kill all redis-servers(master/slave) with SIGINT
@@ -279,7 +272,6 @@ Complete all redis process down
 **Options**
 
 - Force to kill all redis-servers(master/slave) with SIGKILL
-
 
 ``` bash
 --force
@@ -301,10 +293,9 @@ Removing master node configuration
 
 **(6) cluster restart​**
 
-Process 'cluster stop' and then 'cluster start'.​​
+Process `cluster stop` and then `cluster start`.​​
 
 **Options**
-
 
 - Force to kill all redis-servers(master/slave) with SIGKILL and then start again.
 
@@ -317,8 +308,8 @@ Process 'cluster stop' and then 'cluster start'.​​
 ``` bash
 --reset
 ```
- 
-- Process 'cluster create'. This command should be called with '--reset'.
+
+- Process `cluster create`. This command should be called with `--reset`.
 
 ``` bash
 --cluster
@@ -335,7 +326,7 @@ ec2-user@flashbase:2> cluster ls
 
 **(8) cluster use**
 
-Change the cluster to use FBCTL. Use 'cluster use' or 'c' commands.
+Change the cluster to use FBCTL. Use `cluster use` or `c` commands.
 
 ``` bash
 ec2-user@flashbase:2> cluster use 1
@@ -344,12 +335,10 @@ ec2-user@flashbase:1> c 2
 Cluster '2' selected.
 ```
 
-
 **(9) cluster add_slave**
 
 !!! Warning
-    Before using 'add-slave' command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be availabe again.
-
+    Before using `add-slave` command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be availabe again.
 
 You can add a slave to a cluster that is configured only with master without redundancy.
 
@@ -524,7 +513,7 @@ export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
 #######################################################
 ```
 
-Modify SR2_REDIS_SLAVE_HOSTS and SR2_REDIS_SLAVE_PORTS as shown below.
+Modify `SR2_REDIS_SLAVE_HOSTS` and `SR2_REDIS_SLAVE_PORTS` as shown below.
 
 ``` bash
 #!/bin/bash
@@ -570,7 +559,7 @@ OK
 Complete edit
 ```
 
-- execute command add-slave
+- execute `cluster add-slave` command
 
 ``` bash
 ec2-user@flashbase:3> cluster add-slave
@@ -617,7 +606,6 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 
 ```
 
-
 **(10) cluster rowcount**
 
 Check the count of records that are stored in the cluster.
@@ -626,7 +614,6 @@ Check the count of records that are stored in the cluster.
 ec2-user@flashbase:1> cluster rowcount
 0
 ```
-
 
 **(11) Check status of cluster**
 
@@ -687,7 +674,7 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 
 # 2. Thrift Server Commands
 
-If you want to see the list of Thrift Server commands, use the 'thriftserver' command without any option.
+If you want to see the list of Thrift Server commands, use the `thriftserver` command without any option.
 
 ``` bash
 NAME
@@ -738,9 +725,9 @@ Beeline version 1.2.1.spark2 by Apache Hive
 No rows selected (0.55 seconds)
 ```
 
-Default value of db url to connect is jdbc:hive2://$HIVE_HOST:$HIVE_PORT
+Default value of db url to connect is `jdbc:hive2://$HIVE_HOST:$HIVE_PORT`
 
-You can modify $HIVE_HOST and $HIVE_PORT by command 'conf ths'
+You can modify `$HIVE_HOST` and `$HIVE_PORT` by command `conf ths`
 
 **(2) thriftserver monitor**
 
@@ -751,7 +738,7 @@ ec2-user@flashbase:1> thriftserver monitor
 Press Ctrl-C for exit.
 19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
 19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
-19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager 
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager
 ...
 ```
 
@@ -774,7 +761,7 @@ ec2-user@flashbase:1> thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
-You can view the logs through the command 'monitor'.
+You can view the logs through the command `monitor`.
 
 **(5) stop thriftserver**
 
@@ -786,7 +773,6 @@ stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 ```
 
 **(6) conf thriftserver**
-
 
 ``` bash
 ec2-user@flashbase:1> conf thriftserver
@@ -832,6 +818,4 @@ SPARK_LOG_SAVE_MIN=2000
 ##############
 ```
 
-
-
-[^1]: If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.
+[^1]: If user types `cfc 1`, ${SR2_HOME} will be `~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT`.
