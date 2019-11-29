@@ -30,7 +30,7 @@ $ fbctl
 
 When FBCTL starts at the first time,  you needs to confirm 'base_directory'.
 
-[~/tsr2][^1]] is default value.
+[~/tsr2][^1] is default value.
 
 ``` bash
 Type base directory of flashbase [~/tsr2]
@@ -81,7 +81,7 @@ After deploy command, you should type the following information that provides it
 - number of masters
 - replicas
 - number of ssd(disk)
-- prefix of (redis data / redis db path / flash db path)
+- prefix of db path (used for redis data /redis db path / flash db path )
 
 
 Use below option not to save last used value.
@@ -96,19 +96,21 @@ Use below option not to save last used value.
 Select installer
 
     [ INSTALLER LIST ]
-    (1) flashbase.dev.master.dbcb9e.bin
-    (2) flashbase.trial.master.dbcb9e-dirty.bin
-    (3) flashbase.trial.master.dbcb9e.bin
+    (1) [DOWNLOAD] flashbase.dev.master.dbcb9e.bin
+    (2) [LOCAL] flashbase.dev.master.dbcb9e.bin
+    (3) [LOCAL] flashbase.trial.master.dbcb9e-dirty.bin
+    (4) [LOCAL] flashbase.trial.master.dbcb9e.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
 1
 OK, flashbase.dev.master.dbcb9e.bin
 ```
+!!! Tip
+    LOCAL means installer file under path '$FBPATH/releases/' on your local.
+    DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended FlashBase version, use [Release Notes](release-note.md)
 
-With only URL, instead of file path, LightningDB can be installed like below.
-
-To copy the link of the recommended FlashBase version, use [Release Notes](release-note.md).
+Select a number to use that file. Type DOWNLOAD will be used after downloading. The downloaded file is saved in path '$FBPATH/releases'.
 
 ``` bash
 Select installer
@@ -123,6 +125,9 @@ Downloading flashbase.dev.master.5a6a38.bin
 [==================================================] 100%
 OK, flashbase.dev.master.5a6a38.bin
 ```
+
+If installer list is empty like above, you can also use file path or url. If you enter url, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.
+
 
 **(2) Type Hosts**
 
