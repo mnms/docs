@@ -689,6 +689,128 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
 ```
 
+**(12) cluster tree**
+
+User can check the status of master nodes and slaves and show which master and slave nodes are linked. 
+
+``` bash
+ec2-user@flashbase:9> cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(connected)
+|__ 127.0.0.1:18952(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+```
+
+**(13) cluster failover**
+
+If a master node is killed, its slave node will automatically promote after 'cluster-node-time'[^2].
+
+User can promote the slave node immediately with using 'cluster failover' command.
+
+Step 1) Check the status of cluster
+
+In this case, '127.0.0.1:18902' node is killed.
+
+``` bash
+ec2-user@flashbase:9> cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(disconnected)   <--- Killed!
+|__ 127.0.0.1:18952(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+```
+
+Step 2) Do failover with 'cluster failover' command
+
+``` bash
+ec2-user@flashbase:9> cluster failover
+failover 127.0.0.1:18952 for 127.0.0.1:18902
+OK
+ec2-user@flashbase:9> cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(disconnected)   <--- Killed!
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+
+127.0.0.1:18952(connected)      <--- Promoted to master!
+```
+
+**(14) cluster failover**
+
+With 'cluster failover' command, the killed node is restarted and added to cluster as slave node.
+
+``` bash
+ec2-user@flashbase:9> cluster failback
+run 127.0.0.1:18902
+ec2-user@flashbase:9> cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+
+127.0.0.1:18952(connected)       <--- Promoted to master!
+|__ 127.0.0.1:18902(connected)   <--- Failbacked. Now this node is slave!
+```
+
 # 2. Thrift Server Commands
 
 If you want to see the list of Thrift Server commands, use the 'thriftserver' command without any option.
@@ -841,3 +963,4 @@ SPARK_LOG_SAVE_MIN=2000
 
 
 [^1]: If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.
+[^2]: 'cluster-node-time' can be set with using 'config set' command. Its default time is 1200,000 msec.
