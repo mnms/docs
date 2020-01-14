@@ -623,21 +623,20 @@ With the following commands, you can check the status of the cluster.
 
 ``` bash
 ec2-user@flashbase:1> cli ping --all
-+-----------------+--------+
-| addr            | stdout |
-+-----------------+--------+
-| 127.0.0.1:18100 | PONG   |
-|                 |        |
-| 127.0.0.1:18101 | PONG   |
-|                 |        |
-| 127.0.0.1:18102 | PONG   |
-|                 |        |
-| 127.0.0.1:18103 | PONG   |
-|                 |        |
-| 127.0.0.1:18104 | PONG   |
-|                 |        |
-+-----------------+--------+
+alive redis 10/10
 ```
+
+If a node does not reply, the fail node will be displayed like below.
+
+``` bash
++-------+-----------------+--------+
+| TYPE  | ADDR            | RESULT |
++-------+-----------------+--------+
+| Slave | 127.0.0.1:18352 | FAIL   |
++-------+-----------------+--------+
+alive redis 9/10
+```
+
 
 - Check the status of the cluster
 
