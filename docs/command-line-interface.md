@@ -615,7 +615,133 @@ ec2-user@flashbase:1> cluster rowcount
 0
 ```
 
-**(11) Check status of cluster**
+**(11) cluster tree**
+
+Check cluster status with tree format. There are three states of nodes. `connected`, `disconnected` and `paused`. `disconnected` is shown in red and `paused` in yellow.
+
+``` bash
+ec2-user@flashbase:3> cluster tree
+127.0.0.1:18300(connected)
+|__ 127.0.0.1:18350(connected)
+
+127.0.0.1:18301(connected)
+|__ 127.0.0.1:18351(connected)
+
+127.0.0.1:18302(connected)
+|__ 127.0.0.1:18352(connected)
+
+127.0.0.1:18303(connected)
+|__ 127.0.0.1:18353(connected)
+
+127.0.0.1:18304(connected)
+|__ 127.0.0.1:18354(connected)
+
+```
+
+**(12) cluster failover**
+
+Substitute dead master with slave.
+
+Some redis were dead for testing like below and then proceed failover.
+
+``` bash
+ec2-user@flashbase:3> cluster tree
+127.0.0.1:18300(disconnected)
+|__ 127.0.0.1:18350(connected)
+
+127.0.0.1:18301(paused)
+|__ 127.0.0.1:18351(connected)
+
+127.0.0.1:18302(paused)
+|__ 127.0.0.1:18352(disconnected)
+
+127.0.0.1:18303(connected)
+|__ 127.0.0.1:18353(disconnected)
+
+127.0.0.1:18304(connected)
+|__ 127.0.0.1:18354(connected)
+
+ec2-user@flashbase:3> cluster failover
+failover 127.0.0.1:18350 for 127.0.0.1:18300
+OK
+failover 127.0.0.1:18351 for 127.0.0.1:18301
+OK
+127.0.0.1:18302 has no alive slave to proceed failover
+
+ec2-user@flashbase:3> cluster tree
+127.0.0.1:18300(disconnected)
+
+127.0.0.1:18302(paused)
+|__ 127.0.0.1:18352(disconnected)
+
+127.0.0.1:18303(connected)
+|__ 127.0.0.1:18353(connected)
+
+127.0.0.1:18304(connected)
+|__ 127.0.0.1:18354(connected)
+
+127.0.0.1:18350(connected)
+
+127.0.0.1:18351(connected)
+|__ 127.0.0.1:18301(paused)
+```
+
+The results of the progress are as follows. For convenience, I will separate the redis by port number.
+
+Substitute `18300` with `18350`
+
+Substitute `18301` with `18351`
+
+`18302` is failed to failover because there was no alive slave.
+
+Although it looks like the connection between `18300` and `18350` is broken, `18300` is automatically added as a slave to `18350` when it alive.
+
+
+**(13) cluster failback**
+
+Restart the disconnected or paused redis.
+
+Some redis were dead for testing like below and then proceed failback.
+
+``` bash
+ec2-user@flashbase:3> cluster tree
+127.0.0.1:18300(disconnected)
+|__ 127.0.0.1:18350(connected)
+
+127.0.0.1:18301(paused)
+|__ 127.0.0.1:18351(connected)
+
+127.0.0.1:18302(paused)
+|__ 127.0.0.1:18352(disconnected)
+
+127.0.0.1:18303(connected)
+|__ 127.0.0.1:18353(disconnected)
+
+127.0.0.1:18304(paused)
+|__ 127.0.0.1:18354(paused)
+
+ec2-user@flashbase:3> cluster back
+run 127.0.0.1:18300|18352|18353
+restart 127.0.0.1:18301|18302|18304|18354
+
+ec2-user@flashbase:3> cluster tree
+127.0.0.1:18300(connected)
+|__ 127.0.0.1:18350(connected)
+
+127.0.0.1:18301(connected)
+|__ 127.0.0.1:18351(connected)
+
+127.0.0.1:18302(connected)
+|__ 127.0.0.1:18352(connected)
+
+127.0.0.1:18303(connected)
+|__ 127.0.0.1:18353(connected)
+
+127.0.0.1:18304(connected)
+|__ 127.0.0.1:18354(connected)
+```
+
+**(14) Check status of cluster**
 
 With the following commands, you can check the status of the cluster.
 
