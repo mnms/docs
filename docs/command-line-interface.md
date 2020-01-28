@@ -1,6 +1,6 @@
 
 !!! Note
- Command Line Interface(CLI) of LightningDB supports not only deploy and start command but also many commands to access and manipulate data in LightningDB.
+    Command Line Interface(CLI) of LightningDB supports not only deploy and start command but also many commands to access and manipulate data in LightningDB.
 
 # 1. Cluster Commands
 
@@ -10,48 +10,48 @@ If you want to see the list of cluster commands, use the `cluster` command witho
 ec2-user@flashbase:1> cluster
 
 NAME
- fbctl cluster - This is cluster command
+    fbctl cluster - This is cluster command
 
 SYNOPSIS
- fbctl cluster COMMAND
+    fbctl cluster COMMAND
 
 DESCRIPTION
- This is cluster command
+    This is cluster command
 
 COMMANDS
- COMMAND is one of the following:
+    COMMAND is one of the following:
 
- add_slave
- Add slaves to cluster additionally
+     add_slave
+       Add slaves to cluster additionally
 
- clean
- Clean cluster
+     clean
+       Clean cluster
 
- configure
+     configure
 
- create
- Create cluster
+     create
+       Create cluster
 
- ls
- Check cluster list
+     ls
+       Check cluster list
 
- rebalance
- Rebalance
+     rebalance
+       Rebalance
 
- restart
- Restart redist cluster
+     restart
+       Restart redist cluster
 
- rowcount
- Query and show cluster row count
+     rowcount
+       Query and show cluster row count
 
- start
- Start cluster
+     start
+       Start cluster
 
- stop
- Stop cluster
+     stop
+       Stop cluster
 
- use
- Change selected cluster
+     use
+       Change selected cluster
 ```
 
 **(1) cluster configure**
@@ -65,11 +65,11 @@ COMMANDS
 **(2) cluster start**
 
 - Backup logs of the previous master/slave nodes
- - All log files of previous master/slave nodes in `${SR2_HOME}/logs/redis/`[^1] will be moved to `${SR2_HOME}/logs/redis/backup/`.
+    - All log files of previous master/slave nodes in `${SR2_HOME}/logs/redis/`[^1] will be moved to `${SR2_HOME}/logs/redis/backup/`.
 - Generate directories to save data
- - Save aof and rdb files of redis-server and RocksDB files in `${SR2_REDIS_DATA}`
+    - Save aof and rdb files of redis-server and RocksDB files in `${SR2_REDIS_DATA}`
 - Start redis-server process
- - Start master and slave redis-server with `${SR2_HOME}/conf/redis/redis-{port}.conf` file
+    - Start master and slave redis-server with `${SR2_HOME}/conf/redis/redis-{port}.conf` file
 - Log files will be saved in `${SR2_HOME}/logs/redis/`
 
 ``` bash
@@ -84,9 +84,9 @@ Backup redis master log in each MASTER hosts...
 Generate redis configuration files for master hosts
 sync conf
 +-----------+--------+
-| HOST | STATUS |
+| HOST      | STATUS |
 +-----------+--------+
-| 127.0.0.1 | OK |
+| 127.0.0.1 | OK     |
 +-----------+--------+
 Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
 Wait until all redis process up...
@@ -98,7 +98,7 @@ Complete all redis process up
 
 - ErrorCode 11
 
-Redis-server(master) process with the same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
+Redis-server(master) process with same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
 
 ``` bash
 $ cluster start
@@ -110,7 +110,7 @@ We estimate that redis process is <alive-redis-count>.
 
 - ErrorCode 12
 
-Redis-server(slave) process with the same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
+Redis-server(slave) process with same port is already running. To resolve this error, use `cluster stop` or `kill {pid of the process}`.
 
 ``` bash
 $ cluster start
@@ -121,7 +121,7 @@ We estimate that redis process is <alive-redis-count>.
 
 - Conf file not exist
 
-The conf file is not found. To resolve this error, use `cluster configure` and then `cluster start`.
+Conf file is not found. To resove this error, use `cluster configure` and then `cluster start`.
 
 ``` bash
 $ cluster start
@@ -129,10 +129,9 @@ $ cluster start
 FileNotExistError: ${SR2_HOME}/conf/redis/redis-{port}.conf
 ```
 
-- Max try error
-
+- max try error
 ​
-For detail information, please check the log files.
+For detail information, please check log files.
 
 ``` bash
 $ cluster start
@@ -143,17 +142,16 @@ Recommendation Command: 'monitor'
 
 **(3) cluster create**
 
-After checking the information of the cluster, create cluster of LightningDB.
+After checking information of the cluster, create cluster of LightningDB.
 
-**Case 1)** When redis-server processes are already running, create a cluster only.
+**Case 1)** When redis-server processes are running, create cluster only.
 
 ``` bash
-ec2-user@flashbase:1>`cluster create`
-Check status of hosts...
+ec2-user@flashbase:1>`cluster create`Check status of hosts...
 OK
 >>> Creating cluster
 +-----------+-------+--------+
-| HOST | PORT | TYPE |
+| HOST      | PORT  | TYPE   |
 +-----------+-------+--------+
 | 127.0.0.1 | 18100 | MASTER |
 | 127.0.0.1 | 18101 | MASTER |
@@ -182,11 +180,10 @@ Ok
 create cluster complete.
 ```
 
-**Case 2)** When redis-server processes are not running, create a cluster after launching redis-server processes with `cluster start` command.
+**Case 2)** When redis-server processes are not running, create cluster after launching redis-server processes with `cluster start` command.
 
 ``` bash
-ec2-user@flashbase:4>`cluster create`
-Check status of hosts...
+ec2-user@flashbase:4>`cluster create`Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
  - 127.0.0.1
@@ -194,9 +191,9 @@ create redis data directory in each MASTER hosts
  - 127.0.0.1
 sync conf
 +-----------+--------+
-| HOST | STATUS |
+| HOST      | STATUS |
 +-----------+--------+
-| 127.0.0.1 | OK |
+| 127.0.0.1 | OK     |
 +-----------+--------+
 OK
 Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
@@ -205,7 +202,7 @@ cur: 5 / total: 5
 Complete all redis process up
 >>> Creating cluster
 +-----------+-------+--------+
-| HOST | PORT | TYPE |
+| HOST      | PORT  | TYPE   |
 +-----------+-------+--------+
 | 127.0.0.1 | 18100 | MASTER |
 | 127.0.0.1 | 18101 | MASTER |
@@ -239,12 +236,11 @@ create cluster complete.
 When redis servers are not running, this error(Errno 111) will occur. To solve this error, use `cluster start` command previously.
 
 ``` bash
-ec2-user@flashbase:1>`cluster create`
-Check status of hosts...
+ec2-user@flashbase:1>`cluster create`Check status of hosts...
 OK
 >>> Creating cluster
 +-----------+-------+--------+
-| HOST | PORT | TYPE |
+| HOST      | PORT  | TYPE   |
 +-----------+-------+--------+
 | 127.0.0.1 | 18100 | MASTER |
 | 127.0.0.1 | 18101 | MASTER |
@@ -307,7 +303,7 @@ Process `cluster stop` and then `cluster start`.​​
 --force-stop
 ```
 
-- Remove all data(aof, rdb, RocksDB, conf files) before starting again.
+- Remove all data(aof, rdb, RocksDB, conf files) before start again.
 
 ``` bash
 --reset
@@ -321,7 +317,7 @@ Process `cluster stop` and then `cluster start`.​​
 
 **(7) cluster ls**
 
-List the deployed clusters.
+List up the deployed clusters.
 
 ``` bash
 ec2-user@flashbase:2> cluster ls
@@ -342,22 +338,22 @@ Cluster '2' selected.
 **(9) cluster add_slave**
 
 !!! Warning
- Before using `add-slave` command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be available again.
+    Before using `add-slave` command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be availabe again.
 
-You can add a slave to a cluster that is configured only with the master without redundancy.
+You can add a slave to a cluster that is configured only with master without redundancy.
 
-- Create cluster only with masters
- - Procedure for configuring the test environment. If cluster with the only masters already exists, go to the **add slave info**.
+- create cluster only with master
+    - Procedure for configuring the test environment. If cluster with only master already exists, go to the **add slave info**.
 
 - Proceed with the deploy.
- - Enter 0 in replicas as shown below when deploy.
+    - Enter 0 in replicas as shown below when deploy.
 
 ``` bash
 ec2-user@flashbase:2> deploy 3
 Select installer
 
- [ INSTALLER LIST ]
- (1) flashbase.dev.master.5a6a38.bin
+    [ INSTALLER LIST ]
+    (1) flashbase.dev.master.5a6a38.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
@@ -384,28 +380,28 @@ Type prefix of db path [~/sata_ssd/ssd_]
 
 OK, ~/sata_ssd/ssd_
 +--------------+---------------------------------+
-| NAME | VALUE |
+| NAME         | VALUE                           |
 +--------------+---------------------------------+
-| installer | flashbase.dev.master.5a6a38.bin |
-| hosts | 127.0.0.1 |
-| master ports | 18300-18304 |
-| ssd count | 3 |
-| db path | ~/sata_ssd/ssd_ |
+| installer    | flashbase.dev.master.5a6a38.bin |
+| hosts        | 127.0.0.1                       |
+| master ports | 18300-18304                     |
+| ssd count    | 3                               |
+| db path      | ~/sata_ssd/ssd_                 |
 +--------------+---------------------------------+
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 Check status of hosts...
 +-----------+--------+
-| HOST | STATUS |
+| HOST      | STATUS |
 +-----------+--------+
-| 127.0.0.1 | OK |
+| 127.0.0.1 | OK     |
 +-----------+--------+
 OK
 Checking for cluster exist...
 +-----------+--------+
-| HOST | STATUS |
+| HOST      | STATUS |
 +-----------+--------+
-| 127.0.0.1 | CLEAN |
+| 127.0.0.1 | CLEAN  |
 +-----------+--------+
 OK
 Transfer installer and execute...
@@ -430,9 +426,9 @@ create redis data directory in each MASTER hosts
  - 127.0.0.1
 sync conf
 +-----------+--------+
-| HOST | STATUS |
+| HOST      | STATUS |
 +-----------+--------+
-| 127.0.0.1 | OK |
+| 127.0.0.1 | OK     |
 +-----------+--------+
 OK
 Starting master nodes : 127.0.0.1 : 18300|18301|18302|18303|18304 ...
@@ -444,7 +440,7 @@ Check status of hosts...
 OK
 >>> Creating cluster
 +-----------+-------+--------+
-| HOST | PORT | TYPE |
+| HOST      | PORT  | TYPE   |
 +-----------+-------+--------+
 | 127.0.0.1 | 18300 | MASTER |
 | 127.0.0.1 | 18301 | MASTER |
@@ -474,9 +470,9 @@ create cluster complete.
 ec2-user@flashbase:3>
 ```
 
-- Add slave info
+- add slave info
 
-Open the conf file.
+Open conf file.
 
 ``` bash
 ec2-user@flashbase:3> conf cluster
@@ -563,7 +559,7 @@ OK
 Complete edit
 ```
 
-- Execute `cluster add-slave` command
+- execute `cluster add-slave` command
 
 ``` bash
 ec2-user@flashbase:3> cluster add-slave
@@ -593,7 +589,7 @@ replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
 5 / 5 meet complete.
 ```
 
-- Check configuration information
+- check configuration information
 
 ``` bash
 ec2-user@flashbase:3> cli cluster nodes
@@ -610,7 +606,7 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 
 ```
 
-**(10) Cluster rowcount**
+**(10) cluster rowcount**
 
 Check the count of records that are stored in the cluster.
 
@@ -619,7 +615,7 @@ ec2-user@flashbase:1> cluster rowcount
 0
 ```
 
-**(11) Check the status of cluster**
+**(11) Check status of cluster**
 
 With the following commands, you can check the status of the cluster.
 
@@ -634,9 +630,9 @@ If a node does not reply, the fail node will be displayed like below.
 
 ``` bash
 +-------+-----------------+--------+
-| TYPE | ADDR | RESULT |
+| TYPE  | ADDR            | RESULT |
 +-------+-----------------+--------+
-| Slave | 127.0.0.1:18352 | FAIL |
+| Slave | 127.0.0.1:18352 | FAIL   |
 +-------+-----------------+--------+
 alive redis 9/10
 ```
@@ -675,9 +671,9 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
 ```
 
-**(12) Cluster tree**
+**(12) cluster tree**
 
-Users can check the status of master nodes and slaves and show which master and slave nodes are linked. 
+User can check the status of master nodes and slaves and show which master and slave nodes are linked. 
 
 ``` bash
 ec2-user@flashbase:9> cluster tree
@@ -703,13 +699,13 @@ ec2-user@flashbase:9> cluster tree
 |__ 127.0.0.1:18956(connected)
 ```
 
-**(13) Cluster failover**
+**(13) cluster failover**
 
 If a master node is killed, its slave node will automatically promote after 'cluster-node-time'[^2].
 
-Users can promote the slave node immediately by using 'cluster failover' command.
+User can promote the slave node immediately with using 'cluster failover' command.
 
-Step 1) Check the status of the cluster
+Step 1) Check the status of cluster
 
 In this case, '127.0.0.1:18902' node is killed.
 
@@ -721,7 +717,7 @@ ec2-user@flashbase:9> cluster tree
 127.0.0.1:18901(connected)
 |__ 127.0.0.1:18951(connected)
 
-127.0.0.1:18902(disconnected) <--- Killed!
+127.0.0.1:18902(disconnected)   <--- Killed!
 |__ 127.0.0.1:18952(connected)
 
 127.0.0.1:18903(connected)
@@ -750,7 +746,7 @@ ec2-user@flashbase:9> cluster tree
 127.0.0.1:18901(connected)
 |__ 127.0.0.1:18951(connected)
 
-127.0.0.1:18902(disconnected) <--- Killed!
+127.0.0.1:18902(disconnected)   <--- Killed!
 
 127.0.0.1:18903(connected)
 |__ 127.0.0.1:18953(connected)
@@ -764,12 +760,12 @@ ec2-user@flashbase:9> cluster tree
 127.0.0.1:18906(connected)
 |__ 127.0.0.1:18956(connected)
 
-127.0.0.1:18952(connected) <--- Promoted to master!
+127.0.0.1:18952(connected)      <--- Promoted to master!
 ```
 
-**(14) Cluster failover**
+**(14) cluster failover**
 
-With 'cluster failover' command, the killed node is restarted and added to the cluster as the slave node.
+With 'cluster failover' command, the killed node is restarted and added to cluster as slave node.
 
 ``` bash
 ec2-user@flashbase:9> cluster failback
@@ -793,8 +789,8 @@ ec2-user@flashbase:9> cluster tree
 127.0.0.1:18906(connected)
 |__ 127.0.0.1:18956(connected)
 
-127.0.0.1:18952(connected) <--- Promoted to master!
-|__ 127.0.0.1:18902(connected) <--- Failbacked. Now this node is slave!
+127.0.0.1:18952(connected)       <--- Promoted to master!
+|__ 127.0.0.1:18902(connected)   <--- Failbacked. Now this node is slave!
 ```
 
 # 2. Thrift Server Commands
@@ -803,31 +799,31 @@ If you want to see the list of Thrift Server commands, use the `thriftserver` co
 
 ``` bash
 NAME
- fbctl thriftserver
+    fbctl thriftserver
 
 SYNOPSIS
- fbctl thriftserver COMMAND
+    fbctl thriftserver COMMAND
 
 COMMANDS
- COMMAND is one of the following:
+    COMMAND is one of the following:
 
- beeline
- Connect to thriftserver command line
+     beeline
+       Connect to thriftserver command line
 
- monitor
- Show thriftserver log
+     monitor
+       Show thriftserver log
 
- restart
- Thriftserver restart
+     restart
+       Thriftserver restart
 
- start
- Start thriftserver
+     start
+       Start thriftserver
 
- stop
- Stop thriftserver
+     stop
+       Stop thriftserver
 ```
 
-**(1) Thriftserver beeline**
+**(1) thriftserver beeline**
 
 Connect to the thrift server
 
@@ -844,7 +840,7 @@ Transaction isolation: TRANSACTION_REPEATABLE_READ
 Beeline version 1.2.1.spark2 by Apache Hive
 0: jdbc:hive2://localhost:13000> show tables;
 +-----------+------------+--------------+--+
-| database | tableName | isTemporary |
+| database  | tableName  | isTemporary  |
 +-----------+------------+--------------+--+
 +-----------+------------+--------------+--+
 No rows selected (0.55 seconds)
@@ -852,11 +848,11 @@ No rows selected (0.55 seconds)
 
 Default value of db url to connect is `jdbc:hive2://$HIVE_HOST:$HIVE_PORT`
 
-You can modify `$HIVE_HOST` and `$HIVE_PORT` by the command `conf thriftserver`
+You can modify `$HIVE_HOST` and `$HIVE_PORT` by command `conf ths`
 
-**(2) Thriftserver monitor**
+**(2) thriftserver monitor**
 
-You can view the logs of the thrift server in real-time.
+You can view the logs of the thrift server in real time.
 
 ``` bash
 ec2-user@flashbase:1> thriftserver monitor
@@ -867,7 +863,7 @@ Press Ctrl-C for exit.
 ...
 ```
 
-**(3) Thriftserver restart**
+**(3) thriftserver restart**
 
 Restart the thrift server.
 
@@ -877,7 +873,7 @@ no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
-**(4) Start thriftserver**
+**(4) start thriftserver**
 
 Run the thrift server.
 
@@ -888,7 +884,7 @@ starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /o
 
 You can view the logs through the command `monitor`.
 
-**(5) Stop thriftserver**
+**(5) stop thriftserver**
 
 Shut down the thrift server.
 
@@ -897,7 +893,7 @@ ec2-user@flashbase:1> thriftserver stop
 stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 ```
 
-**(6) Conf thriftserver**
+**(6) conf thriftserver**
 
 ``` bash
 ec2-user@flashbase:1> conf thriftserver
