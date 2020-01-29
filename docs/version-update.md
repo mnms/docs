@@ -1,5 +1,5 @@
 
-You can update LightningDB with using 'deploy' command.
+You can update LightningDB by using the 'deploy' command.
 
 ``` bash
 > c 1 // alias of 'cluster use 1'
@@ -18,8 +18,8 @@ Select installer
     (2) flashbase.trial.master.dbcb9e-dirty.bin
     (3) flashbase.trial.master.dbcb9e.bin
 
-Please enter the number, file path or url of the installer you want to use.
-you can also add file in list by copy to '$FBPATH/releases/'
+Please enter the number, file path or URL of the installer you want to use.
+you can also add a file in list by copy to '$FBPATH/releases/'
 1
 OK, flashbase.dev.master.dbcb9e.bin
 ```
@@ -98,4 +98,4 @@ Cluster 1 selected.
 > cluster restart
 ```
 
-After restart, new version will be applied.
+After the restart, the new version will be applied.

@@ -140,17 +140,17 @@ cat .ssh/id_rsa.pub | ssh {server name} "cat >> .ssh/authorized_keys"
 
 (1) Intel MKL 2019 library install
 
-- go to the website: https://software.intel.com/en-us/mkl/choose-download/macos
-- register and login
-- select product named "Intel * Math Kernel Library for Linux" or "Intel * Math Kernel Library for Mac" from the select box "Choose Product to Download"
+- Go to the website: https://software.intel.com/en-us/mkl/choose-download/macos
+- Register and login
+- Select product named "Intel * Math Kernel Library for Linux" or "Intel * Math Kernel Library for Mac" from the select box "Choose Product to Download"
 - Choose a Version "2019 Update 2" and download
-- unzip the file and execute the install.sh file with root account or (sudo command)
+- Unzip the file and execute the install.sh file with root account or (sudo command)
 
 ``` bash
     sudo ./install.sh
 ```
 
-- choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)
+- Choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)
 
 ``` bash
 matthew@fbg05 /opt/intel $ pwd
@@ -177,7 +177,7 @@ lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -> compilers_and_libraries/linux
 
 (2) Intel MKL 2019 library environment settings
 
-- append the following statement into ~/.bashrc
+- Append the following statement into ~/.bashrc
 
 ``` bash
 # INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
@@ -220,9 +220,9 @@ alias cfc='source ~/.use_cluster'
 
 # 4. Install and Start LightningDB
 
-With FBCTL provided by LightningDB, user can deploy and use LightningDB.
+With FBCTL provided by LightningDB, users can deploy and use LightningDB.
 
-Install FBCTL with following command.
+Install FBCTL with the following command.
 
 ``` bash
 $ pip insatll fbctl

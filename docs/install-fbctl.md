@@ -1,7 +1,7 @@
 
 # 1. How to run FBCTL
 
-If you try to use FBCTL for the first time after EC2 instance was created, please update FBCTL like below.
+If you try to use FBCTL for the first time after the EC2 instance was created, please update FBCTL like below.
 
 ``` bash
 pip install fbctl --upgrade --user
@@ -10,7 +10,7 @@ pip install fbctl --upgrade --user
 
 **(1) Run**
 
-To run FBCTL, ${FBPATH} should be set. If not, following error messages will be shown.
+To run FBCTL, ${FBPATH} should be set. If not, the following error messages will be shown.
 
 ``` bash
 To start using FBCTL, you should set env FBPATH
@@ -19,7 +19,7 @@ export FBPATH=$HOME/.flashbase
 ```
 
 !!! Tip
-    In case of EC2 Instance, this path is set automatically.
+    In the case of EC2 Instance, this path is set automatically.
 
 
 Run FBCTL by typing 'fbctl'
@@ -28,7 +28,7 @@ Run FBCTL by typing 'fbctl'
 $ fbctl
 ```
 
-When FBCTL starts at the first time,  you needs to confirm 'base_directory'.
+When FBCTL starts for the first time,  you need to confirm 'base_directory'.
 
 [~/tsr2][^1] is default value.
 
@@ -40,8 +40,8 @@ OK, ~/tsr2
 
 In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.
 
-If you logs in FBCTL normally, FBCTL starts on last visited cluster.
-In case of first login, '-' is shown instead of cluster number.
+If you logs in FBCTL normally, FBCTL starts on the last visited cluster.
+In the case of the first login, '-' is shown instead of cluster number.
 
 
 ``` bash
@@ -61,7 +61,7 @@ root@flashbase:1>
 
 Log messages of FBCTL will be saved in '$FBPATH/logs/fb-roate.log'.
 
-Its max-file-size is 1GiB and **rolling update** will be done in case of exceed of size limit.
+Its max-file-size is 1GiB and **rolling update** will be done in case of exceeding of size limit.
 
 
 # 2. Deploy LightningDB
@@ -76,15 +76,15 @@ You could make LightningDB cluster with the following command.
 
 After deploy command, you should type the following information that provides its last used value.
 
-- installer
-- host
-- number of masters
-- replicas
-- number of ssd(disk)
-- prefix of db path (used for redis data /redis db path / flash db path )
+- Installer
+- Host
+- Number of masters
+- Replicas
+- Number of SSD(disk)
+- The prefix of DB path (used for 'redis data', 'redis DB path' and 'flash DB path')
 
 
-Use below option not to save last used value.
+Use the below option not to save the last used value.
 
 ``` bash
 > deploy --history-save=False
@@ -126,12 +126,12 @@ Downloading flashbase.dev.master.5a6a38.bin
 OK, flashbase.dev.master.5a6a38.bin
 ```
 
-If installer list is empty like above, you can also use file path or url. If you enter url, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.
+If the installer list is empty like above, you can also use file path or URL. If you enter URL, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.
 
 
 **(2) Type Hosts**
 
-IP address or hostname can be used. In case of several hosts, list can be seperated by comma(',').
+IP address or hostname can be used. In the case of several hosts, the list can be separated by comma(',').
 
 ``` bash
 Please type host list separated by comma(,) [127.0.0.1]
@@ -146,7 +146,7 @@ OK, ['127.0.0.1']
 How many masters would you like to create on each host? [10]
 
 OK, 10
-Please type ports separate with comma(,) and use hyphen(-) for range. [18100-18109]
+Please type ports separate with a comma(,) and use a hyphen(-) for range. [18100-18109]
 
 OK, ['18100-18109']
 ```
@@ -154,7 +154,7 @@ OK, ['18100-18109']
 Define how many master processes will be created in the cluster per server.
 
 !!! Tip
-    To create cluster, 3 master processes should be included at least.
+    To create a cluster, 3 master processes should be included at least.
 
 **(4) Type information of slave**
 
@@ -179,7 +179,7 @@ OK, /nvme/data_
 
 **(6) Check all settings finally**
 
-Finally all settings will be shown and confirmation will be requested like below.
+Finally, all settings will be shown and confirmation will be requested like below.
 
 
 ``` bash
@@ -198,7 +198,7 @@ y
 
 **(7) Deploy cluster**
 
-After deploying is completed, following messages are shown and FBCTL of the cluster is activated.
+After deploying is completed, the following messages are shown and FBCTL of the cluster is activated.
 
 ``` bash
 Check status of hosts...
@@ -247,7 +247,7 @@ There are unavailable host.
 - UNKNOWN HOST
     - Can not get IP address with the hostname. Please check if the hostname is right.
 - CONNECTION ERROR
-    - Please check the status of host(server) or outbound/inbound of the server.
+    - Please check the status of the host(server) or outbound/inbound of the server.
 
 
 **Cluster already exist**
@@ -283,11 +283,11 @@ Cluster information exist on some hosts.
   Must include localhost.
 ```
 
-If localhost(127.0.0.1) is not included in host information, this error occurs. Please add localhost in host list in this case.
+If the localhost(127.0.0.1) is not included in host information, this error occurs. Please add the localhost in the host list in this case.
 
 # 3. Start LightningDB
 
-Create cluster of LightningDB with using 'cluster create' command.
+Create a cluster of LightningDB using 'cluster create' command.
 
 ``` bash
 ec2-user@flashbase:1> cluster create
@@ -358,6 +358,6 @@ alive redis 10/10
 ec2-user@flashbase:1>
 ```
 
-From now, you can try ingestion and querying in LightningDB with [Zeppelin](try-with-zeppelin.md) . And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
+From now, you can try ingestion and query in LightningDB with [Zeppelin](try-with-zeppelin.md). And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
 
-[^1]: If you type 'enter' without any text, the default value is applied. In some case, default value will not provided.
+[^1]: If you type 'enter' without any text, the default value is applied. In some cases, the default value will not be provided.
