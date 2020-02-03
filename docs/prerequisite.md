@@ -1,7 +1,26 @@
 !!! Note
     This page guides how to start LightningDB automatically only for the case of **AWS EC2 Instance**.
 
-# 1. Access EC2 Instance
+# 1. Create EC2 Instance
+
+Amazon Machine Image(AMI) for LightningDB can be found in 'AWS Marketplace' and user can create EC2 Instance with the AMI.
+
+![aws marketplace](images/aws_marketplace.png)
+
+
+To use LightningDB in a new Instance, the size of the root volume should be 15GiB at least.
+
+To use Web UI of HDFS, YARN, Spark and Zeppelin, you should add the following ports to 'Edit inbound rules' of 'Security groups' in EC2 Instance.
+
+|Service|Port|
+|:-----:|:-----:|
+|HDFS| 50070|
+|YARN| 8088|
+|Spark| 4040|
+|Zeppelin| 8080|
+
+
+# 2. Access EC2 Instance
 
 Create a EC2 Instance for LightningDB and  access with 'Public IP' or 'Public DNS'.
 
@@ -11,7 +30,7 @@ Create a EC2 Instance for LightningDB and  access with 'Public IP' or 'Public DN
 $ ssh -i /path/to/.pem ec2-user@${IP_ADDRESS}
 ```
 
-# 2. Setup environment
+# 3. Setup environment
 
 When you access EC2 Instance, the following jobs are already done.
 
@@ -41,16 +60,9 @@ nvme2n1 259:3    0  1.7T  0 disk /nvme/data_04
 !!! Tip
     To launch Spark application on YARN, start YARN with running 'start-dfs.sh' and 'start-yarn.sh' in order.
 
-# 3. Start LightningDB
+# 4. Start LightningDB
 
 LightningDB provides FBCTL that is introduced in [Installation](install-fbctl.md). With FBCTL, you can deploy and use LightningDB.
 
 LightningDB supports Zeppelin to provide the convenience of ingestion and querying data of LightningDB. About Zeppelin, [Try out with Zeppelin](try-with-zeppelin.md) page provides some guides.
 
-!!! Tip
-    To use Web UI of HDFS, YARN, Spark and Zeppelin, you should add the following ports to 'Edit inbound rules' of 'Security groups' in EC2 Instance.
-
-    - HDFS: 50070
-    - YARN: 8088
-    - Spark: 4040
-    - Zeppelin: 8080
