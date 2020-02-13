@@ -2,7 +2,7 @@ site_name: LightningDB Docs
 site_author: LightningDB Team
 site_description: LightningDB is a DRAM / SSD optimized real-time in-memory DBMS.
 site_url: https://mnms.github.io/docs
-copyright: All right reserved, LightningDB Team.
+copyright: All right reserved, <a href='https://lightningdb.io'>LightningDB Team</a>.
 google_analytics: ['UA-152587413-1', 'mnms.github.io/docs']
 
 repo_name: source repository
