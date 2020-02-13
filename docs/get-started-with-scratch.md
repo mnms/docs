@@ -225,7 +225,7 @@ With FBCTL provided by LightningDB, users can deploy and use LightningDB.
 Install FBCTL with the following command.
 
 ``` bash
-$ pip insatll fbctl
+$ pip install fbctl
 ```
 
 After installation is completed, start FBCTL with [Commands](command-line-interface.md#command-line-interface)
