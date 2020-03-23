@@ -1,19 +1,19 @@
 
-# 1. How to run FBCTL
+# 1. How to run LTCLI
 
-If you try to use FBCTL for the first time after the EC2 instance was created, please update FBCTL like below.
+If you try to use LTCLI for the first time after the EC2 instance was created, please update LTCLI like below.
 
 ``` bash
-pip install fbctl --upgrade --user
+pip install ltcli --upgrade --user
 ```
 
 
 **(1) Run**
 
-To run FBCTL, ${FBPATH} should be set. If not, the following error messages will be shown.
+To run LTCLI, ${FBPATH} should be set. If not, the following error messages will be shown.
 
 ``` bash
-To start using FBCTL, you should set env FBPATH
+To start using LTCLI, you should set env FBPATH
 ex)
 export FBPATH=$HOME/.flashbase
 ```
@@ -22,13 +22,13 @@ export FBPATH=$HOME/.flashbase
     In the case of EC2 Instance, this path is set automatically.
 
 
-Run FBCTL by typing 'fbctl'
+Run LTCLI by typing 'ltcli'
 
 ``` bash
-$ fbctl
+$ ltcli
 ```
 
-When FBCTL starts for the first time,  you need to confirm 'base_directory'.
+When LTCLI starts for the first time,  you need to confirm 'base_directory'.
 
 [~/tsr2][^1] is default value.
 
@@ -40,26 +40,26 @@ OK, ~/tsr2
 
 In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.
 
-If you logs in FBCTL normally, FBCTL starts on the last visited cluster.
+If you logs in LTCLI normally, LTCLI starts on the last visited cluster.
 In the case of the first login, '-' is shown instead of cluster number.
 
 
 ``` bash
-root@flashbase:->
+root@lightningdb:->
 
 ...
 ...
 
-root@flashbase:1>
+root@lightningdb:1>
 ```
 
 !!! Tip
-    In this page, '$' means that you are in Centos and '>' means that you are in FBCTL.
+    In this page, '$' means that you are in Centos and '>' means that you are in LTCLI.
 
 
 **(2) Log messages**
 
-Log messages of FBCTL will be saved in '$FBPATH/logs/fb-roate.log'.
+Log messages of LTCLI will be saved in '$FBPATH/logs/fb-roate.log'.
 
 Its max-file-size is 1GiB and **rolling update** will be done in case of exceeding of size limit.
 
@@ -198,7 +198,7 @@ y
 
 **(7) Deploy cluster**
 
-After deploying is completed, the following messages are shown and FBCTL of the cluster is activated.
+After deploying is completed, the following messages are shown and LTCLI of the cluster is activated.
 
 ``` bash
 Check status of hosts...
@@ -290,7 +290,7 @@ If the localhost(127.0.0.1) is not included in host information, this error occu
 Create a cluster of LightningDB using 'cluster create' command.
 
 ``` bash
-ec2-user@flashbase:1> cluster create
+ec2-user@lightningdb:1> cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -352,12 +352,12 @@ Adding slots...
 Check cluster state and asign slot...
 Ok
 create cluster complete.
-ec2-user@flashbase:1> cli ping --all
+ec2-user@lightningdb:1> cli ping --all
 alive redis 10/10
 
-ec2-user@flashbase:1>
+ec2-user@lightningdb:1>
 ```
 
-From now, you can try ingestion and query in LightningDB with [Zeppelin](try-with-zeppelin.md). And for further information about commands of FBCTL, please use [Command Line](command-line-interface.md).
+From now, you can try ingestion and query in LightningDB with [Zeppelin](try-with-zeppelin.md). And for further information about commands of LTCLI, please use [Command Line](command-line-interface.md).
 
 [^1]: If you type 'enter' without any text, the default value is applied. In some cases, the default value will not be provided.

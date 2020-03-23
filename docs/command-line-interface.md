@@ -7,13 +7,13 @@
 If you want to see the list of cluster commands, use the `cluster` command without any option.
 
 ``` bash
-ec2-user@flashbase:1> cluster
+ec2-user@lightningdb:1> cluster
 
 NAME
-    fbctl cluster - This is cluster command
+    ltcli cluster - This is cluster command
 
 SYNOPSIS
-    fbctl cluster COMMAND
+    ltcli cluster COMMAND
 
 DESCRIPTION
     This is cluster command
@@ -73,7 +73,7 @@ COMMANDS
 - Log files will be saved in `${SR2_HOME}/logs/redis/`
 
 ``` bash
-ec2-user@flashbase:1> cluster start
+ec2-user@lightningdb:1> cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -147,7 +147,7 @@ After checking the information of the cluster, create a cluster of LightningDB.
 **Case 1)** When redis-server processes are running, create a cluster only.
 
 ``` bash
-ec2-user@flashbase:1>`cluster create`
+ec2-user@lightningdb:1>cluster create
 Check status of hosts...
 OK
 >>> Creating cluster
@@ -184,7 +184,7 @@ create cluster complete.
 **Case 2)** When redis-server processes are not running, create a cluster after launching redis-server processes with `cluster start` command.
 
 ``` bash
-ec2-user@flashbase:4>`cluster create`
+ec2-user@lightningdb:4>cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -238,7 +238,7 @@ create cluster complete.
 When redis servers are not running, this error(Errno 111) will occur. To solve this error, use `cluster start` command previously.
 
 ``` bash
-ec2-user@flashbase:1>`cluster create`
+ec2-user@lightningdb:1>cluster create
 Check status of hosts...
 OK
 >>> Creating cluster
@@ -263,7 +263,7 @@ y
 ​Gracefully kill all redis-servers(master/slave) with SIGINT
 ​​
 ``` bash
-ec2-user@flashbase:1> cluster stop
+ec2-user@lightningdb:1> cluster stop
 Check status of hosts...
 OK
 Stopping master cluster of redis...
@@ -285,7 +285,7 @@ Complete all redis process down
 Remove conf files for redis-server and all data(aof, rdb, RocksDB) of LightningDB
 
 ``` bash
-ec2-user@flashbase:1> cluster clean
+ec2-user@lightningdb:1> cluster clean
 Removing redis generated master configuration files
  - 127.0.0.1
 Removing flash db directory, appendonly and dump.rdb files in master
@@ -323,18 +323,18 @@ Process `cluster stop` and then `cluster start`.​​
 List the deployed clusters.
 
 ``` bash
-ec2-user@flashbase:2> cluster ls
+ec2-user@lightningdb:2> cluster ls
 [1, 2]
 ```
 
 **(8) Cluster use**
 
-Change the cluster to use FBCTL. Use `cluster use` or `c` commands.
+Change the cluster to use LTCLI. Use `cluster use` or `c` commands.
 
 ``` bash
-ec2-user@flashbase:2> cluster use 1
+ec2-user@lightningdb:2> cluster use 1
 Cluster '1' selected.
-ec2-user@flashbase:1> c 2
+ec2-user@lightningdb:1> c 2
 Cluster '2' selected.
 ```
 
@@ -352,7 +352,7 @@ You can add a slave to a cluster that is configured only with the master without
     - Enter 0 in replicas as shown below when deploy.
 
 ``` bash
-ec2-user@flashbase:2> deploy 3
+ec2-user@lightningdb:2> deploy 3
 Select installer
 
     [ INSTALLER LIST ]
@@ -417,7 +417,7 @@ Cluster '3' selected.
 - When the deploy is complete, start and create the cluster.
 
 ``` bash
-ec2-user@flashbase:3> cluster start
+ec2-user@lightningdb:3> cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -438,7 +438,7 @@ Starting master nodes : 127.0.0.1 : 18300|18301|18302|18303|18304 ...
 Wait until all redis process up...
 cur: 5 / total: 5
 Complete all redis process up
-ec2-user@flashbase:3> cluster create
+ec2-user@lightningdb:3> cluster create
 Check status of hosts...
 OK
 >>> Creating cluster
@@ -470,7 +470,7 @@ Adding slots...
 Check cluster state and asign slot...
 Ok
 create cluster complete.
-ec2-user@flashbase:3>
+ec2-user@lightningdb:3>
 ```
 
 - Add slave info
@@ -478,7 +478,7 @@ ec2-user@flashbase:3>
 Open the conf file.
 
 ``` bash
-ec2-user@flashbase:3> conf cluster
+ec2-user@lightningdb:3> conf cluster
 ```
 
 You can modify redis.properties by entering the command as shown above.
@@ -554,7 +554,7 @@ export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
 Save the modification and exit.
 
 ``` bash
-ec2-user@flashbase:3> conf cluster
+ec2-user@lightningdb:3> conf cluster
 Check status of hosts...
 OK
 sync conf
@@ -565,7 +565,7 @@ Complete edit
 - Execute `cluster add-slave` command
 
 ``` bash
-ec2-user@flashbase:3> cluster add-slave
+ec2-user@lightningdb:3> cluster add-slave
 Check status of hosts...
 OK
 Check cluster exist...
@@ -595,7 +595,7 @@ replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
 - Check configuration information
 
 ``` bash
-ec2-user@flashbase:3> cli cluster nodes
+ec2-user@lightningdb:3> cli cluster nodes
 0549ec03031213f95121ceff6c9c13800aef848c 127.0.0.1:18303 master - 0 1574132251126 3 connected 3280-6555
 1b09519d37ebb1c09095158b4f1c9f318ddfc747 127.0.0.1:18352 slave a6a8013cf0032f0f36baec3162122b3d993dd2c8 0 1574132251025 6 connected
 c7dc4815e24054104dff61cac6b13256a84ac4ae 127.0.0.1:18353 slave 0549ec03031213f95121ceff6c9c13800aef848c 0 1574132251126 3 connected
@@ -614,7 +614,7 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 Check the count of records that are stored in the cluster.
 
 ``` bash
-ec2-user@flashbase:1> cluster rowcount
+ec2-user@lightningdb:1> cluster rowcount
 0
 ```
 
@@ -625,7 +625,7 @@ With the following commands, you can check the status of the cluster.
 - Send PING
 
 ``` bash
-ec2-user@flashbase:1> cli ping --all
+ec2-user@lightningdb:1> cli ping --all
 alive redis 10/10
 ```
 
@@ -644,7 +644,7 @@ alive redis 9/10
 - Check the status of the cluster
 
 ``` bash
-ec2-user@flashbase:1> cli cluster info
+ec2-user@lightningdb:1> cli cluster info
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -666,7 +666,7 @@ cluster_stats_messages_received:26
 - Check the list of the nodes those are organizing the cluster.
 
 ``` bash
-ec2-user@flashbase:1> cli cluster nodes
+ec2-user@lightningdb:1> cli cluster nodes
 559af5e90c3f2c92f19c927c29166c268d938e8f 127.0.0.1:18104 master - 0 1574127926000 4 connected 6556-9831
 174e2a62722273fb83814c2f12e2769086c3d185 127.0.0.1:18101 myself,master - 0 1574127925000 3 connected 9832-13107
 35ab4d3f7f487c5332d7943dbf4b20d5840053ea 127.0.0.1:18100 master - 0 1574127926000 1 connected 0-3279
@@ -679,7 +679,7 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 User can check the status of master nodes and slaves and show which master and slave nodes are linked. 
 
 ``` bash
-ec2-user@flashbase:9> cluster tree
+ec2-user@lightningdb:9> cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -713,7 +713,7 @@ Step 1) Check the status of the cluster
 In this case, '127.0.0.1:18902' node is killed.
 
 ``` bash
-ec2-user@flashbase:9> cluster tree
+ec2-user@lightningdb:9> cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -739,10 +739,10 @@ ec2-user@flashbase:9> cluster tree
 Step 2) Do failover with 'cluster failover' command
 
 ``` bash
-ec2-user@flashbase:9> cluster failover
+ec2-user@lightningdb:9> cluster failover
 failover 127.0.0.1:18952 for 127.0.0.1:18902
 OK
-ec2-user@flashbase:9> cluster tree
+ec2-user@lightningdb:9> cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -771,9 +771,9 @@ ec2-user@flashbase:9> cluster tree
 With 'cluster failover' command, the killed node is restarted and added to the cluster as the slave node.
 
 ``` bash
-ec2-user@flashbase:9> cluster failback
+ec2-user@lightningdb:9> cluster failback
 run 127.0.0.1:18902
-ec2-user@flashbase:9> cluster tree
+ec2-user@lightningdb:9> cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -802,10 +802,10 @@ If you want to see the list of Thrift Server commands, use the the `thriftserver
 
 ``` bash
 NAME
-    fbctl thriftserver
+    ltcli thriftserver
 
 SYNOPSIS
-    fbctl thriftserver COMMAND
+    ltcli thriftserver COMMAND
 
 COMMANDS
     COMMAND is one of the following:
@@ -831,7 +831,7 @@ COMMANDS
 Connect to the thrift server
 
 ``` bash
-ec2-user@flashbase:1> thriftserver beeline
+ec2-user@lightningdb:1> thriftserver beeline
 Connecting...
 Connecting to jdbc:hive2://localhost:13000
 19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
@@ -858,7 +858,7 @@ You can modify `$HIVE_HOST` and `$HIVE_PORT` by the command `conf thriftserver`
 You can view the logs of the thrift server in real-time.
 
 ``` bash
-ec2-user@flashbase:1> thriftserver monitor
+ec2-user@lightningdb:1> thriftserver monitor
 Press Ctrl-C for exit.
 19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
 19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
@@ -871,7 +871,7 @@ Press Ctrl-C for exit.
 Restart the thrift server.
 
 ``` bash
-ec2-user@flashbase:1> thriftserver restart
+ec2-user@lightningdb:1> thriftserver restart
 no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
@@ -881,7 +881,7 @@ starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /o
 Run the thrift server.
 
 ``` bash
-ec2-user@flashbase:1> thriftserver start
+ec2-user@lightningdb:1> thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 ```
 
@@ -892,14 +892,14 @@ You can view the logs through the command `monitor`.
 Shut down the thrift server.
 
 ``` bash
-ec2-user@flashbase:1> thriftserver stop
+ec2-user@lightningdb:1> thriftserver stop
 stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 ```
 
 **(6) Conf thriftserver**
 
 ``` bash
-ec2-user@flashbase:1> conf thriftserver
+ec2-user@lightningdb:1> conf thriftserver
 
 #!/bin/bash
 ###############################################################################

@@ -2,7 +2,7 @@
 
 You can try LightningDB in the Zeppelin notebook.
 
-Firstly, deploy and start the cluster of LightningDB using [Installation](install-fbctl.md) before launching the Zeppelin daemon.
+Firstly, deploy and start the cluster of LightningDB using [Installation](install-ltcli.md) before launching the Zeppelin daemon.
 
 Secondly, to run LightningDB on the Spark, the jars in the LightningDB should be passed to the Spark.
 When EC2 Instance is initialized, the environment variable (`$SPARK_SUBMIT_OPTIONS`) is configured for this reason.

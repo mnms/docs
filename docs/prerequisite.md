@@ -62,7 +62,7 @@ nvme2n1 259:3    0  1.7T  0 disk /nvme/data_04
 
 # 4. Start LightningDB
 
-LightningDB provides FBCTL that is introduced in [Installation](install-fbctl.md). With FBCTL, you can deploy and use LightningDB.
+LightningDB provides LTCLI that is introduced in [Installation](install-ltcli.md). With LTCLI, you can deploy and use LightningDB.
 
 LightningDB supports Zeppelin to provide the convenience of ingestion and querying data of LightningDB. About Zeppelin, [Try out with Zeppelin](try-with-zeppelin.md) page provides some guides.
 

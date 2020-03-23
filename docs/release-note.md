@@ -11,8 +11,8 @@
 - License: free
 - Description
     - Initial version
-    - Support FBCTL
+    - Support LTCLI
     - Support geoSpatial functions
 
 
-[^1]: Copy link address with Right-Clicking and paste when you  try to deploy LightningDB in FBCTL.
+[^1]: Copy link address with Right-Clicking and paste when you  try to deploy LightningDB in LTCLI.

@@ -1,5 +1,5 @@
 !!! Note
-    This page guides how to start LightningDB on CentOS manually. In case of using **AWS EC2 Instance**, please use [Installation](install-fbctl.md)
+    This page guides how to start LightningDB on CentOS manually. In case of using **AWS EC2 Instance**, please use [Installation](install-ltcli.md)
 
 # 1. Optimizing System Parameters
 
@@ -220,12 +220,12 @@ alias cfc='source ~/.use_cluster'
 
 # 4. Install and Start LightningDB
 
-With FBCTL provided by LightningDB, users can deploy and use LightningDB.
+With LTCLI provided by LightningDB, users can deploy and use LightningDB.
 
-Install FBCTL with the following command.
+Install LTCLI with the following command.
 
 ``` bash
-$ pip install fbctl
+$ pip install ltcli --upgrade --user
 ```
 
-After installation is completed, start FBCTL with [Commands](command-line-interface.md#command-line-interface)
+After installation is completed, start LTCLI with [Commands](command-line-interface.md#command-line-interface)

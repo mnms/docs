@@ -14,7 +14,7 @@ nav:
     - Release Notes: release-note.md
   - Getting Started:
     - Prerequisite: prerequisite.md 
-    - Installation: install-fbctl.md 
+    - Installation: install-ltcli.md 
   - Tutorial:
     - Try out with Zeppelin: try-with-zeppelin.md 
   - Interface:
