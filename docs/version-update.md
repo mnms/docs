@@ -15,8 +15,8 @@ Select installer
 
     [ INSTALLER LIST ]
     (1) lightningdb.release.master.5a6a38.bin
-    (2) flashbase.trial.master.dbcb9e-dirty.bin
-    (3) flashbase.trial.master.dbcb9e.bin
+    (2) lightningdb.trial.master.dbcb9e-dirty.bin
+    (3) lightningdb.trial.master.dbcb9e.bin
 
 Please enter the number, file path or URL of the installer you want to use.
 you can also add a file in list by copy to '$FBPATH/releases/'

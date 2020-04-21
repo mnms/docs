@@ -46,7 +46,7 @@ There are various options used to describe storage properties.
 
 !!!Tip
     The metastore of LightningDB only contains metadata/schema of tables.
-    The actual data are stored in FlashBase which consists of Redis & RockDB (Abbreviation: r2), and the table information is stored in metastore.
+    The actual data are stored in Lightning DB which consists of Redis & RockDB (Abbreviation: r2), and the table information is stored in metastore.
 
 
 # 2. Data Ingestion

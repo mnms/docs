@@ -356,14 +356,14 @@ ec2-user@lightningdb:2> deploy 3
 Select installer
 
     [ INSTALLER LIST ]
-    (1) flashbase.dev.master.5a6a38.bin
+    (1) lightningdb.dev.master.5a6a38.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
-https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.5a6a38.bin
-Downloading flashbase.dev.master.5a6a38.bin
+https://flashbase.s3.ap-northeast-2.amazonaws.com/lightningdb.release.master.5a6a38.bin
+Downloading lightningdb.release.master.5a6a38.bin
 [==================================================] 100%
-OK, flashbase.dev.master.5a6a38.bin
+OK, lightningdb.release.master.5a6a38.bin
 Please type host list separated by comma(,) [127.0.0.1]
 
 OK, ['127.0.0.1']
@@ -385,7 +385,7 @@ OK, ~/sata_ssd/ssd_
 +--------------+---------------------------------+
 | NAME         | VALUE                           |
 +--------------+---------------------------------+
-| installer    | flashbase.dev.master.5a6a38.bin |
+| installer    | lightningdb.dev.master.5a6a38.bin |
 | hosts        | 127.0.0.1                       |
 | master ports | 18300-18304                     |
 | ssd count    | 3                               |

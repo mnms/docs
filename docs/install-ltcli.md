@@ -108,7 +108,7 @@ OK, lightningdb.release.master.5a6a38.bin
 ```
 !!! Tip
     LOCAL means installer file under path '$FBPATH/releases/' on your local.
-    DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended FlashBase version, use [Release Notes](release-note.md)
+    DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended Lightning DB version, use [Release Notes](release-note.md)
 
 Select a number to use that file. Type DOWNLOAD will be used after downloading. The downloaded file is saved in path '$FBPATH/releases'.
 
