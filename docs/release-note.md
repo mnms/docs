@@ -1,13 +1,13 @@
 # 1. Recommended Versions
 
-[LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin)[^1]
+[LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin)[^1]
 
 # 2. Release Notes
 
 **Ver 1.0**
 
 - Date: 2019.11.20
-- Download: [LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin)
+- Download: [LightningDB ver 1.0](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin)
 - License: free
 - Description
     - Initial version

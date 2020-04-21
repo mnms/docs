@@ -14,14 +14,14 @@ y
 Select installer
 
     [ INSTALLER LIST ]
-    (1) flashbase.dev.master.dbcb9e.bin
+    (1) lightningdb.release.master.5a6a38.bin
     (2) flashbase.trial.master.dbcb9e-dirty.bin
     (3) flashbase.trial.master.dbcb9e.bin
 
 Please enter the number, file path or URL of the installer you want to use.
 you can also add a file in list by copy to '$FBPATH/releases/'
 1
-OK, flashbase.dev.master.dbcb9e.bin
+OK, lightningdb.release.master.5a6a38.bin
 ```
 
 
@@ -37,21 +37,21 @@ If the current settings will be reused, type 'y'.
 **(3) Check all settings finally**
 
 ``` bash
-+-----------------+---------------------------------------------+
-| NAME            | VALUE                                       |
-+-----------------+---------------------------------------------+
-| installer       | flashbase.dev.master.dbcb9e.bin             |
-| nodes           | nodeA                                       |
-|                 | nodeB                                       |
-|                 | nodeC                                       |
-|                 | nodeD                                       |
-| master ports    | 18100                                       |
-| slave ports     | 18150-18151                                 |
-| ssd count       | 3                                           |
-| redis data path | ~/sata_ssd/ssd_                             |
-| redis db path   | ~/sata_ssd/ssd_                             |
-| flash db path   | ~/sata_ssd/ssd_                             |
-+-----------------+---------------------------------------------+
++-----------------+---------------------------------------------------+
+| NAME            | VALUE                                             |
++-----------------+---------------------------------------------------+
+| installer       | lightningdb.release.master.5a6a38.bin             |
+| nodes           | nodeA                                             |
+|                 | nodeB                                             |
+|                 | nodeC                                             |
+|                 | nodeD                                             |
+| master ports    | 18100                                             |
+| slave ports     | 18150-18151                                       |
+| ssd count       | 3                                                 |
+| redis data path | ~/sata_ssd/ssd_                                   |
+| redis db path   | ~/sata_ssd/ssd_                                   |
+| flash db path   | ~/sata_ssd/ssd_                                   |
++-----------------+---------------------------------------------------+
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 Check status of hosts...

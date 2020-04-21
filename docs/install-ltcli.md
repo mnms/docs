@@ -96,15 +96,15 @@ Use the below option not to save the last used value.
 Select installer
 
     [ INSTALLER LIST ]
-    (1) [DOWNLOAD] flashbase.dev.master.dbcb9e.bin
-    (2) [LOCAL] flashbase.dev.master.dbcb9e.bin
-    (3) [LOCAL] flashbase.trial.master.dbcb9e-dirty.bin
-    (4) [LOCAL] flashbase.trial.master.dbcb9e.bin
+    (1) [DOWNLOAD] lightningdb.release.master.5a6a38.bin
+    (2) [LOCAL] lightningdb.release.master.dbcb9e.bin
+    (3) [LOCAL] lightningdb.trial.master.dbcb9e-dirty.bin
+    (4) [LOCAL] lightningdb.trial.master.dbcb9e.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
 1
-OK, flashbase.dev.master.dbcb9e.bin
+OK, lightningdb.release.master.5a6a38.bin
 ```
 !!! Tip
     LOCAL means installer file under path '$FBPATH/releases/' on your local.
@@ -120,10 +120,10 @@ Select installer
 
 Please enter file path or url of the installer you want to use
 you can also add file in list by copy to '$FBPATH/releases/'
-https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin
-Downloading flashbase.dev.master.5a6a38.bin
+https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin
+Downloading lightningdb.release.master.5a6a38.bin
 [==================================================] 100%
-OK, flashbase.dev.master.5a6a38.bin
+OK, lightningdb.release.master.5a6a38.bin
 ```
 
 If the installer list is empty like above, you can also use file path or URL. If you enter URL, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.
@@ -183,15 +183,15 @@ Finally, all settings will be shown and confirmation will be requested like belo
 
 
 ``` bash
-+--------------+---------------------------------+
-| NAME         | VALUE                           |
-+--------------+---------------------------------+
-| installer    | flashbase.dev.master.5a6a38.bin |
-| hosts        | 127.0.0.1                       |
-| master ports | 18100-18109                     |
-| ssd count    | 4                               |
-| db path      | /nvme/data_                     |
-+--------------+---------------------------------+
++--------------+---------------------------------------+
+| NAME         | VALUE                                 |
++--------------+---------------------------------------+
+| installer    | lightningdb.release.master.5a6a38.bin |
+| hosts        | 127.0.0.1                             |
+| master ports | 18100-18109                           |
+| ssd count    | 4                                     |
+| db path      | /nvme/data_                           |
++--------------+---------------------------------------+
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 ```
