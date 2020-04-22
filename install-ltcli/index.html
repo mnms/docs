@@ -6,25 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <meta name="author" content="LightningDB Team">
+  <meta name="author" content="Lightning DB Team">
+  <link rel="canonical" href="https://mnms.github.io/docs/install-ltcli/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Installation - LightningDB Docs</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>Installation - Lightning DB Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
     var mkdocs_page_name = "Installation";
-    var mkdocs_page_input_path = "install-fbctl.md";
-    var mkdocs_page_url = "/docs/install-fbctl/";
+    var mkdocs_page_input_path = "install-ltcli.md";
+    var mkdocs_page_url = "/docs/install-ltcli/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
   <script>
@@ -33,7 +34,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-152587413-1', 'mnms.github.io/docs');
+      ga('create', 'UA-152587413-1', 'lightningdb.io');
       ga('send', 'pageview');
   </script>
   
@@ -45,8 +46,9 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> LightningDB Docs</a>
+        <a href=".." class="icon icon-home"> Lightning DB Docs</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -55,102 +57,46 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Introduction</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="..">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../release-note/">Release Notes</a>
-                </li>
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../release-note/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../prerequisite/">Prerequisite</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Installation</a>
+    <ul class="current">
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../prerequisite/">Prerequisite</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Installation</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#1-how-to-run-fbctl">1. How to run FBCTL</a></li>
-    
-
-    <li class="toctree-l3"><a href="#2-deploy-lightningdb">2. Deploy LightningDB</a></li>
-    
-
-    <li class="toctree-l3"><a href="#3-start-lightningdb">3. Start LightningDB</a></li>
-    
-
-    </ul>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Tutorial</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../try-with-zeppelin/">Try out with Zeppelin</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Interface</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../command-line-interface/">Command Line</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Operation</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../version-update/">Version update</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Additional Resources</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../get-started-with-scratch/">Manual Installation</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorial</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../try-with-zeppelin/">Try out with Zeppelin</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Interface</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../command-line-interface/">Command Line</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Operation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Additional Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../get-started-with-scratch/">Manual Installation</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -158,7 +104,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">LightningDB Docs</a>
+        <a href="..">Lightning DB Docs</a>
       </nav>
 
       
@@ -177,23 +123,24 @@
     <li>Installation</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/install-fbctl.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/install-ltcli.md"> Edit on source repository</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
             <div class="section">
               
-                <h1 id="1-how-to-run-fbctl">1. How to run FBCTL<a class="headerlink" href="#1-how-to-run-fbctl" title="Permanent link">&para;</a></h1>
-<p>If you try to use FBCTL for the first time after the EC2 instance was created, please update FBCTL like below.</p>
-<pre><code class="bash">pip install fbctl --upgrade --user
+                <h1 id="1-how-to-run-ltcli">1. How to run LTCLI<a class="headerlink" href="#1-how-to-run-ltcli" title="Permanent link">&para;</a></h1>
+<p>If you try to use LTCLI for the first time after the EC2 instance was created, please update LTCLI like below.</p>
+<pre><code class="bash">pip install ltcli --upgrade --user
 </code></pre>
 
 <p><strong>(1) Run</strong></p>
-<p>To run FBCTL, ${FBPATH} should be set. If not, the following error messages will be shown.</p>
-<pre><code class="bash">To start using FBCTL, you should set env FBPATH
+<p>To run LTCLI, ${FBPATH} should be set. If not, the following error messages will be shown.</p>
+<pre><code class="bash">To start using LTCLI, you should set env FBPATH
 ex)
 export FBPATH=$HOME/.flashbase
 </code></pre>
@@ -202,34 +149,34 @@ export FBPATH=$HOME/.flashbase
 <p class="admonition-title">Tip</p>
 <p>In the case of EC2 Instance, this path is set automatically.</p>
 </div>
-<p>Run FBCTL by typing 'fbctl'</p>
-<pre><code class="bash">$ fbctl
+<p>Run LTCLI by typing 'ltcli'</p>
+<pre><code class="bash">$ ltcli
 </code></pre>
 
-<p>When FBCTL starts for the first time,  you need to confirm 'base_directory'.</p>
+<p>When LTCLI starts for the first time,  you need to confirm 'base_directory'.</p>
 <p>[~/tsr2]<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> is default value.</p>
-<pre><code class="bash">Type base directory of flashbase [~/tsr2]
+<pre><code class="bash">Type base directory of LightningDB [~/tsr2]
 ~/tsr2
 OK, ~/tsr2
 </code></pre>
 
 <p>In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.</p>
-<p>If you logs in FBCTL normally, FBCTL starts on the last visited cluster.
+<p>If you logs in LTCLI normally, LTCLI starts on the last visited cluster.
 In the case of the first login, '-' is shown instead of cluster number.</p>
-<pre><code class="bash">root@flashbase:-&gt;
+<pre><code class="bash">root@lightningdb:-&gt;
 
 ...
 ...
 
-root@flashbase:1&gt;
+root@lightningdb:1&gt;
 </code></pre>
 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>In this page, '$' means that you are in Centos and '&gt;' means that you are in FBCTL.</p>
+<p>In this page, '$' means that you are in Centos and '&gt;' means that you are in LTCLI.</p>
 </div>
 <p><strong>(2) Log messages</strong></p>
-<p>Log messages of FBCTL will be saved in '$FBPATH/logs/fb-roate.log'.</p>
+<p>Log messages of LTCLI will be saved in '$FBPATH/logs/fb-roate.log'.</p>
 <p>Its max-file-size is 1GiB and <strong>rolling update</strong> will be done in case of exceeding of size limit.</p>
 <h1 id="2-deploy-lightningdb">2. Deploy LightningDB<a class="headerlink" href="#2-deploy-lightningdb" title="Permanent link">&para;</a></h1>
 <p>Deploy is the procedure that LightningDB is installed with the specified cluster number.</p>
@@ -254,21 +201,21 @@ root@flashbase:1&gt;
 <pre><code class="bash">Select installer
 
     [ INSTALLER LIST ]
-    (1) [DOWNLOAD] flashbase.dev.master.dbcb9e.bin
-    (2) [LOCAL] flashbase.dev.master.dbcb9e.bin
-    (3) [LOCAL] flashbase.trial.master.dbcb9e-dirty.bin
-    (4) [LOCAL] flashbase.trial.master.dbcb9e.bin
+    (1) [DOWNLOAD] lightningdb.release.master.5a6a38.bin
+    (2) [LOCAL] lightningdb.release.master.dbcb9e.bin
+    (3) [LOCAL] lightningdb.trial.master.dbcb9e-dirty.bin
+    (4) [LOCAL] lightningdb.trial.master.dbcb9e.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
 1
-OK, flashbase.dev.master.dbcb9e.bin
+OK, lightningdb.release.master.5a6a38.bin
 </code></pre>
 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>LOCAL means installer file under path '$FBPATH/releases/' on your local.
-DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended FlashBase version, use <a href="../release-note/">Release Notes</a></p>
+DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended Lightning DB version, use <a href="../release-note/">Release Notes</a></p>
 </div>
 <p>Select a number to use that file. Type DOWNLOAD will be used after downloading. The downloaded file is saved in path '$FBPATH/releases'.</p>
 <pre><code class="bash">Select installer
@@ -278,10 +225,10 @@ DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed
 
 Please enter file path or url of the installer you want to use
 you can also add file in list by copy to '$FBPATH/releases/'
-https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin
-Downloading flashbase.dev.master.5a6a38.bin
+https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin
+Downloading lightningdb.release.master.5a6a38.bin
 [==================================================] 100%
-OK, flashbase.dev.master.5a6a38.bin
+OK, lightningdb.release.master.5a6a38.bin
 </code></pre>
 
 <p>If the installer list is empty like above, you can also use file path or URL. If you enter URL, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.</p>
@@ -324,21 +271,21 @@ OK, /nvme/data_
 
 <p><strong>(6) Check all settings finally</strong></p>
 <p>Finally, all settings will be shown and confirmation will be requested like below.</p>
-<pre><code class="bash">+--------------+---------------------------------+
-| NAME         | VALUE                           |
-+--------------+---------------------------------+
-| installer    | flashbase.dev.master.5a6a38.bin |
-| hosts        | 127.0.0.1                       |
-| master ports | 18100-18109                     |
-| ssd count    | 4                               |
-| db path      | /nvme/data_                     |
-+--------------+---------------------------------+
+<pre><code class="bash">+--------------+---------------------------------------+
+| NAME         | VALUE                                 |
++--------------+---------------------------------------+
+| installer    | lightningdb.release.master.5a6a38.bin |
+| hosts        | 127.0.0.1                             |
+| master ports | 18100-18109                           |
+| ssd count    | 4                                     |
+| db path      | /nvme/data_                           |
++--------------+---------------------------------------+
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 </code></pre>
 
 <p><strong>(7) Deploy cluster</strong></p>
-<p>After deploying is completed, the following messages are shown and FBCTL of the cluster is activated.</p>
+<p>After deploying is completed, the following messages are shown and LTCLI of the cluster is activated.</p>
 <pre><code class="bash">Check status of hosts...
 +-----------+--------+
 | HOST      | STATUS |
@@ -423,7 +370,7 @@ Cluster information exist on some hosts.
 <p>If the localhost(127.0.0.1) is not included in host information, this error occurs. Please add the localhost in the host list in this case.</p>
 <h1 id="3-start-lightningdb">3. Start LightningDB<a class="headerlink" href="#3-start-lightningdb" title="Permanent link">&para;</a></h1>
 <p>Create a cluster of LightningDB using 'cluster create' command.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster create
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -485,13 +432,13 @@ Adding slots...
 Check cluster state and asign slot...
 Ok
 create cluster complete.
-ec2-user@flashbase:1&gt; cli ping --all
+ec2-user@lightningdb:1&gt; cli ping --all
 alive redis 10/10
 
-ec2-user@flashbase:1&gt;
+ec2-user@lightningdb:1&gt;
 </code></pre>
 
-<p>From now, you can try ingestion and query in LightningDB with <a href="../try-with-zeppelin/">Zeppelin</a>. And for further information about commands of FBCTL, please use <a href="../command-line-interface/">Command Line</a>.</p>
+<p>From now, you can try ingestion and query in LightningDB with <a href="../try-with-zeppelin/">Zeppelin</a>. And for further information about commands of LTCLI, please use <a href="../command-line-interface/">Command Line</a>.</p>
 <div class="footnote">
 <hr />
 <ol>
@@ -520,11 +467,11 @@ ec2-user@flashbase:1&gt;
   <div role="contentinfo">
     <!-- Copyright etc -->
     
-      <p>All right reserved, <a href='https://lightningdb.io'>LightningDB Team</a>.</p>
+      <p>All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.</p>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -534,7 +481,7 @@ ec2-user@flashbase:1&gt;
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -548,6 +495,11 @@ ec2-user@flashbase:1&gt;
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

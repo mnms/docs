@@ -6,14 +6,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <meta name="author" content="LightningDB Team">
+  <meta name="author" content="Lightning DB Team">
+  <link rel="canonical" href="https://mnms.github.io/docs/release-note/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Release Notes - LightningDB Docs</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>Release Notes - Lightning DB Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
   <script>
@@ -33,7 +34,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-152587413-1', 'mnms.github.io/docs');
+      ga('create', 'UA-152587413-1', 'lightningdb.io');
       ga('send', 'pageview');
   </script>
   
@@ -45,8 +46,9 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> LightningDB Docs</a>
+        <a href=".." class="icon icon-home"> Lightning DB Docs</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -55,99 +57,46 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Introduction</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="..">Overview</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Release Notes</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#1-recommended-versions">1. Recommended Versions</a></li>
-    
-
-    <li class="toctree-l3"><a href="#2-release-notes">2. Release Notes</a></li>
-    
-
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Release Notes</a>
+    <ul class="current">
     </ul>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../prerequisite/">Prerequisite</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../install-fbctl/">Installation</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Tutorial</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../try-with-zeppelin/">Try out with Zeppelin</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Interface</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../command-line-interface/">Command Line</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Operation</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../version-update/">Version update</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Additional Resources</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../get-started-with-scratch/">Manual Installation</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../prerequisite/">Prerequisite</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../install-ltcli/">Installation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorial</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../try-with-zeppelin/">Try out with Zeppelin</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Interface</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../command-line-interface/">Command Line</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Operation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Additional Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../get-started-with-scratch/">Manual Installation</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -155,7 +104,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">LightningDB Docs</a>
+        <a href="..">Lightning DB Docs</a>
       </nav>
 
       
@@ -178,22 +127,23 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
             <div class="section">
               
                 <h1 id="1-recommended-versions">1. Recommended Versions<a class="headerlink" href="#1-recommended-versions" title="Permanent link">&para;</a></h1>
-<p><a href="https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin">LightningDB ver 1.0</a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p><a href="https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin">LightningDB ver 1.0</a><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
 <h1 id="2-release-notes">2. Release Notes<a class="headerlink" href="#2-release-notes" title="Permanent link">&para;</a></h1>
 <p><strong>Ver 1.0</strong></p>
 <ul>
 <li>Date: 2019.11.20</li>
-<li>Download: <a href="https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/flashbase.dev.master.5a6a38.bin">LightningDB ver 1.0</a></li>
+<li>Download: <a href="https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.master.5a6a38.bin">LightningDB ver 1.0</a></li>
 <li>License: free</li>
 <li>Description<ul>
 <li>Initial version</li>
-<li>Support FBCTL</li>
+<li>Support LTCLI</li>
 <li>Support geoSpatial functions</li>
 </ul>
 </li>
@@ -202,7 +152,7 @@
 <hr />
 <ol>
 <li id="fn:1">
-<p>Copy link address with Right-Clicking and paste when you  try to deploy LightningDB in FBCTL.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Copy link address with Right-Clicking and paste when you  try to deploy LightningDB in LTCLI.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
@@ -226,11 +176,11 @@
   <div role="contentinfo">
     <!-- Copyright etc -->
     
-      <p>All right reserved, <a href='https://lightningdb.io'>LightningDB Team</a>.</p>
+      <p>All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.</p>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -240,7 +190,7 @@
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -254,6 +204,11 @@
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

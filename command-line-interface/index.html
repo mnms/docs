@@ -6,14 +6,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <meta name="author" content="LightningDB Team">
+  <meta name="author" content="Lightning DB Team">
+  <link rel="canonical" href="https://mnms.github.io/docs/command-line-interface/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Command Line - LightningDB Docs</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>Command Line - Lightning DB Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
   <script>
@@ -33,7 +34,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-152587413-1', 'mnms.github.io/docs');
+      ga('create', 'UA-152587413-1', 'lightningdb.io');
       ga('send', 'pageview');
   </script>
   
@@ -45,8 +46,9 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> LightningDB Docs</a>
+        <a href=".." class="icon icon-home"> Lightning DB Docs</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -55,99 +57,46 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Introduction</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="..">Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../release-note/">Release Notes</a>
-                </li>
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../release-note/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../prerequisite/">Prerequisite</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../install-ltcli/">Installation</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorial</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../try-with-zeppelin/">Try out with Zeppelin</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Interface</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Command Line</a>
+    <ul class="current">
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../prerequisite/">Prerequisite</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../install-fbctl/">Installation</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Tutorial</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../try-with-zeppelin/">Try out with Zeppelin</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Interface</span>
-    <ul class="subnav">
-                <li class=" current">
-                    
-    <a class="current" href="./">Command Line</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#1-cluster-commands">1. Cluster Commands</a></li>
-    
-
-    <li class="toctree-l3"><a href="#2-thrift-server-commands">2. Thrift Server Commands</a></li>
-    
-
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Operation</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../version-update/">Version update</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Additional Resources</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../get-started-with-scratch/">Manual Installation</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Operation</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Additional Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../get-started-with-scratch/">Manual Installation</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -155,7 +104,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">LightningDB Docs</a>
+        <a href="..">Lightning DB Docs</a>
       </nav>
 
       
@@ -178,6 +127,7 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
@@ -189,13 +139,13 @@
 </div>
 <h1 id="1-cluster-commands">1. Cluster Commands<a class="headerlink" href="#1-cluster-commands" title="Permanent link">&para;</a></h1>
 <p>If you want to see the list of cluster commands, use the <code>cluster</code> command without any option.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster
 
 NAME
-    fbctl cluster - This is cluster command
+    ltcli cluster - This is cluster command
 
 SYNOPSIS
-    fbctl cluster COMMAND
+    ltcli cluster COMMAND
 
 DESCRIPTION
     This is cluster command
@@ -257,7 +207,7 @@ COMMANDS
 </li>
 <li>Log files will be saved in <code>${SR2_HOME}/logs/redis/</code></li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster start
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -323,7 +273,7 @@ Recommendation Command: 'monitor'
 <p><strong>(3) Cluster create</strong></p>
 <p>After checking the information of the cluster, create a cluster of LightningDB.</p>
 <p><strong>Case 1)</strong> When redis-server processes are running, create a cluster only.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt;`cluster create`
+<pre><code class="bash">ec2-user@lightningdb:1&gt;cluster create
 Check status of hosts...
 OK
 &gt;&gt;&gt; Creating cluster
@@ -358,7 +308,7 @@ create cluster complete.
 </code></pre>
 
 <p><strong>Case 2)</strong> When redis-server processes are not running, create a cluster after launching redis-server processes with <code>cluster start</code> command.</p>
-<pre><code class="bash">ec2-user@flashbase:4&gt;`cluster create`
+<pre><code class="bash">ec2-user@lightningdb:4&gt;cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -409,7 +359,7 @@ create cluster complete.
 
 <p><strong>Errors</strong></p>
 <p>When redis servers are not running, this error(Errno 111) will occur. To solve this error, use <code>cluster start</code> command previously.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt;`cluster create`
+<pre><code class="bash">ec2-user@lightningdb:1&gt;cluster create
 Check status of hosts...
 OK
 &gt;&gt;&gt; Creating cluster
@@ -432,7 +382,7 @@ y
 <p><strong>(4) Cluster stop</strong></p>
 <p>​Gracefully kill all redis-servers(master/slave) with SIGINT
 ​​</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster stop
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster stop
 Check status of hosts...
 OK
 Stopping master cluster of redis...
@@ -450,7 +400,7 @@ Complete all redis process down
 
 <p><strong>(5) Cluster clean</strong></p>
 <p>Remove conf files for redis-server and all data(aof, rdb, RocksDB) of LightningDB</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster clean
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster clean
 Removing redis generated master configuration files
  - 127.0.0.1
 Removing flash db directory, appendonly and dump.rdb files in master
@@ -482,15 +432,15 @@ Removing master node configuration
 
 <p><strong>(7) Cluster ls</strong></p>
 <p>List the deployed clusters.</p>
-<pre><code class="bash">ec2-user@flashbase:2&gt; cluster ls
+<pre><code class="bash">ec2-user@lightningdb:2&gt; cluster ls
 [1, 2]
 </code></pre>
 
 <p><strong>(8) Cluster use</strong></p>
-<p>Change the cluster to use FBCTL. Use <code>cluster use</code> or <code>c</code> commands.</p>
-<pre><code class="bash">ec2-user@flashbase:2&gt; cluster use 1
+<p>Change the cluster to use LTCLI. Use <code>cluster use</code> or <code>c</code> commands.</p>
+<pre><code class="bash">ec2-user@lightningdb:2&gt; cluster use 1
 Cluster '1' selected.
-ec2-user@flashbase:1&gt; c 2
+ec2-user@lightningdb:1&gt; c 2
 Cluster '2' selected.
 </code></pre>
 
@@ -514,18 +464,18 @@ Cluster '2' selected.
 </ul>
 </li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:2&gt; deploy 3
+<pre><code class="bash">ec2-user@lightningdb:2&gt; deploy 3
 Select installer
 
     [ INSTALLER LIST ]
-    (1) flashbase.dev.master.5a6a38.bin
+    (1) lightningdb.dev.master.5a6a38.bin
 
 Please enter the number, file path or url of the installer you want to use.
 you can also add file in list by copy to '$FBPATH/releases/'
-https://flashbase.s3.ap-northeast-2.amazonaws.com/flashbase.dev.master.5a6a38.bin
-Downloading flashbase.dev.master.5a6a38.bin
+https://flashbase.s3.ap-northeast-2.amazonaws.com/lightningdb.release.master.5a6a38.bin
+Downloading lightningdb.release.master.5a6a38.bin
 [==================================================] 100%
-OK, flashbase.dev.master.5a6a38.bin
+OK, lightningdb.release.master.5a6a38.bin
 Please type host list separated by comma(,) [127.0.0.1]
 
 OK, ['127.0.0.1']
@@ -547,7 +497,7 @@ OK, ~/sata_ssd/ssd_
 +--------------+---------------------------------+
 | NAME         | VALUE                           |
 +--------------+---------------------------------+
-| installer    | flashbase.dev.master.5a6a38.bin |
+| installer    | lightningdb.dev.master.5a6a38.bin |
 | hosts        | 127.0.0.1                       |
 | master ports | 18300-18304                     |
 | ssd count    | 3                               |
@@ -579,7 +529,7 @@ Cluster '3' selected.
 <ul>
 <li>When the deploy is complete, start and create the cluster.</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:3&gt; cluster start
+<pre><code class="bash">ec2-user@lightningdb:3&gt; cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -600,7 +550,7 @@ Starting master nodes : 127.0.0.1 : 18300|18301|18302|18303|18304 ...
 Wait until all redis process up...
 cur: 5 / total: 5
 Complete all redis process up
-ec2-user@flashbase:3&gt; cluster create
+ec2-user@lightningdb:3&gt; cluster create
 Check status of hosts...
 OK
 &gt;&gt;&gt; Creating cluster
@@ -632,14 +582,14 @@ Adding slots...
 Check cluster state and asign slot...
 Ok
 create cluster complete.
-ec2-user@flashbase:3&gt;
+ec2-user@lightningdb:3&gt;
 </code></pre>
 
 <ul>
 <li>Add slave info</li>
 </ul>
 <p>Open the conf file.</p>
-<pre><code class="bash">ec2-user@flashbase:3&gt; conf cluster
+<pre><code class="bash">ec2-user@lightningdb:3&gt; conf cluster
 </code></pre>
 
 <p>You can modify redis.properties by entering the command as shown above.</p>
@@ -709,7 +659,7 @@ export SR2_FLASH_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
 </code></pre>
 
 <p>Save the modification and exit.</p>
-<pre><code class="bash">ec2-user@flashbase:3&gt; conf cluster
+<pre><code class="bash">ec2-user@lightningdb:3&gt; conf cluster
 Check status of hosts...
 OK
 sync conf
@@ -720,7 +670,7 @@ Complete edit
 <ul>
 <li>Execute <code>cluster add-slave</code> command</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:3&gt; cluster add-slave
+<pre><code class="bash">ec2-user@lightningdb:3&gt; cluster add-slave
 Check status of hosts...
 OK
 Check cluster exist...
@@ -750,7 +700,7 @@ replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
 <ul>
 <li>Check configuration information</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:3&gt; cli cluster nodes
+<pre><code class="bash">ec2-user@lightningdb:3&gt; cli cluster nodes
 0549ec03031213f95121ceff6c9c13800aef848c 127.0.0.1:18303 master - 0 1574132251126 3 connected 3280-6555
 1b09519d37ebb1c09095158b4f1c9f318ddfc747 127.0.0.1:18352 slave a6a8013cf0032f0f36baec3162122b3d993dd2c8 0 1574132251025 6 connected
 c7dc4815e24054104dff61cac6b13256a84ac4ae 127.0.0.1:18353 slave 0549ec03031213f95121ceff6c9c13800aef848c 0 1574132251126 3 connected
@@ -766,7 +716,7 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 
 <p><strong>(10) Cluster rowcount</strong></p>
 <p>Check the count of records that are stored in the cluster.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cluster rowcount
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster rowcount
 0
 </code></pre>
 
@@ -775,7 +725,7 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 <ul>
 <li>Send PING</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cli ping --all
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cli ping --all
 alive redis 10/10
 </code></pre>
 
@@ -791,7 +741,7 @@ alive redis 9/10
 <ul>
 <li>Check the status of the cluster</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cli cluster info
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cli cluster info
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -813,7 +763,7 @@ cluster_stats_messages_received:26
 <ul>
 <li>Check the list of the nodes those are organizing the cluster.</li>
 </ul>
-<pre><code class="bash">ec2-user@flashbase:1&gt; cli cluster nodes
+<pre><code class="bash">ec2-user@lightningdb:1&gt; cli cluster nodes
 559af5e90c3f2c92f19c927c29166c268d938e8f 127.0.0.1:18104 master - 0 1574127926000 4 connected 6556-9831
 174e2a62722273fb83814c2f12e2769086c3d185 127.0.0.1:18101 myself,master - 0 1574127925000 3 connected 9832-13107
 35ab4d3f7f487c5332d7943dbf4b20d5840053ea 127.0.0.1:18100 master - 0 1574127926000 1 connected 0-3279
@@ -823,7 +773,7 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 
 <p><strong>(12) Cluster tree</strong></p>
 <p>User can check the status of master nodes and slaves and show which master and slave nodes are linked. </p>
-<pre><code class="bash">ec2-user@flashbase:9&gt; cluster tree
+<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -851,7 +801,7 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 <p>User can promote the slave node immediately by using the 'cluster failover' command.</p>
 <p>Step 1) Check the status of the cluster</p>
 <p>In this case, '127.0.0.1:18902' node is killed.</p>
-<pre><code class="bash">ec2-user@flashbase:9&gt; cluster tree
+<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -875,10 +825,10 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 </code></pre>
 
 <p>Step 2) Do failover with 'cluster failover' command</p>
-<pre><code class="bash">ec2-user@flashbase:9&gt; cluster failover
+<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster failover
 failover 127.0.0.1:18952 for 127.0.0.1:18902
 OK
-ec2-user@flashbase:9&gt; cluster tree
+ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -904,9 +854,9 @@ ec2-user@flashbase:9&gt; cluster tree
 
 <p><strong>(14) Cluster failover</strong></p>
 <p>With 'cluster failover' command, the killed node is restarted and added to the cluster as the slave node.</p>
-<pre><code class="bash">ec2-user@flashbase:9&gt; cluster failback
+<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster failback
 run 127.0.0.1:18902
-ec2-user@flashbase:9&gt; cluster tree
+ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -932,10 +882,10 @@ ec2-user@flashbase:9&gt; cluster tree
 <h1 id="2-thrift-server-commands">2. Thrift Server Commands<a class="headerlink" href="#2-thrift-server-commands" title="Permanent link">&para;</a></h1>
 <p>If you want to see the list of Thrift Server commands, use the the <code>thriftserver</code> command without any option.</p>
 <pre><code class="bash">NAME
-    fbctl thriftserver
+    ltcli thriftserver
 
 SYNOPSIS
-    fbctl thriftserver COMMAND
+    ltcli thriftserver COMMAND
 
 COMMANDS
     COMMAND is one of the following:
@@ -958,7 +908,7 @@ COMMANDS
 
 <p><strong>(1) Thriftserver beeline</strong></p>
 <p>Connect to the thrift server</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; thriftserver beeline
+<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver beeline
 Connecting...
 Connecting to jdbc:hive2://localhost:13000
 19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
@@ -980,7 +930,7 @@ No rows selected (0.55 seconds)
 <p>You can modify <code>$HIVE_HOST</code> and <code>$HIVE_PORT</code> by the command <code>conf thriftserver</code></p>
 <p><strong>(2) Thriftserver monitor</strong></p>
 <p>You can view the logs of the thrift server in real-time.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; thriftserver monitor
+<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver monitor
 Press Ctrl-C for exit.
 19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
 19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
@@ -990,26 +940,26 @@ Press Ctrl-C for exit.
 
 <p><strong>(3) Thriftserver restart</strong></p>
 <p>Restart the thrift server.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; thriftserver restart
+<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver restart
 no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 </code></pre>
 
 <p><strong>(4) Start thriftserver</strong></p>
 <p>Run the thrift server.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; thriftserver start
+<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 </code></pre>
 
 <p>You can view the logs through the command <code>monitor</code>.</p>
 <p><strong>(5) Stop thriftserver</strong></p>
 <p>Shut down the thrift server.</p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; thriftserver stop
+<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver stop
 stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 </code></pre>
 
 <p><strong>(6) Conf thriftserver</strong></p>
-<pre><code class="bash">ec2-user@flashbase:1&gt; conf thriftserver
+<pre><code class="bash">ec2-user@lightningdb:1&gt; conf thriftserver
 
 #!/bin/bash
 ###############################################################################
@@ -1083,11 +1033,11 @@ SPARK_LOG_SAVE_MIN=2000
   <div role="contentinfo">
     <!-- Copyright etc -->
     
-      <p>All right reserved, <a href='https://lightningdb.io'>LightningDB Team</a>.</p>
+      <p>All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.</p>
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -1097,7 +1047,7 @@ SPARK_LOG_SAVE_MIN=2000
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -1111,6 +1061,11 @@ SPARK_LOG_SAVE_MIN=2000
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
