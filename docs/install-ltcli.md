@@ -33,7 +33,7 @@ When LTCLI starts for the first time,  you need to confirm 'base_directory'.
 [~/tsr2][^1] is default value.
 
 ``` bash
-Type base directory of flashbase [~/tsr2]
+Type base directory of LightningDB [~/tsr2]
 ~/tsr2
 OK, ~/tsr2
 ```
