@@ -3,7 +3,7 @@
 
 # 1. Optimizing System Parameters
 
-(1) Edit `/etc/sysctl.conf` like following
+### (1) Edit `/etc/sysctl.conf` like following
 
 ``` bash
 ...
@@ -23,10 +23,11 @@ net.core.somaxconn = 65535
 !!! Tip
     In case of application in runtime, use `sudo sysctl -p`
 
-(2) Edit `/etc/security/limits.conf`
+### (2) Edit `/etc/security/limits.conf`
 
 ``` bash
 ...
+* soft core     -1
 * soft nofile 262144
 * hard nofile 262144
 * soft nproc 131072
@@ -41,7 +42,7 @@ net.core.somaxconn = 65535
 !!! Tip
     In case of application in runtime, use `ulimit -n 65535, ulimit -u 131072`
 
-(3) Edit `/etc/fstab`
+### (3) Edit `/etc/fstab`
 
 Remove SWAP Partition (Comment out SWAP partition with using `#` and reboot)
 
@@ -54,7 +55,7 @@ Remove SWAP Partition (Comment out SWAP partition with using `#` and reboot)
 !!! Tip
     In case of application in runtime, use `swapoff -a`
 
-(4) `/etc/init.d/disable-transparent-hugepages`
+### (4) `/etc/init.d/disable-transparent-hugepages`
 
 ``` bash
 root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
@@ -104,29 +105,30 @@ esac
 [root@fbg01 ~] chkconfig --add disable-transparent-hugepages
 ```
 
+
 # 2. Setup Prerequisites
 
-- bash, unzip, ssh
+### - bash, unzip, ssh
 
-- JDK 1.8 or higher
+### - JDK 1.8 or higher
 
-- gcc 4.8.5 or higher
+### - gcc 4.8.5 or higher
 
-- glibc 2.17 or higher
+### - glibc 2.17 or higher
 
-- epel-release
+### - epel-release
 
 ``` bash
 sudo yum install epel-release
 ```
 
-- boost, boost-thread, boost-devel
+### - boost, boost-thread, boost-devel
 
 ``` bash
 sudo yum install boost boost-thread boost-devel
 ```
 
-- Exchange SSH Key
+### - Exchange SSH Key
 
 For all servers that LightningDB will be deployed, SSH key should be exchanged.
 
@@ -136,7 +138,7 @@ chmod 0600 ~/.ssh/authorized_keys
 cat .ssh/id_rsa.pub | ssh {server name} "cat >> .ssh/authorized_keys"
 ```
 
-- Intel MKL library
+### - Intel MKL library
 
 (1) Intel MKL 2019 library install
 
@@ -184,15 +186,33 @@ lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -> compilers_and_libraries/linux
 source /opt/intel/mkl/bin/mklvars.sh intel64
 ```
 
-- [Apache Hadoop 2.6.0](https://archive.apache.org/dist/hadoop/common/hadoop-2.6.0/) (or higher)
+### - [Apache Hadoop 2.6.0](https://archive.apache.org/dist/hadoop/common/hadoop-2.6.0/) (or higher)
 
-- [Apache Spark 2.3 on Hadoop 2.6](https://archive.apache.org/dist/spark/spark-2.3.0/)
+### - [Apache Spark 2.3 on Hadoop 2.6](https://archive.apache.org/dist/spark/spark-2.3.0/)
 
-- ntp: For clock synchronization between servers over packet-switched, variable-latency data networks.
+### - ntp
+For clock synchronization between servers over packet-switched, variable-latency data networks.
+
+### - Settings for core dump(Optional)
+
+(1) [INSTALLING ABRT AND STARTING ITS SERVICES](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-abrt-installation)
+
+(2) Set core dump file size
+
+``` bash
+ulimit -c unlimited
+```
+
+(3) Change the path of core dump files
+
+``` bash
+echo /tmp/core.%p > /proc/sys/kernel/core_pattern
+```
+
 
 # 3. Session configuration files
 
-- Edit `~/.bashrc`
+### '~/.bashrc'
 
 Add followings
 
