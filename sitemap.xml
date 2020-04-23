@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://mnms.github.io/docs/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/release-note/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/prerequisite/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/install-ltcli/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/try-with-zeppelin/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/command-line-interface/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/data-ingestion-and-querying/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/version-update/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://mnms.github.io/docs/get-started-with-scratch/</loc>
-     <lastmod>2020-04-22</lastmod>
+     <lastmod>2020-04-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
