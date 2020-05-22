@@ -766,9 +766,9 @@ ec2-user@lightningdb:9> cluster tree
 127.0.0.1:18952(connected)      <--- Promoted to master!
 ```
 
-**(14) Cluster failover**
+**(14) Cluster failback**
 
-With 'cluster failover' command, the killed node is restarted and added to the cluster as the slave node.
+With 'cluster failback' command, the killed node is restarted and added to the cluster as the slave node.
 
 ``` bash
 ec2-user@lightningdb:9> cluster failback
