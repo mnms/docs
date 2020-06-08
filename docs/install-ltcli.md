@@ -177,6 +177,25 @@ Type prefix of db path [/nvme/data_]
 OK, /nvme/data_
 ```
 
+With this setting, LightningDB will use 4 disk paths('/nvme/data_01', '/nvme/data_02', '/nvme/data_03', '/nvme/data_04'). 
+
+!!! Tip
+    In order to use this setting, the directories must be generated with the user's name under all disk path and the permission setting(chmod/chown) for the directory must be configured as follows.
+
+``` bash
+$ pwd
+/nvme/data_01
+$ mkdir ltdb                    // user name is 'ltdb'
+$chown ltdb ltdb
+$chmod 755 ltdb
+$ ls -alh
+drwxr-xr-x 10 ltdb  ltdb  4.0K  4월 27 14:34 .
+drwxr-xr-x 33 nvkvs nvkvs 4.0K  2월  4 10:19 ..
+drwxrwxr-x  3 ltdb  ltdb  4.0K  6월  5 18:36 ltdb  // user name is 'ltdb'
+...
+```
+
+
 **(6) Check all settings finally**
 
 Finally, all settings will be shown and confirmation will be requested like below.
