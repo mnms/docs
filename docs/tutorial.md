@@ -80,13 +80,14 @@ zookeeper 및 kafka broker 설치가 선행되어야 함 ==> [Kafka&Kaetlyn 설
 
 사용하는 topic은 크게 아래와 같이 3가지로 나누어짐
 
-1. 데이터 적재를 위한 topic
-    - table간 dependency가 없도록 table별로 나눠서 적재 필요
-2. error topic
-    - 'tsr2-kaetlyn edit'을 통해 'KAFKA_ERROR_REPORT_TOPIC_NAME=topic-error' 로 설정
-    - consuming 단계에서 적재 실패 시 error topic으로 에러 내용을 넣어서 적재 client가 확인할 수 있도록 함
-3. result topic(optional)
-    - consuming 후 적재 결과를 정의된 protocol에 맞게 적재 app에 전달할 수 있음
+	1. 데이터 적재를 위한 topic
+		- table간 dependency가 없도록 table별로 나눠서 적재 필요
+	2. error topic
+		- 'tsr2-kaetlyn edit'을 통해 'KAFKA_ERROR_REPORT_TOPIC_NAME=topic-error' 로 설정
+		- consuming 단계에서 적재 실패 시 error topic으로 에러 내용을 넣어서 적재 client가 확인할 수 있도록 함
+	3. result topic(optional)
+		- consuming 후 적재 결과를 정의된 protocol에 맞게 적재 app에 전달할 수 있음
+
 
 - kafka consumer
 
