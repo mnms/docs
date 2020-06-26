@@ -470,6 +470,10 @@ Error: com.skt.spark.r2.exception.UnsupportedQueryTypeException: at least one pa
 
 # 5. Zeppelin
 
-아래와 같이 [한글 튜토리얼 파일](https://docs.lightningdb.io/scripts/tutorial_ko.json)을 내려받거나 URL을 입력하여 Zeppelin에서 불러옵니다.
+Zeppelin 튜토리얼을 진행하기 전, [Zeppelin에 Lightning DB 관련 Jar 파일들이 추가하도록 설정](https://docs.lightningdb.io/try-with-zeppelin/#1-setting-for-zeppelin)하였는지 확인해주세요.
+
+아래와 같이 [한글 튜토리얼 노트 파일](https://docs.lightningdb.io/scripts/tutorial_ko.json)을 내려받거나 아래 URL을 입력하여 Zeppelin에서 불러옵니다.
+
+* 한글 튜토리얼 노트 링크: https://docs.lightningdb.io/scripts/tutorial_ko.json
 
 ![Import Zeppelin note](https://docs.lightningdb.io/images/import_notebook.gif)
