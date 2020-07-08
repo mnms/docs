@@ -1,11 +1,13 @@
-# Kafka 설정 및 실행
+# 1. Kafka 설정 및 실행
 
-### 1. Cluster 구성
+** 1. Cluster 구성 **
 
-#### (1) 환경 변수 설정
+(1) 환경 변수 설정
+
 - Kafka Cluster를 구성할 노드에 Kafka를 각각 설치해주고 ~/.bash_profile에 $KAFKA_HOME을 설정해준다.(필수는 아님)
 
-#### (2) Zookeeper 설정 및 시작
+(2) Zookeeper 설정 및 시작
+
 - 각 서버 노드에 kafka 설치 후 $KAFKA_HOME/conf/zookeeper.properties 열어서 $dataDir, $server.1 ~ $server.n의 property를 설정한다.  
 예시로 apollo-w07, apollo-w08 두개의 노드에 cluster를 구성한다고 가정하면, server.1, server.2 두개의 노드를 써주면 된다.
 
@@ -34,7 +36,8 @@ server.2=apollo-w08:2888:3888
     > $KAFKA_HOME/bin/zookeeper-server-start.sh config/zookeeper.properties &
 ```
 
-#### (3) Kafka Broker 설정 및 시작
+(3) Kafka Broker 설정 및 시작
+
 - 각 서버 노드에서 $KAFKA_HOME/conf/server.properties 를 Open
 - Broker ID 설정
 ```console
@@ -113,7 +116,7 @@ server.2=apollo-w08:2888:3888
 ```
   
   
-### 2. Kafka Topic정보 확인하기
+** 2. Kafka Topic정보 확인하기 **
 
 - Consumer list 확인하기
 ```console
@@ -156,11 +159,11 @@ server.2=apollo-w08:2888:3888
     > $KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --reset-offsets --shift-by -10000 --execute --group (Consumer 그룹명) --topic nvkvs
 ```
   
-# Kaetlyn Consumer 설정 및 시작
+# 2. Kaetlyn Consumer 설정 및 시작
 
-### 1. Kaetlyn Consumer 설정
+** 1. Kaetlyn Consumer 설정 **
 
-- Command : tsr2-kaetlyn edit
+- tsr2-kaetlyn edit
 ```
   KAFKA_SERVER : Kafka Broker의 host:port
   DRIVER_MEMORY, EXECUTOR_MEMORY : Yarn에서 할당해주는 Spark Driver/Excutor의 Memory. 적재 후 jstat -gc를 통해 메모리 사용량과 FGC 카운트를 확인한 후 적당하게 설정해준다.
@@ -205,7 +208,8 @@ MAX_RATE_PER_PARTITION=100
 ...
 ```
 
-### 2. Kaetlyn Consumer start/stop
+** 2. Kaetlyn Consumer start/stop **
+
  - 기본적으로 Yarn cluster 상에서 동작하는 Spark Application이므로 Spark이 설치되어 있고 Hadoop/Yarn이 구동되고 있는 노드에서 시작할 수 있다.
  - Start 및 Driver Log Monitoring 
 ```console
@@ -222,27 +226,28 @@ MAX_RATE_PER_PARTITION=100
 > tsr2-kaetlyn consumer stop
 ```
   
-### 3. Kaetlyn Log level 조정
+** 3. Kaetlyn Log level 조정 **
   - logger로 logback을 사용하고 있다. kaetlyn실행 후 $SPARK_HOME/conf/logback-kaetlyn.xml 파일이 생성된다. Driver Log level 조정 시에는 이 파일을 편집하면 된다.
   ```console
   > vi $SPARK_HOME/conf/logback-kaetlyn.xml
   ```
   
   
-# Kafka Message Generator 설정 및 시작
+# 3. Kafka Message Generator 설정 및 시작
 
-### 1. Generator 설정
-```
-  KAFKA_SERVER : Data를 전송할 Kafka 서버 IP:Port
-  SAMPLE_DATA_PATH : sample파일이 저장되어 있는 폴더 path
-  TABLE_NAME_TO_ID : sample파일의 Table ID를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
-  TABLE_NAME_TO_SEPARATOR : sample파일의 Separator를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
-  KAFKA_PRODUCE_TOPIC_NAME : producing할 topic명
-  GENERATED_EVENT_TIME : 첫번째 Column에 들어갈 evnet time
-  DATA_GENERATING_COUNT : sample 파일을 몇번 전송할지 지정. 파일 한번 전송완료하면 다음부터는 GENERATED_EVENT_TIME을 5분씩 올려서 전송
-  GENERATING_PERIOD : record를 producing할 주기
-  RECORD_PER_PERIOD : GENERATING_PERIOD당 생성할 record갯수
-```
+** 1. Generator 설정 **
+
+
+- KAFKA_SERVER : Data를 전송할 Kafka 서버 '{IP}:{Port}'
+- SAMPLE_DATA_PATH : sample파일이 저장되어 있는 폴더 path
+- TABLE_NAME_TO_ID : sample파일의 Table ID를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
+- TABLE_NAME_TO_SEPARATOR : sample파일의 Separator를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
+- KAFKA_PRODUCE_TOPIC_NAME : producing할 topic명
+- GENERATED_EVENT_TIME : 첫번째 Column에 들어갈 evnet time
+- DATA_GENERATING_COUNT : sample 파일을 몇번 전송할지 지정. 파일 한번 전송완료하면 다음부터는 - - GENERATED_EVENT_TIME을 5분씩 올려서 전송
+- GENERATING_PERIOD : record를 producing할 주기
+- RECORD_PER_PERIOD : GENERATING_PERIOD당 생성할 record갯수
+
    
 ```console
 > cfc 1 (또는 c01)
@@ -270,7 +275,8 @@ KAFKA_PRODUCE_TOPIC_NAME=nvkvs
 - Generator 설정 시 RECORD_PER_PERIOD를 너무 크게 잡으면 Message 전송 요청량이 노드의 네트워크 오버헤드보다 더 커져서 TimeoutException이 발생할 수 있다.
 (Producer config의 request.timeout.ms 참조)
 
-### 2. Generator Start/Stop
+** 2. Generator Start/Stop **
+
  - Start 
 ```console
 > tsr2-kaetlyn generator start

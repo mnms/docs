@@ -1,6 +1,6 @@
 # 1. 선행작업
 
-## 1) Redis
+** 1) Redis **
 
 - 'flashbase cluster-rowcount' 기록
 - 'flashbase cli-all config get flash-db-ttl' 기록
@@ -8,7 +8,7 @@
 - 'flashbase cli-all info tablespace' 확인 // totalRowgroups, totalRows등 적재 현황 확인
 - 'flashbase cli-all info eviction'확인  // 'avg full percent' 으로 eviction이 효율적으로 동작하는지 확인
 
-## 2) Thriftserver
+** 2) Thriftserver **
 
 - 'crontab -e'로 관련 cron job 확인
 ``` bash
@@ -25,7 +25,7 @@
 select * from {table name} where ... limit 1;
 ```
 
-## 3) 시스템 자원 확인
+** 3) 시스템 자원 확인 **
 
 - available 메모리 확인(nmon, 'free -h' 사용)
 - disk 사용현황 확인(nmon, 'df -h' 사용)
@@ -35,7 +35,7 @@ select * from {table name} where ... limit 1;
 
 # 2. redis 장애 현황 파악 및 대응
 
-## 1) 배경 지식
+** 1) 배경 지식**
 
 -  장애 발생으로 해당 노드가 kill되면 아래처럼 'disconnected'가 된다.
 
@@ -59,9 +59,9 @@ select * from {table name} where ... limit 1;
 001ce4a87de2f2fc62ff44e2b5387a3f0bb9837c 127.0.0.1:18202 master - 0 1585787800000 0 connected
 ```
 
-## 2) 현황 파악
+** 2) 현황 파악**
 
-#### 1) check-distribution
+1) check-distribution
 
 서버별 master/slave 분포 현황을 알려준다.
 
@@ -75,7 +75,7 @@ SERVER NAME | M | S
 Total nodes | 5 | 3
 ```
 
-#### 2) find-masters
+2) find-masters
 
 - option 확인
 
@@ -109,7 +109,7 @@ Use options(no-slave|no-slot|failovered)
 127.0.0.1:18253
 ```
 
-#### 3) find-slaves
+3) find-slaves
 
 - option 확인
 
@@ -125,7 +125,7 @@ Use options(failbacked)
 127.0.0.1:18200
 ```
 
-#### 4) find-masters-with-dir
+4) find-masters-with-dir
 
 특정 서버의 특정 디스크 장애 시 해당 디스크를 사용하는 master(redis-server)들을 listup함. 이 노드들은 이미 죽었거나 향후 disk i/o 발생 시 바로 죽을 노드들로, 문제 확인 시 즉시 failover를 수행해야 함
 
@@ -140,13 +140,13 @@ ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
 ```
 
 
-## 3) 대응 방안
+** 3) 대응 방안**
 
-#### 1) cluster-failover.sh
+1) cluster-failover.sh
 
 디스크 장애로 cluster state가 'fail'이 된 cluster의 경우, redis-server process가 죽거나 pause 된 상태인데 이 때에는 'cluster-failover.sh'로 failover시켜 즉시 cluster state를 'ok'로 만들 수 있다.
 
-#### 2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir
+2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir
 
 - 디스크 장애가 발생했지만 아직 cluster state가 'fail'이 안된 cluster의 경우, 해당 디스크를 사용하는 master(redis-server)들을 listup하고
 
@@ -200,7 +200,7 @@ PONG
 ```
 
 
-#### 3) find-noaddr / forget-noaddr
+3) find-noaddr / forget-noaddr
 
 - 'noaddr' 노드 삭제
 
@@ -219,7 +219,7 @@ OK
 
 ```
 
-#### 4) do-replicate
+4) do-replicate
 
 - 이중화해야 하는 pair가 많고 복잡하게 흩어져있는 경우, [pairing.py](scripts/pairing.py)  스크립트를 활용하면 편리하다.
 ```
@@ -295,7 +295,7 @@ OK // 'cluster meet' 이 성공한 OK
 OK // 'cluster replicate'가 성공한 OK
 ```
 
-#### 5) reset-distribution
+5) reset-distribution
 
 이후 failover로 특정 서버에 master 노드가 몰린 상황을 해결하려면 'reset-distribution'을 사용한다.
 
@@ -337,7 +337,7 @@ SERVER NAME | M | S
 Total nodes | 12 | 12
 ```
 
-#### 6) force-failover
+6) force-failover
 
 특정 서버의 장애 또는 HW 교체/점검 등으로 shutdown될 때, 해당 서버의 모든 master 노드들이 slave로 되고 다른 서버에 있는 slave가 master로 되도록 변경 시 'force-failover'를 사용한다.
 
@@ -376,7 +376,7 @@ Total nodes | 12 | 9
 
 # 3. 작업 후 최종 점검
 
-## 1) Redis
+** 1) Redis **
 
 - 'flashbase cluster-rowcount' 이전 기록과 비교
 - 'flashbase cli-all config get flash-db-ttl' 이전 기록과 비교
@@ -385,14 +385,14 @@ Total nodes | 12 | 9
 - flashbase cli-all info memory | grep isOOM:true
 
 
-## 2) yarn & spark
+** 2) yarn & spark **
 
 - web ui 및 'yarn application -list'로 확인
 - spark의 경우, spark 의 spark-default.conf 내에 있는 spark.local.dir에 장애난 디스크 포함되어 있으면 해당 디스크 제거하고 설정 파일 수정하여, thrift server 재시작
 - spark의 경우, spark-default.conf 문제가 아니더라도, yarn local dir이 문제가 될 경우, 질의 에러 발생되므로, thrift server 재시작 필요
 
 
-## 3) Thriftserver
+** 3) Thriftserver **
 
 - 'crontab -e' 확인
 ``` bash
@@ -409,14 +409,14 @@ Total nodes | 12 | 9
 select * from {table name} where ... limit 1;
 ```
 
-## 4) kafka & kaetlyn
+** 4) kafka & kaetlyn **
 
 - kafka-utils.sh help // options 확인
 - kafka-utils.sh topic-check {topic name}    // Partition의 Leader가 골고루 분포되어 있는지 확인
 - kafka-utils.sh offset-check      // Consumer LAG 가져와지는지 확인
 
 
-## 5) 시스템 자원 확인
+** 5) 시스템 자원 확인 **
 
 - available 메모리 확인
 - disk 사용현황 확인
