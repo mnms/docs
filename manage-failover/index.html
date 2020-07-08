@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Lightning DB Team">
-  <link rel="canonical" href="https://mnms.github.io/docs/handling-disk-failure/">
+  <link rel="canonical" href="https://mnms.github.io/docs/manage-failover/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>1. 선행작업 - Lightning DB Docs</title>
+  <title>How to manage failover (ko) - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "1. \uc120\ud589\uc791\uc5c5";
-    var mkdocs_page_input_path = "handling-disk-failure.md";
-    var mkdocs_page_url = "/docs/handling-disk-failure/";
+    var mkdocs_page_name = "How to manage failover (ko)";
+    var mkdocs_page_input_path = "manage-failover.md";
+    var mkdocs_page_url = "/docs/manage-failover/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -84,8 +84,14 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Operation</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to manage failover (ko)</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Additional Resources</span></p>
@@ -113,11 +119,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Operation &raquo;</li>
+        
+      
     
-    <li>1. 선행작업</li>
+    <li>How to manage failover (ko)</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/handling-disk-failure.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/manage-failover.md"> Edit on source repository</a>
       
     </li>
   </ul>
@@ -128,7 +138,7 @@
             <div class="section">
               
                 <h1 id="1">1. 선행작업<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
-<h2 id="1-redis">1) Redis<a class="headerlink" href="#1-redis" title="Permanent link">&para;</a></h2>
+<p><strong> 1) Redis </strong></p>
 <ul>
 <li>'flashbase cluster-rowcount' 기록</li>
 <li>'flashbase cli-all config get flash-db-ttl' 기록</li>
@@ -136,7 +146,7 @@
 <li>'flashbase cli-all info tablespace' 확인 // totalRowgroups, totalRows등 적재 현황 확인</li>
 <li>'flashbase cli-all info eviction'확인  // 'avg full percent' 으로 eviction이 효율적으로 동작하는지 확인</li>
 </ul>
-<h2 id="2-thriftserver">2) Thriftserver<a class="headerlink" href="#2-thriftserver" title="Permanent link">&para;</a></h2>
+<p><strong> 2) Thriftserver </strong></p>
 <ul>
 <li>'crontab -e'로 관련 cron job 확인</li>
 </ul>
@@ -155,13 +165,13 @@
 <pre><code class="bash">select * from {table name} where ... limit 1;
 </code></pre>
 
-<h2 id="3">3) 시스템 자원 확인<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p><strong> 3) 시스템 자원 확인 </strong></p>
 <ul>
 <li>available 메모리 확인(nmon, 'free -h' 사용)</li>
 <li>disk 사용현황 확인(nmon, 'df -h' 사용)</li>
 </ul>
 <h1 id="2-redis">2. redis 장애 현황 파악 및 대응<a class="headerlink" href="#2-redis" title="Permanent link">&para;</a></h1>
-<h2 id="1_1">1) 배경 지식<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h2>
+<p><strong> 1) 배경 지식</strong></p>
 <ul>
 <li>장애 발생으로 해당 노드가 kill되면 아래처럼 'disconnected'가 된다.</li>
 </ul>
@@ -184,8 +194,8 @@
 001ce4a87de2f2fc62ff44e2b5387a3f0bb9837c 127.0.0.1:18202 master - 0 1585787800000 0 connected
 </code></pre>
 
-<h2 id="2">2) 현황 파악<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<h4 id="1-check-distribution">1) check-distribution<a class="headerlink" href="#1-check-distribution" title="Permanent link">&para;</a></h4>
+<p><strong> 2) 현황 파악</strong></p>
+<p>1) check-distribution</p>
 <p>서버별 master/slave 분포 현황을 알려준다.</p>
 <pre><code class="bash">&gt; flashbase check-distribution
 check distribution of masters/slaves...
@@ -196,7 +206,7 @@ SERVER NAME | M | S
 Total nodes | 5 | 3
 </code></pre>
 
-<h4 id="2-find-masters">2) find-masters<a class="headerlink" href="#2-find-masters" title="Permanent link">&para;</a></h4>
+<p>2) find-masters</p>
 <ul>
 <li>option 확인</li>
 </ul>
@@ -229,7 +239,7 @@ Use options(no-slave|no-slot|failovered)
 127.0.0.1:18253
 </code></pre>
 
-<h4 id="3-find-slaves">3) find-slaves<a class="headerlink" href="#3-find-slaves" title="Permanent link">&para;</a></h4>
+<p>3) find-slaves</p>
 <ul>
 <li>option 확인</li>
 </ul>
@@ -244,7 +254,7 @@ Use options(failbacked)
 127.0.0.1:18200
 </code></pre>
 
-<h4 id="4-find-masters-with-dir">4) find-masters-with-dir<a class="headerlink" href="#4-find-masters-with-dir" title="Permanent link">&para;</a></h4>
+<p>4) find-masters-with-dir</p>
 <p>특정 서버의 특정 디스크 장애 시 해당 디스크를 사용하는 master(redis-server)들을 listup함. 이 노드들은 이미 죽었거나 향후 disk i/o 발생 시 바로 죽을 노드들로, 문제 확인 시 즉시 failover를 수행해야 함</p>
 <pre><code class="bash">&gt; flashbase find-masters-with-dir
 Error) Invalid arguments.
@@ -255,10 +265,10 @@ ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
 18204
 </code></pre>
 
-<h2 id="3_1">3) 대응 방안<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
-<h4 id="1-cluster-failoversh">1) cluster-failover.sh<a class="headerlink" href="#1-cluster-failoversh" title="Permanent link">&para;</a></h4>
+<p><strong> 3) 대응 방안</strong></p>
+<p>1) cluster-failover.sh</p>
 <p>디스크 장애로 cluster state가 'fail'이 된 cluster의 경우, redis-server process가 죽거나 pause 된 상태인데 이 때에는 'cluster-failover.sh'로 failover시켜 즉시 cluster state를 'ok'로 만들 수 있다.</p>
-<h4 id="2-find-nodes-with-dir-find-masters-with-dir-failover-with-dir-kill-with-dir">2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir<a class="headerlink" href="#2-find-nodes-with-dir-find-masters-with-dir-failover-with-dir-kill-with-dir" title="Permanent link">&para;</a></h4>
+<p>2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir</p>
 <ul>
 <li>디스크 장애가 발생했지만 아직 cluster state가 'fail'이 안된 cluster의 경우, 해당 디스크를 사용하는 master(redis-server)들을 listup하고</li>
 </ul>
@@ -311,7 +321,7 @@ redis client for 127.0.0.1:18254
 PONG
 </code></pre>
 
-<h4 id="3-find-noaddr-forget-noaddr">3) find-noaddr / forget-noaddr<a class="headerlink" href="#3-find-noaddr-forget-noaddr" title="Permanent link">&para;</a></h4>
+<p>3) find-noaddr / forget-noaddr</p>
 <ul>
 <li>'noaddr' 노드 삭제</li>
 </ul>
@@ -329,7 +339,7 @@ OK
 
 </code></pre>
 
-<h4 id="4-do-replicate">4) do-replicate<a class="headerlink" href="#4-do-replicate" title="Permanent link">&para;</a></h4>
+<p>4) do-replicate</p>
 <ul>
 <li>이중화해야 하는 pair가 많고 복잡하게 흩어져있는 경우, <a href="../scripts/pairing.py">pairing.py</a>  스크립트를 활용하면 편리하다.</li>
 </ul>
@@ -402,7 +412,7 @@ OK // 'cluster meet' 이 성공한 OK
 OK // 'cluster replicate'가 성공한 OK
 </code></pre>
 
-<h4 id="5-reset-distribution">5) reset-distribution<a class="headerlink" href="#5-reset-distribution" title="Permanent link">&para;</a></h4>
+<p>5) reset-distribution</p>
 <p>이후 failover로 특정 서버에 master 노드가 몰린 상황을 해결하려면 'reset-distribution'을 사용한다.</p>
 <pre><code class="bash">// cluster nodes 현황 파악
 &gt; flashbase check-distribution
@@ -441,7 +451,7 @@ SERVER NAME | M | S
 Total nodes | 12 | 12
 </code></pre>
 
-<h4 id="6-force-failover">6) force-failover<a class="headerlink" href="#6-force-failover" title="Permanent link">&para;</a></h4>
+<p>6) force-failover</p>
 <p>특정 서버의 장애 또는 HW 교체/점검 등으로 shutdown될 때, 해당 서버의 모든 master 노드들이 slave로 되고 다른 서버에 있는 slave가 master로 되도록 변경 시 'force-failover'를 사용한다.</p>
 <pre><code class="bash">&gt; flashbase check-distribution
 check distribution of masters/slaves...
@@ -475,8 +485,8 @@ SERVER NAME | M | S
 Total nodes | 12 | 9
 </code></pre>
 
-<h1 id="3_2">3. 작업 후 최종 점검<a class="headerlink" href="#3_2" title="Permanent link">&para;</a></h1>
-<h2 id="1-redis_1">1) Redis<a class="headerlink" href="#1-redis_1" title="Permanent link">&para;</a></h2>
+<h1 id="3">3. 작업 후 최종 점검<a class="headerlink" href="#3" title="Permanent link">&para;</a></h1>
+<p><strong> 1) Redis </strong></p>
 <ul>
 <li>'flashbase cluster-rowcount' 이전 기록과 비교</li>
 <li>'flashbase cli-all config get flash-db-ttl' 이전 기록과 비교</li>
@@ -484,13 +494,13 @@ Total nodes | 12 | 9
 <li>flashbase cli -h {ip} -p {port} cluster nodes</li>
 <li>flashbase cli-all info memory | grep isOOM:true</li>
 </ul>
-<h2 id="2-yarn-spark">2) yarn &amp; spark<a class="headerlink" href="#2-yarn-spark" title="Permanent link">&para;</a></h2>
+<p><strong> 2) yarn &amp; spark </strong></p>
 <ul>
 <li>web ui 및 'yarn application -list'로 확인</li>
 <li>spark의 경우, spark 의 spark-default.conf 내에 있는 spark.local.dir에 장애난 디스크 포함되어 있으면 해당 디스크 제거하고 설정 파일 수정하여, thrift server 재시작</li>
 <li>spark의 경우, spark-default.conf 문제가 아니더라도, yarn local dir이 문제가 될 경우, 질의 에러 발생되므로, thrift server 재시작 필요</li>
 </ul>
-<h2 id="3-thriftserver">3) Thriftserver<a class="headerlink" href="#3-thriftserver" title="Permanent link">&para;</a></h2>
+<p><strong> 3) Thriftserver </strong></p>
 <ul>
 <li>'crontab -e' 확인</li>
 </ul>
@@ -508,13 +518,13 @@ Total nodes | 12 | 9
 <pre><code class="bash">select * from {table name} where ... limit 1;
 </code></pre>
 
-<h2 id="4-kafka-kaetlyn">4) kafka &amp; kaetlyn<a class="headerlink" href="#4-kafka-kaetlyn" title="Permanent link">&para;</a></h2>
+<p><strong> 4) kafka &amp; kaetlyn </strong></p>
 <ul>
 <li>kafka-utils.sh help // options 확인</li>
 <li>kafka-utils.sh topic-check {topic name}    // Partition의 Leader가 골고루 분포되어 있는지 확인</li>
 <li>kafka-utils.sh offset-check      // Consumer LAG 가져와지는지 확인</li>
 </ul>
-<h2 id="5">5) 시스템 자원 확인<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p><strong> 5) 시스템 자원 확인 </strong></p>
 <ul>
 <li>available 메모리 확인</li>
 <li>disk 사용현황 확인</li>
@@ -523,6 +533,15 @@ Total nodes | 12 | 9
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kaetlyn/" class="btn btn-neutral float-right" title="Data ingestion with KAFKA (ko)">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../version-update/" class="btn btn-neutral" title="Version update"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -548,6 +567,10 @@ Total nodes | 12 | 9
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../version-update/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../kaetlyn/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -9,7 +9,7 @@
   <meta name="author" content="Lightning DB Team">
   <link rel="canonical" href="https://mnms.github.io/docs/kaetlyn/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Kafka 설정 및 실행 - Lightning DB Docs</title>
+  <title>Data ingestion with KAFKA (ko) - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Kafka \uc124\uc815 \ubc0f \uc2e4\ud589";
+    var mkdocs_page_name = "Data ingestion with KAFKA (ko)";
     var mkdocs_page_input_path = "kaetlyn.md";
     var mkdocs_page_url = "/docs/kaetlyn/";
   </script>
@@ -84,8 +84,14 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Operation</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Data ingestion with KAFKA (ko)</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Additional Resources</span></p>
@@ -113,8 +119,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Operation &raquo;</li>
+        
+      
     
-    <li>Kafka 설정 및 실행</li>
+    <li>Data ingestion with KAFKA (ko)</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/mnms/docs/edit/master/docs/kaetlyn.md"> Edit on source repository</a>
@@ -127,13 +137,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="kafka">Kafka 설정 및 실행<a class="headerlink" href="#kafka" title="Permanent link">&para;</a></h1>
-<h3 id="1-cluster">1. Cluster 구성<a class="headerlink" href="#1-cluster" title="Permanent link">&para;</a></h3>
-<h4 id="1">(1) 환경 변수 설정<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+                <h1 id="1-kafka">1. Kafka 설정 및 실행<a class="headerlink" href="#1-kafka" title="Permanent link">&para;</a></h1>
+<p><strong> 1. Cluster 구성 </strong></p>
+<p>(1) 환경 변수 설정</p>
 <ul>
 <li>Kafka Cluster를 구성할 노드에 Kafka를 각각 설치해주고 ~/.bash_profile에 $KAFKA_HOME을 설정해준다.(필수는 아님)</li>
 </ul>
-<h4 id="2-zookeeper">(2) Zookeeper 설정 및 시작<a class="headerlink" href="#2-zookeeper" title="Permanent link">&para;</a></h4>
+<p>(2) Zookeeper 설정 및 시작</p>
 <ul>
 <li>각 서버 노드에 kafka 설치 후 $KAFKA_HOME/conf/zookeeper.properties 열어서 $dataDir, $server.1 ~ $server.n의 property를 설정한다.<br />
 예시로 apollo-w07, apollo-w08 두개의 노드에 cluster를 구성한다고 가정하면, server.1, server.2 두개의 노드를 써주면 된다.</li>
@@ -165,7 +175,7 @@ server.2=apollo-w08:2888:3888
 <pre><code class="console">    &gt; $KAFKA_HOME/bin/zookeeper-server-start.sh config/zookeeper.properties &amp;
 </code></pre>
 
-<h4 id="3-kafka-broker">(3) Kafka Broker 설정 및 시작<a class="headerlink" href="#3-kafka-broker" title="Permanent link">&para;</a></h4>
+<p>(3) Kafka Broker 설정 및 시작</p>
 <ul>
 <li>각 서버 노드에서 $KAFKA_HOME/conf/server.properties 를 Open</li>
 <li>Broker ID 설정</li>
@@ -251,7 +261,7 @@ server.2=apollo-w08:2888:3888
     &gt; $KAFKA_HOME/bin/kafka-topics.sh --zookeeper localhost:2181/chroot --alter --topic nvkvs --partitions 6
 </code></pre>
 
-<h3 id="2-kafka-topic">2. Kafka Topic정보 확인하기<a class="headerlink" href="#2-kafka-topic" title="Permanent link">&para;</a></h3>
+<p><strong> 2. Kafka Topic정보 확인하기 </strong></p>
 <ul>
 <li>Consumer list 확인하기</li>
 </ul>
@@ -297,10 +307,10 @@ server.2=apollo-w08:2888:3888
     &gt; $KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --reset-offsets --shift-by -10000 --execute --group (Consumer 그룹명) --topic nvkvs
 </code></pre>
 
-<h1 id="kaetlyn-consumer">Kaetlyn Consumer 설정 및 시작<a class="headerlink" href="#kaetlyn-consumer" title="Permanent link">&para;</a></h1>
-<h3 id="1-kaetlyn-consumer">1. Kaetlyn Consumer 설정<a class="headerlink" href="#1-kaetlyn-consumer" title="Permanent link">&para;</a></h3>
+<h1 id="2-kaetlyn-consumer">2. Kaetlyn Consumer 설정 및 시작<a class="headerlink" href="#2-kaetlyn-consumer" title="Permanent link">&para;</a></h1>
+<p><strong> 1. Kaetlyn Consumer 설정 </strong></p>
 <ul>
-<li>Command : tsr2-kaetlyn edit</li>
+<li>tsr2-kaetlyn edit</li>
 </ul>
 <pre><code>  KAFKA_SERVER : Kafka Broker의 host:port
   DRIVER_MEMORY, EXECUTOR_MEMORY : Yarn에서 할당해주는 Spark Driver/Excutor의 Memory. 적재 후 jstat -gc를 통해 메모리 사용량과 FGC 카운트를 확인한 후 적당하게 설정해준다.
@@ -344,7 +354,7 @@ MAX_RATE_PER_PARTITION=100
 ...
 </code></pre>
 
-<h3 id="2-kaetlyn-consumer-startstop">2. Kaetlyn Consumer start/stop<a class="headerlink" href="#2-kaetlyn-consumer-startstop" title="Permanent link">&para;</a></h3>
+<p><strong> 2. Kaetlyn Consumer start/stop </strong></p>
 <ul>
 <li>기본적으로 Yarn cluster 상에서 동작하는 Spark Application이므로 Spark이 설치되어 있고 Hadoop/Yarn이 구동되고 있는 노드에서 시작할 수 있다.</li>
 <li>Start 및 Driver Log Monitoring </li>
@@ -365,28 +375,26 @@ MAX_RATE_PER_PARTITION=100
 <pre><code class="console">&gt; tsr2-kaetlyn consumer stop
 </code></pre>
 
-<h3 id="3-kaetlyn-log-level">3. Kaetlyn Log level 조정<a class="headerlink" href="#3-kaetlyn-log-level" title="Permanent link">&para;</a></h3>
-<ul>
-<li>logger로 logback을 사용하고 있다. kaetlyn실행 후 $SPARK_HOME/conf/logback-kaetlyn.xml 파일이 생성된다. Driver Log level 조정 시에는 이 파일을 편집하면 된다.
-  ```console<blockquote>
+<p><strong> 3. Kaetlyn Log level 조정 </strong>
+  - logger로 logback을 사용하고 있다. kaetlyn실행 후 $SPARK_HOME/conf/logback-kaetlyn.xml 파일이 생성된다. Driver Log level 조정 시에는 이 파일을 편집하면 된다.
+  ```console</p>
+<blockquote>
 <p>vi $SPARK_HOME/conf/logback-kaetlyn.xml
   ```</p>
 </blockquote>
-</li>
+<h1 id="3-kafka-message-generator">3. Kafka Message Generator 설정 및 시작<a class="headerlink" href="#3-kafka-message-generator" title="Permanent link">&para;</a></h1>
+<p><strong> 1. Generator 설정 </strong></p>
+<ul>
+<li>KAFKA_SERVER : Data를 전송할 Kafka 서버 '{IP}:{Port}'</li>
+<li>SAMPLE_DATA_PATH : sample파일이 저장되어 있는 폴더 path</li>
+<li>TABLE_NAME_TO_ID : sample파일의 Table ID를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.</li>
+<li>TABLE_NAME_TO_SEPARATOR : sample파일의 Separator를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.</li>
+<li>KAFKA_PRODUCE_TOPIC_NAME : producing할 topic명</li>
+<li>GENERATED_EVENT_TIME : 첫번째 Column에 들어갈 evnet time</li>
+<li>DATA_GENERATING_COUNT : sample 파일을 몇번 전송할지 지정. 파일 한번 전송완료하면 다음부터는 - - GENERATED_EVENT_TIME을 5분씩 올려서 전송</li>
+<li>GENERATING_PERIOD : record를 producing할 주기</li>
+<li>RECORD_PER_PERIOD : GENERATING_PERIOD당 생성할 record갯수</li>
 </ul>
-<h1 id="kafka-message-generator">Kafka Message Generator 설정 및 시작<a class="headerlink" href="#kafka-message-generator" title="Permanent link">&para;</a></h1>
-<h3 id="1-generator">1. Generator 설정<a class="headerlink" href="#1-generator" title="Permanent link">&para;</a></h3>
-<pre><code>  KAFKA_SERVER : Data를 전송할 Kafka 서버 IP:Port
-  SAMPLE_DATA_PATH : sample파일이 저장되어 있는 폴더 path
-  TABLE_NAME_TO_ID : sample파일의 Table ID를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
-  TABLE_NAME_TO_SEPARATOR : sample파일의 Separator를 지정. 여기에 지정되지 않는 파일은 Generation하지 않는다.
-  KAFKA_PRODUCE_TOPIC_NAME : producing할 topic명
-  GENERATED_EVENT_TIME : 첫번째 Column에 들어갈 evnet time
-  DATA_GENERATING_COUNT : sample 파일을 몇번 전송할지 지정. 파일 한번 전송완료하면 다음부터는 GENERATED_EVENT_TIME을 5분씩 올려서 전송
-  GENERATING_PERIOD : record를 producing할 주기
-  RECORD_PER_PERIOD : GENERATING_PERIOD당 생성할 record갯수
-</code></pre>
-
 <pre><code class="console">&gt; cfc 1 (또는 c01)
 &gt; tsr2-kaetlyn edit
 
@@ -413,7 +421,7 @@ KAFKA_PRODUCE_TOPIC_NAME=nvkvs
 <li>Generator 설정 시 RECORD_PER_PERIOD를 너무 크게 잡으면 Message 전송 요청량이 노드의 네트워크 오버헤드보다 더 커져서 TimeoutException이 발생할 수 있다.
 (Producer config의 request.timeout.ms 참조)</li>
 </ul>
-<h3 id="2-generator-startstop">2. Generator Start/Stop<a class="headerlink" href="#2-generator-startstop" title="Permanent link">&para;</a></h3>
+<p><strong> 2. Generator Start/Stop </strong></p>
 <ul>
 <li>Start </li>
 </ul>
@@ -429,6 +437,15 @@ KAFKA_PRODUCE_TOPIC_NAME=nvkvs
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../get-started-with-scratch/" class="btn btn-neutral float-right" title="Manual Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../manage-failover/" class="btn btn-neutral" title="How to manage failover (ko)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -454,6 +471,10 @@ KAFKA_PRODUCE_TOPIC_NAME=nvkvs
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../manage-failover/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../get-started-with-scratch/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
