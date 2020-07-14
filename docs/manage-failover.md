@@ -1,3 +1,8 @@
+!!! Warning
+    This document is temporarily written in Korean. This page will be translated into English soon.
+
+
+
 # 1. 선행작업
 
 ** 1) Redis **

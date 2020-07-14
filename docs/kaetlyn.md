@@ -1,3 +1,7 @@
+!!! Warning
+    This document is temporarily written in Korean. This page will be translated into English soon.
+
+
 # 1. Kafka 설정 및 실행
 
 ** 1. Cluster 구성 **
