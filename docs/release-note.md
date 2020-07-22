@@ -15,6 +15,7 @@
     - Aggregation Pushdown
     - Optimize memory usage about clustering
     - Adaptive RDD partitioning scheme by filters('node base' or 'redis key base')
+    - Support geoSpatial queries based on OGC standards
     - Update OSGeo repository address
 
 
