@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Lightning DB Team">
-  <link rel="canonical" href="https://mnms.github.io/docs/version-update/">
+  <link rel="canonical" href="https://mnms.github.io/docs/how-to-scaleout/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Version update - Lightning DB Docs</title>
+  <title>How to scaleout - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Version update";
-    var mkdocs_page_input_path = "version-update.md";
-    var mkdocs_page_url = "/docs/version-update/";
+    var mkdocs_page_name = "How to scaleout";
+    var mkdocs_page_input_path = "how-to-scaleout.md";
+    var mkdocs_page_url = "/docs/how-to-scaleout/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -85,13 +85,15 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Operation</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Version update</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to scaleout</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Additional Resources</span></p>
@@ -124,10 +126,10 @@
         
       
     
-    <li>Version update</li>
+    <li>How to scaleout</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/version-update.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/how-to-scaleout.md"> Edit on source repository</a>
       
     </li>
   </ul>
@@ -137,93 +139,150 @@
           <div role="main">
             <div class="section">
               
-                <p>You can update LightningDB by using the 'deploy' command.</p>
-<pre><code class="bash">&gt; c 1 // alias of 'cluster use 1'
-&gt; deploy
-(Watch out) Cluster 1 is already deployed. Do you want to deploy again? (y/n) [n]
-y
+                <h1 id="check-the-distribution-of-slots">Check the distribution of slots<a class="headerlink" href="#check-the-distribution-of-slots" title="Permanent link">&para;</a></h1>
+<p>You can use 'redis-trib.rb check {master's IP}:{master's Port} | grep slots | grep master' command to check slots assigned to each master. Any master can be used for '{master's IP}:{master's Port}'.</p>
+<pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep slots | grep master
+
+   slots:0-818 (819 slots) master
+
+   slots:3277-4095 (819 slots) master
+
+   slots:5734-6553 (820 slots) master
+
+   slots:7373-8191 (819 slots) master
+
+   slots:13926-14745 (820 slots) master
+
+   slots:4096-4914 (819 slots) master
+
+   slots:8192-9010 (819 slots) master
+
+   slots:2458-3276 (819 slots) master
+
+   slots:9011-9829 (819 slots) master
+
+   slots:10650-11468 (819 slots) master
+
+   slots:11469-12287 (819 slots) master
+
+   slots:1638-2457 (820 slots) master
+
+   slots:12288-13106 (819 slots) master
+
+   slots:15565-16383 (819 slots) master
+
+   slots:9830-10649 (820 slots) master
+
+   slots:819-1637 (819 slots) master
+
+   slots:6554-7372 (819 slots) master
+
+   slots:4915-5733 (819 slots) master
+
+   slots:13107-13925 (819 slots) master
+
+   slots:14746-15564 (819 slots) master
 </code></pre>
 
-<p><strong>(1) Select installer</strong></p>
-<pre><code class="bash">Select installer
+<h1 id="check-the-distribution-of-redis-servers">Check the distribution of redis-servers<a class="headerlink" href="#check-the-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
+<pre><code>$ flashbase check-distribution
 
-    [ INSTALLER LIST ]
-    (1) lightningdb.release.master.5a6a38.bin
-    (2) lightningdb.trial.master.dbcb9e-dirty.bin
-    (3) lightningdb.trial.master.dbcb9e.bin
+check distribution of masters/slaves...
 
-Please enter the number, file path or URL of the installer you want to use.
-you can also add a file in list by copy to '$FBPATH/releases/'
-1
-OK, lightningdb.release.master.5a6a38.bin
+SERVER NAME     | M | S
+
+--------------------------------
+
+192.168.111.201 | 10 | 10
+
+192.168.111.202 | 10 | 10
+
+--------------------------------
+
+Total nodes     | 20 | 20
+
 </code></pre>
 
-<p><strong>(2) Restore</strong></p>
-<pre><code class="bash">Do you want to restore conf? (y/n)
-y
+<h1 id="scale-out">Scale out<a class="headerlink" href="#scale-out" title="Permanent link">&para;</a></h1>
+<p>Open 'redis.properties' with 'flashbase edit' command.</p>
+<pre><code>$ flashbase edit
 </code></pre>
 
-<p>If the current settings will be reused, type 'y'.</p>
-<p><strong>(3) Check all settings finally</strong></p>
-<pre><code class="bash">+-----------------+---------------------------------------------------+
-| NAME            | VALUE                                             |
-+-----------------+---------------------------------------------------+
-| installer       | lightningdb.release.master.5a6a38.bin             |
-| nodes           | nodeA                                             |
-|                 | nodeB                                             |
-|                 | nodeC                                             |
-|                 | nodeD                                             |
-| master ports    | 18100                                             |
-| slave ports     | 18150-18151                                       |
-| ssd count       | 3                                                 |
-| redis data path | ~/sata_ssd/ssd_                                   |
-| redis db path   | ~/sata_ssd/ssd_                                   |
-| flash db path   | ~/sata_ssd/ssd_                                   |
-+-----------------+---------------------------------------------------+
-Do you want to proceed with the deploy accroding to the above information? (y/n)
-y
-Check status of hosts...
-+-----------+--------+
-| HOST      | STATUS |
-+-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
-+-----------+--------+
-Checking for cluster exist...
-+------+--------+
-| HOST | STATUS |
-+------+--------+
-Backup conf of cluster 1...
-OK, cluster_1_conf_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeA...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeB...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeC...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeD...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Transfer installer and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
-Sync conf...
-Complete to deploy cluster 1.
-Cluster 1 selected.
+<p>Add a new node("192.168.111.203").</p>
+<p><strong>As-is</strong></p>
+<pre><code>#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18800 18809) )
+
+## Slave hosts and ports (optional)
+export SR2_REDIS_SLAVE_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; )
+export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
 </code></pre>
 
-<ul>
-<li>Backup path of cluster: ${base-directory}/backup/cluster_${cluster-id}_bak_${time-stamp}</li>
-<li>Backup path of conf files: $FBAPTH/conf_backup/cluster_${cluster-id}_conf_bak_${time-stamp}</li>
-</ul>
-<p><strong>(4) Restart</strong></p>
-<pre><code class="bash">&gt; cluster restart
+<p><strong>To-be</strong></p>
+<pre><code>#!/bin/bash
+
+## Master hosts and ports
+
+export SR2_REDIS_MASTER_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; &quot;192.168.111.203&quot; )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18800 18809) )
+
+## Slave hosts and ports (optional)
+export SR2_REDIS_SLAVE_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; &quot;192.168.111.203&quot; )
+export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
 </code></pre>
 
-<p>After the restart, the new version will be applied.</p>
+<p>Scale out the cluster with a 'flashbase scale-out {new node's IP}' command. If you add more than one node, you can use like 'flashbase scale-out 192.168.111.203 192.168.111.204 192.168.111.205'.</p>
+<pre><code>$ flashbase scale-out 192.168.111.203
+</code></pre>
+
+<h1 id="check-the-new-distribution-of-slots">Check the new distribution of slots<a class="headerlink" href="#check-the-new-distribution-of-slots" title="Permanent link">&para;</a></h1>
+<pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep master | grep slot
+   slots:273-818 (546 slots) master
+   slots:11742-12287 (546 slots) master
+   slots:0-272,10650-10921,14198-14199 (547 slots) master
+   slots:10922,11469-11741,14746-15018 (547 slots) master
+   slots:6827-7372 (546 slots) master
+   slots:1912-2457 (546 slots) master
+   slots:6008-6553 (546 slots) master
+   slots:7646-8191 (546 slots) master
+   slots:1911,5734-6007,13926-14197 (547 slots) master
+   slots:5188-5733 (546 slots) master
+   slots:13380-13925 (546 slots) master
+   slots:1092-1637 (546 slots) master
+   slots:1638-1910,9830-10103 (547 slots) master
+   slots:3550-4095 (546 slots) master
+   slots:7373-7645,8192-8464 (546 slots) master
+   slots:14200-14745 (546 slots) master
+   slots:2458-2730,4096-4368 (546 slots) master
+   slots:4369-4914 (546 slots) master
+   slots:9284-9829 (546 slots) master
+   slots:12561-13106 (546 slots) master
+   slots:6554-6826,15565-15837 (546 slots) master
+   slots:9011-9283,12288-12560 (546 slots) master
+   slots:4915-5187,13107-13379 (546 slots) master
+   slots:15019-15564 (546 slots) master
+   slots:10923-11468 (546 slots) master
+   slots:819-1091,3277-3549 (546 slots) master
+   slots:8465-9010 (546 slots) master
+   slots:2731-3276 (546 slots) master
+   slots:15838-16383 (546 slots) master
+   slots:10104-10649 (546 slots) master
+</code></pre>
+
+<h1 id="check-the-new-distribution-of-redis-servers">Check the new distribution of redis-servers<a class="headerlink" href="#check-the-new-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
+<pre><code>$ fb check-distribution
+check distribution of masters/slaves...
+SERVER NAME     |   M   |   S
+--------------------------------
+192.168.111.201 |   10  |   10
+192.168.111.202 |   10  |   10
+192.168.111.203 |   10  |   10
+--------------------------------
+Total nodes     |   30  |   30
+</code></pre>
               
             </div>
           </div>
@@ -231,10 +290,10 @@ Cluster 1 selected.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../manage-failover/" class="btn btn-neutral float-right" title="How to manage failover (ko)">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../get-started-with-scratch/" class="btn btn-neutral float-right" title="Manual Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../data-ingestion-and-querying/" class="btn btn-neutral" title="Data Ingestion and querying"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../kaetlyn/" class="btn btn-neutral" title="Data ingestion with KAFKA (ko)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -262,10 +321,10 @@ Cluster 1 selected.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../data-ingestion-and-querying/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../kaetlyn/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../manage-failover/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../get-started-with-scratch/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
