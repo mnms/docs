@@ -23,7 +23,8 @@ nav:
   - Operation:
     - Version update:  version-update.md
     - How to manage failover (ko): manage-failover.md
-    - Data ingestion with KAFKA (ko): kaetlyn.md 
+    - Data ingestion with KAFKA (ko): kaetlyn.md
+    - How to scaleout: how-to-scaleout.md 
   - Additional Resources:
     - Manual Installation: get-started-with-scratch.md
 
