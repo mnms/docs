@@ -1,8 +1,8 @@
-#nodes=("flashbase-d01" "flashbase-d02" "flashbase-d03")
-#nodes=("flashbase-w01" "flashbase-w02" "flashbase-w03" "flashbase-w04" "flashbase-w05" "flashbase-w06")
+#nodes=("flashbase01" "flashbase02" "flashbase03" "flashbase04" "flashbase05" "flashbase06")
 nodes=( "localhost")
 
 INSTALLER_PATH=$1
+shift
 
 [[ $INSTALLER_PATH == "" ]] && echo "NO ARGS" && echo "cmd <path of installer.bin>" && exit 1
 [[ ! -e $INSTALLER_PATH ]] && echo "NO FILE: $INSTALLER_PATH" && exit 1
@@ -14,7 +14,7 @@ echo "DATEMIN: $DATEMIN"
 echo "INSTALLER PATH: $INSTALLER_PATH"
 echo "INSTALLER NAME: $INSTALLER_BIN"
 
-for cluster_num in "1";
+for cluster_num in $@;
 do
     CLUSTER_DIR=$TSR2_DIR/cluster_${cluster_num}
     BACKUP_DIR="${CLUSTER_DIR}_bak_$DATEMIN"
