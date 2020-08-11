@@ -145,7 +145,7 @@ ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
 ```
 
 
-** 3) 대응 방안**
+** 3) 대응 방안(이중화가 된 경우)**
 
 1) cluster-failover.sh
 
@@ -378,6 +378,39 @@ SERVER NAME | M | S
 --------------------------------
 Total nodes | 12 | 9
 ```
+
+** 4) 대응 방안(이중화가 안 된 경우)**
+
+이중화가 안된 노드들의 경우, 디스크 교체시 'nodes-{port number}.conf'파일도 유실되기 때문에 재시작 시 새로운 uuid가 생성된다.
+
+따라서 기존 해당 프로세스에서 사용하던 uuid는 noaddr가 되고, 새로운 uuid를 생성해서 프로세스가 실행된다.
+
+이렇게 새로 실행된 프로세스는 새로운 uuid에 slot 정보가 없으므로 'addslots'를 사용해서 slot을 할당해주어야 한다. (참고로, 이중화가 된 경우는 'cluster meet' 후 'replicate'를 하면 master로 부터 slot을 받기 때문에 addslots를 할 필요가 없다.)
+
+1) noaddr 를 찾아서 클러스터에서 비어있는 slot 구간을 확인한다.
+
+```bash
+> flashbase find-noaddr
+7c84d9bb36ae3fa4caaf75318b59d3d2f6c7e9d8 :0 master,fail,noaddr - 1596769266377 1596769157081 77 disconnected 13261-13311 // '13261-13311' 부분이 유실된 slot 구간이다.
+```
+
+2) 새로 띄운 프로세스에서 각 slot range를 추가한다.
+
+```bash
+> flashbase cli -h 192.168.111.35 -p 18317 cluster addslots {13261..13311}
+```
+
+3) 해당 프로세스의 epoch를 올려 클러스터 전체에 동기화가 되도록 한다.
+```bash
+> flashbase cli -h 192.168.111.35 -p 18317 cluster bumpepoch
+BUMPED 321
+```
+
+4) 마지막으로 noaddr 노드를 제거한다.
+```bash
+> flashbase forget-noaddr
+```
+
 
 # 3. 작업 후 최종 점검
 
