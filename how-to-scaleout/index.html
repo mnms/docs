@@ -95,6 +95,8 @@
     <ul class="current">
     </ul>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../how-to-use-flashbase/">How to use flashbase</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Additional Resources</span></p>
                 <ul>
@@ -139,7 +141,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="check-the-distribution-of-slots">Check the distribution of slots<a class="headerlink" href="#check-the-distribution-of-slots" title="Permanent link">&para;</a></h1>
+                <h1 id="1-check-the-distribution-of-slots">1. Check the distribution of slots<a class="headerlink" href="#1-check-the-distribution-of-slots" title="Permanent link">&para;</a></h1>
 <p>You can use 'redis-trib.rb check {master's IP}:{master's Port} | grep slots | grep master' command to check slots assigned to each master. Any master can be used for '{master's IP}:{master's Port}'.</p>
 <pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep slots | grep master
 
@@ -184,7 +186,7 @@
    slots:14746-15564 (819 slots) master
 </code></pre>
 
-<h1 id="check-the-distribution-of-redis-servers">Check the distribution of redis-servers<a class="headerlink" href="#check-the-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
+<h1 id="2-check-the-distribution-of-redis-servers">2. Check the distribution of redis-servers<a class="headerlink" href="#2-check-the-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
 <pre><code>$ flashbase check-distribution
 
 check distribution of masters/slaves...
@@ -203,7 +205,7 @@ Total nodes     | 20 | 20
 
 </code></pre>
 
-<h1 id="scale-out">Scale out<a class="headerlink" href="#scale-out" title="Permanent link">&para;</a></h1>
+<h1 id="3-scale-out">3. Scale out<a class="headerlink" href="#3-scale-out" title="Permanent link">&para;</a></h1>
 <p>Open 'redis.properties' with 'flashbase edit' command.</p>
 <pre><code>$ flashbase edit
 </code></pre>
@@ -238,7 +240,7 @@ export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
 <pre><code>$ flashbase scale-out 192.168.111.203
 </code></pre>
 
-<h1 id="check-the-new-distribution-of-slots">Check the new distribution of slots<a class="headerlink" href="#check-the-new-distribution-of-slots" title="Permanent link">&para;</a></h1>
+<h1 id="4-check-the-new-distribution-of-slots">4. Check the new distribution of slots<a class="headerlink" href="#4-check-the-new-distribution-of-slots" title="Permanent link">&para;</a></h1>
 <pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep master | grep slot
    slots:273-818 (546 slots) master
    slots:11742-12287 (546 slots) master
@@ -272,7 +274,7 @@ export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
    slots:10104-10649 (546 slots) master
 </code></pre>
 
-<h1 id="check-the-new-distribution-of-redis-servers">Check the new distribution of redis-servers<a class="headerlink" href="#check-the-new-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
+<h1 id="5-check-the-new-distribution-of-redis-servers">5. Check the new distribution of redis-servers<a class="headerlink" href="#5-check-the-new-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
 <pre><code>$ fb check-distribution
 check distribution of masters/slaves...
 SERVER NAME     |   M   |   S
@@ -290,7 +292,7 @@ Total nodes     |   30  |   30
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../get-started-with-scratch/" class="btn btn-neutral float-right" title="Manual Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../how-to-use-flashbase/" class="btn btn-neutral float-right" title="How to use flashbase">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../kaetlyn/" class="btn btn-neutral" title="Data ingestion with KAFKA (ko)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -324,7 +326,7 @@ Total nodes     |   30  |   30
         <span><a href="../kaetlyn/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../get-started-with-scratch/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../how-to-use-flashbase/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
