@@ -25,6 +25,7 @@ nav:
     - How to manage failover (ko): manage-failover.md
     - Data ingestion with KAFKA (ko): kaetlyn.md
     - How to scaleout: how-to-scaleout.md 
+    - How to use flashbase: how-to-use-flashbase.md
   - Additional Resources:
     - Manual Installation: get-started-with-scratch.md
 

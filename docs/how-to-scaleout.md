@@ -1,4 +1,4 @@
-# Check the distribution of slots
+# 1. Check the distribution of slots
 
 You can use 'redis-trib.rb check {master's IP}:{master's Port} | grep slots | grep master' command to check slots assigned to each master. Any master can be used for '{master's IP}:{master's Port}'.
 
@@ -47,7 +47,7 @@ $ redis-trib.rb check 192.168.111.201:18800 | grep slots | grep master
 ```
 
 
-# Check the distribution of redis-servers
+# 2. Check the distribution of redis-servers
 ```
 $ flashbase check-distribution
 
@@ -68,7 +68,7 @@ Total nodes     | 20 | 20
 ```
 
 
-# Scale out
+# 3. Scale out
 
 Open 'redis.properties' with 'flashbase edit' command.
 ```
@@ -110,7 +110,7 @@ Scale out the cluster with a 'flashbase scale-out {new node's IP}' command. If y
 $ flashbase scale-out 192.168.111.203
 ```
 
-# Check the new distribution of slots
+# 4. Check the new distribution of slots
 ```
 $ redis-trib.rb check 192.168.111.201:18800 | grep master | grep slot
    slots:273-818 (546 slots) master
@@ -145,7 +145,7 @@ $ redis-trib.rb check 192.168.111.201:18800 | grep master | grep slot
    slots:10104-10649 (546 slots) master
 ```
 
-# Check the new distribution of redis-servers
+# 5. Check the new distribution of redis-servers
 ```
 $ fb check-distribution
 check distribution of masters/slaves...
