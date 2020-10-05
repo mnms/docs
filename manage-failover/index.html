@@ -9,7 +9,7 @@
   <meta name="author" content="Lightning DB Team">
   <link rel="canonical" href="https://mnms.github.io/docs/manage-failover/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>How to manage failover (ko) - Lightning DB Docs</title>
+  <title>How to manage failover - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "How to manage failover (ko)";
+    var mkdocs_page_name = "How to manage failover";
     var mkdocs_page_input_path = "manage-failover.md";
     var mkdocs_page_url = "/docs/manage-failover/";
   </script>
@@ -87,11 +87,11 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to manage failover (ko)</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to manage failover</a>
     <ul class="current">
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -128,7 +128,7 @@
         
       
     
-    <li>How to manage failover (ko)</li>
+    <li>How to manage failover</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/mnms/docs/edit/master/docs/manage-failover.md"> Edit on source repository</a>
@@ -141,70 +141,59 @@
           <div role="main">
             <div class="section">
               
-                <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This document is temporarily written in Korean. This page will be translated into English soon.</p>
-</div>
-<h1 id="1">1. 선행작업<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
+                <h1 id="1-prerequisite">1. Prerequisite<a class="headerlink" href="#1-prerequisite" title="Permanent link">&para;</a></h1>
 <p><strong> 1) Redis </strong></p>
 <ul>
-<li>'flashbase cluster-rowcount' 기록</li>
-<li>'flashbase cli-all config get flash-db-ttl' 기록</li>
-<li>'flashbase cli-all info keyspace' 확인 // 'memKeys'로 in-memory data key수 확인</li>
-<li>'flashbase cli-all info tablespace' 확인 // totalRowgroups, totalRows등 적재 현황 확인</li>
-<li>'flashbase cli-all info eviction'확인  // 'avg full percent' 으로 eviction이 효율적으로 동작하는지 확인</li>
+<li>Check 'flashbase cluster-rowcount'</li>
+<li>Check 'flashbase cli-all config get flash-db-ttl'</li>
+<li>Check 'flashbase cli-all info keyspace' // 'memKeys'(the number of in-memory data keys)</li>
+<li>Check 'flashbase cli-all info tablespace' // 'totalRowgroups', 'totalRows'</li>
+<li>Check 'flashbase cli-all info eviction' // 'avg full percent'</li>
 </ul>
 <p><strong> 2) Thriftserver </strong></p>
 <ul>
-<li>'crontab -e'로 관련 cron job 확인</li>
-</ul>
-<pre><code class="bash">#0 0 * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; thriftserver stop &amp;&amp; echo &quot;`date` stop thriftserver by cron&quot; &gt;&gt; /tmp/spark-thrift-alive.log &amp;&amp; sleep 10 &amp;&amp; thriftserver start
-0 0 * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; thriftserver stop &amp;&amp; echo &quot;`date` stop thriftserver by cron&quot; &gt;&gt; /tmp/spark-thrift-alive.log
-30 0 * * * find /data22/thriftserver-event-logs -type f -mtime +7  | xargs rm -rf
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; echo &quot;`date` check-thrift-server-alive&quot; &gt;&gt; /tmp/spark-thrift-alive.log &amp;&amp; /home/nvkvs/utils/cron-job-keep-alive-thriftserver.sh &gt;&gt; /tmp/spark-thrift-alive.log
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; /home/nvkvs/utils/cron-job-check-spark-executor-jvm-status.sh &gt;&gt; /tmp/spark-executor-jvm.log
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; /home/nvkvs/utils/cron-job-check-spark-driver-jvm-status.sh &gt;&gt; /tmp/spark-driver-jvm.log
-</code></pre>
-
-<ul>
-<li>Table schema 확인</li>
-<li>작업한 클러스터에 있는 테이블별로 질의</li>
+<li>Check cron jobs with 'crontab -e'.</li>
+<li>Check table schema and query.</li>
 </ul>
 <pre><code class="bash">select * from {table name} where ... limit 1;
 </code></pre>
 
-<p><strong> 3) 시스템 자원 확인 </strong></p>
+<p><strong> 3) System resources </strong></p>
 <ul>
-<li>available 메모리 확인(nmon, 'free -h' 사용)</li>
-<li>disk 사용현황 확인(nmon, 'df -h' 사용)</li>
+<li>Check available memory(nmon, 'free -h')</li>
+<li>check the status of disks(nmon, 'df -h')</li>
 </ul>
-<h1 id="2-redis">2. redis 장애 현황 파악 및 대응<a class="headerlink" href="#2-redis" title="Permanent link">&para;</a></h1>
-<p><strong> 1) 배경 지식</strong></p>
+<h1 id="2-check-the-status-and-failover">2. Check the status and failover<a class="headerlink" href="#2-check-the-status-and-failover" title="Permanent link">&para;</a></h1>
+<p><strong> 1) Background </strong></p>
 <ul>
-<li>장애 발생으로 해당 노드가 kill되면 아래처럼 'disconnected'가 된다.</li>
+<li>If a redis-server is killed, a status of the node is changed to 'disconnected'.</li>
 </ul>
 <pre><code class="bash">543f81b6c5d6e29b9871ddbbd07a4524508d27e5 127.0.0.1:18202 master - 1585787616744 1585787612000 0 disconnected
 </code></pre>
 
 <ul>
-<li>'cluster-node-timeout'이 지나면 pFail(한 노드만 확인한 상태), Fail(다른 노드도 disconnected로 확인한 상태) 상태로 빠지면서 최종적으로 Cluster Fail 상태가 되고, 이중화가 된 경우 Failover가 수행된다. 'cluster-failover.sh'를 수행하면 즉시 failover가 된다.</li>
+<li>After a single node checked that a redis-server is disconnected, the status of the redis-server is changed to <code>pFail</code>.</li>
+<li>After all nodes inf the cluster checked that the node is disconnected,  the status of the redis-server is changed to <code>Fail</code>.</li>
+<li>If the node is replicated, the slave of the node is failovered.</li>
+<li>With 'cluster-failover.sh', you can do failover regardless of the status(pFail/Fail).</li>
 </ul>
 <pre><code class="bash">543f81b6c5d6e29b9871ddbbd07a4524508d27e5 127.0.0.1:18202 master,fail - 1585787616744 1585787612000 0 disconnected
 </code></pre>
 
 <ul>
-<li>Disk 장애 등으로 'node-{port}.conf' 가 유실된 경우, 해당 노드를 재시작하게 되면, 'node-{port}.conf' 파일에 있는 myself의 uuid가 유실되어 새로운 uuid를 생성하게 된다. 이와 동시에 기존 클러스터에서 알고 있던 이전 uuid는 해당 노드를 찾을 수 없어 'noaddr'로 표기된다. 이 노드는 'cluster forget'으로 제거해야 한다.</li>
+<li>If <code>node-{port}.conf</code> file is lost by disk failure, the redis-server using the conf file creates new uuid.</li>
+<li>Because the previous uuid in the cluster is lost, the uuid is changed to <code>noaddr</code>. This <code>noaddr</code> uuid should be removed with using <code>cluster forget</code> command.</li>
 </ul>
-<pre><code class="bash">// 18202의 이전 uuid
+<pre><code class="bash">// previous uuid of 18202
 543f81b6c5d6e29b9871ddbbd07a4524508d27e5 :0 master,fail,noaddr - 1585787799235 1585787799235 0 disconnected
 
-// 18202의 새로운 uuid
+// new uuid of 18202
 001ce4a87de2f2fc62ff44e2b5387a3f0bb9837c 127.0.0.1:18202 master - 0 1585787800000 0 connected
 </code></pre>
 
-<p><strong> 2) 현황 파악</strong></p>
+<p><strong> 2) Check the status of the cluster </strong></p>
 <p>1) check-distribution</p>
-<p>서버별 master/slave 분포 현황을 알려준다.</p>
+<p>Show the distribution of master/slave in each server.</p>
 <pre><code class="bash">&gt; flashbase check-distribution
 check distribution of masters/slaves...
 SERVER NAME | M | S
@@ -216,14 +205,14 @@ Total nodes | 5 | 3
 
 <p>2) find-masters</p>
 <ul>
-<li>option 확인</li>
+<li>options</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-masters
 Use options(no-slave|no-slot|failovered)
 </code></pre>
 
 <ul>
-<li>no-slave (slave가 없는 master들로, 향후 failback으로 추가된 노드들을 slave로 추가해야 함)</li>
+<li>no-slave (masters without slaves. Need to add the failbacked slaves to this node)</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-masters no-slave
 127.0.0.1:18203
@@ -231,7 +220,7 @@ Use options(no-slave|no-slot|failovered)
 </code></pre>
 
 <ul>
-<li>no-slot (cluster에 추가되지 않았거나 slot없이 master로 남아 있는 노드들로 slave가 되어야 함)</li>
+<li>no-slot (Not yet added into the cluster or masters without slot)</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-masters no-slot
 127.0.0.1:18202
@@ -239,7 +228,7 @@ Use options(no-slave|no-slot|failovered)
 </code></pre>
 
 <ul>
-<li>failovered (초기 설정 시 slave 노드였으나 failover로 master가 된 노드들로 향후 master 분포가 특정노드에 치우쳐졌을 때 원복을 해야함)</li>
+<li>failovered (When the cluster is initialized, this node was a slave. But now, the ndoes is a master by failover)</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-masters failovered
 127.0.0.1:18250
@@ -249,21 +238,24 @@ Use options(no-slave|no-slot|failovered)
 
 <p>3) find-slaves</p>
 <ul>
-<li>option 확인</li>
+<li>options</li>
 </ul>
 <pre><code class="bash">flashbase find-slaves
 Use options(failbacked)
 </code></pre>
 
 <ul>
-<li>failbacked (초기 설정 시 master였으나, 장애 이후 failback되어 현재 slave가 된 노드들로 향후 master 분포가 특정노드에 치우쳐졌을 때 원복을 해야함)</li>
+<li>failbacked When the cluster is initialized, this node was a master. But now, the ndoes is a slave by failback)</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-slaves failbacked
 127.0.0.1:18200
 </code></pre>
 
 <p>4) find-masters-with-dir</p>
-<p>특정 서버의 특정 디스크 장애 시 해당 디스크를 사용하는 master(redis-server)들을 listup함. 이 노드들은 이미 죽었거나 향후 disk i/o 발생 시 바로 죽을 노드들로, 문제 확인 시 즉시 failover를 수행해야 함</p>
+<ul>
+<li>List up the redis-servers with using the disk with HW fault.</li>
+<li>After HW fault, some of these nodes are already killed and the others will be killed in a few minutes.</li>
+</ul>
 <pre><code class="bash">&gt; flashbase find-masters-with-dir
 Error) Invalid arguments.
 ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
@@ -273,12 +265,12 @@ ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
 18204
 </code></pre>
 
-<p><strong> 3) 대응 방안(이중화가 된 경우)</strong></p>
+<p><strong> 3) How to handle HW fault(in case of replication) </strong></p>
 <p>1) cluster-failover.sh</p>
-<p>디스크 장애로 cluster state가 'fail'이 된 cluster의 경우, redis-server process가 죽거나 pause 된 상태인데 이 때에는 'cluster-failover.sh'로 failover시켜 즉시 cluster state를 'ok'로 만들 수 있다.</p>
+<p>If some redis-servers are disconnected(killed/paused), you can do failover immediately and make the status of the cluster 'ok'.</p>
 <p>2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir</p>
 <ul>
-<li>디스크 장애가 발생했지만 아직 cluster state가 'fail'이 안된 cluster의 경우, 해당 디스크를 사용하는 master(redis-server)들을 listup하고</li>
+<li>List up all nodes or master those are using the disk with HW fault.</li>
 </ul>
 <pre><code class="bash">&gt; flashbase find-masters-with-dir
 Error) Invalid arguments.
@@ -290,7 +282,7 @@ ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
 </code></pre>
 
 <ul>
-<li>장애 디스크를 사용하는 master들에 대해, 해당 노드의 slave로 하여금 failover를 시켜서 장애디스크를 사용하는 master 노드가 없도록 한다.</li>
+<li>Do failover and change the master using the error disk to the slave</li>
 </ul>
 <pre><code>&gt; failover-with-dir 127.0.0.1 /nvdrive0/ssd_02/nvkvs/nvkvs
 127.0.0.1:18250 will be master
@@ -299,7 +291,7 @@ OK
 </code></pre>
 
 <ul>
-<li>해당 디스크를 바라보는 노드를 모두 죽이기 위해 kill-with-dir를 수행한다.(flashbaes cli-all xxx 동작을 수행하기 위해)</li>
+<li>with <code>kill-with-dir</code>, kill all nodes that use the error disk.</li>
 </ul>
 <pre><code>&gt; flashbase kill-with-dir 127.0.0.1 /nvdrive0/ssd_02/nvkvs/nvkvs
 flashbase kill 18200
@@ -331,25 +323,25 @@ PONG
 
 <p>3) find-noaddr / forget-noaddr</p>
 <ul>
-<li>'noaddr' 노드 삭제</li>
+<li>Remove 'noaddr' node</li>
 </ul>
-<pre><code class="bash">&gt; flashbase find-noaddr  // disk 장애가 발생하기 전에 생성 및 저장된 노드(uuid)
+<pre><code class="bash">&gt; flashbase find-noaddr  // The prev uuid. Now not used anymore.
 1b5d70b57079a4549a1d2e8d0ac2bd7c50986372 :0 master,fail,noaddr - 1589853266724 1589853265000 1 disconnected
 
-&gt; flashbase forget-noaddr // 'cluster nodes'에서 noaddr 를 가진 노드(uuid)를 삭제한다.
-(error) ERR Unknown node 1b5d70b57079a4549a1d2e8d0ac2bd7c50986372  // 새로 추가된 노드들은 기존 uuid정보가 없어 이런 메시지가 뜬다.
+&gt; flashbase forget-noaddr // Remove the 'noaddr' uuid.
+(error) ERR Unknown node 1b5d70b57079a4549a1d2e8d0ac2bd7c50986372  // Because newly added node does not know the previous uuid.
 OK
 OK
 OK
 OK
 
-&gt; flashbase find-noaddr // noaddr 노드가 모두 제거된 것을 확인한다.
+&gt; flashbase find-noaddr // Check that the noaddr uuid is removed
 
 </code></pre>
 
 <p>4) do-replicate</p>
 <ul>
-<li>이중화해야 하는 pair가 많고 복잡하게 흩어져있는 경우, <a href="../scripts/pairing.py">pairing.py</a>  스크립트를 활용하면 편리하다.</li>
+<li>First of all, make the master/slave pair. If there are many nodes to replicate, <a href="../scripts/pairing.py">pairing.py</a> is helpful.</li>
 </ul>
 <pre><code>&gt; flashbase find-noslot &gt; slaves
 
@@ -363,7 +355,7 @@ flashbase do-replicate 192.168.0.2:19005 192.168.0.4:19055
 </code></pre>
 
 <ul>
-<li>no-slot master들을 no-slave master들의 slave로 붙임(replicate)</li>
+<li>Add no-slot master as the slave to no-slave master(replicate)</li>
 </ul>
 <pre><code class="bash">&gt; flashbase do-replicate 127.0.0.1:18202 127.0.0.1:18252
 Add 127.0.0.1:18202 as slave of master(127.0.0.1:18252)
@@ -411,18 +403,18 @@ repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
 </code></pre>
 
-<p>만약 slave로 붙일 노드가 cluster에 포함이 안된 상태라면, 'cluster meet'를 먼저 수행한 후에 replicate를 해야 한다. 이러한 동작도 'do-replicate' 내부에서 수행된다.</p>
+<p>If the slave candidate is not included in the cluster, 'do-replicate' is done after 'cluster meet'.</p>
 <pre><code class="bash">&gt; flashbase do-replicate 127.0.0.1:18252 127.0.0.1:18202
 Add 127.0.0.1:18252 as slave of master(127.0.0.1:18202)
-Fail to get master's uuid
+Fail to get masters uuid
 'cluster meet' is done
-OK // 'cluster meet' 이 성공한 OK
-OK // 'cluster replicate'가 성공한 OK
+OK // 'cluster meet' is done successfully
+OK // 'cluster replicate' is done successfully
 </code></pre>
 
 <p>5) reset-distribution</p>
-<p>이후 failover로 특정 서버에 master 노드가 몰린 상황을 해결하려면 'reset-distribution'을 사용한다.</p>
-<pre><code class="bash">// cluster nodes 현황 파악
+<p>To initialize the node distribution, use 'reset-distribution'.</p>
+<pre><code class="bash">// Check the distribution of cluster nodes.
 &gt; flashbase check-distribution
 check distribution of masters/slaves...
 SERVER NAME | M | S
@@ -434,7 +426,7 @@ SERVER NAME | M | S
 Total nodes | 12 | 12
 
 ...
-// master/slave 배치 상태를 초기 상태로 돌림
+
 &gt; flashbase reset-distribution
 192.168.111.38:20600
 OK
@@ -447,7 +439,7 @@ OK
 
 ...
 
-/ /다시 cluster nodes 현황 파악. 고르게 분포됨을 확인함
+// Check the distribution of cluster nodes again.
 &gt; flashbase check-distribution
 check distribution of masters/slaves...
 SERVER NAME | M | S
@@ -460,7 +452,7 @@ Total nodes | 12 | 12
 </code></pre>
 
 <p>6) force-failover</p>
-<p>특정 서버의 장애 또는 HW 교체/점검 등으로 shutdown될 때, 해당 서버의 모든 master 노드들이 slave로 되고 다른 서버에 있는 slave가 master로 되도록 변경 시 'force-failover'를 사용한다.</p>
+<p>When a server need to be shutdown by HW fault or checking, change all masters in the server to slaves by failover of those slaves.</p>
 <pre><code class="bash">&gt; flashbase check-distribution
 check distribution of masters/slaves...
 SERVER NAME | M | S
@@ -493,71 +485,64 @@ SERVER NAME | M | S
 Total nodes | 12 | 9
 </code></pre>
 
-<p><strong> 4) 대응 방안(이중화가 안 된 경우)</strong></p>
-<p>이중화가 안된 노드들의 경우, 디스크 교체시 'nodes-{port number}.conf'파일도 유실되기 때문에 재시작 시 새로운 uuid가 생성된다.</p>
-<p>따라서 기존 해당 프로세스에서 사용하던 uuid는 noaddr가 되고, 새로운 uuid를 생성해서 프로세스가 실행된다.</p>
-<p>이렇게 새로 실행된 프로세스는 새로운 uuid에 slot 정보가 없으므로 'addslots'를 사용해서 slot을 할당해주어야 한다. (참고로, 이중화가 된 경우는 'cluster meet' 후 'replicate'를 하면 master로 부터 slot을 받기 때문에 addslots를 할 필요가 없다.)</p>
-<p>1) noaddr 를 찾아서 클러스터에서 비어있는 slot 구간을 확인한다.</p>
+<p><strong> 4) How to handle HW fault(in case of no replication) </strong></p>
+<p>After disk replacement, <code>nodes-{port number}.conf</code> is lost.</p>
+<p>Therefore a new uuid is generated after restart.</p>
+<p>Because the previous uuid in the cluster is lost, the uuid is changed to <code>noaddr</code>. This <code>noaddr</code> uuid should be removed with using <code>cluster forget</code> command.</p>
+<p>Because the restarted node with the new uuid has no slot information, a slot range should be assigned by using 'addslots'. </p>
+<p>1) Find <code>noaddr</code> node and check its slot range.</p>
 <pre><code class="bash">&gt; flashbase find-noaddr
-7c84d9bb36ae3fa4caaf75318b59d3d2f6c7e9d8 :0 master,fail,noaddr - 1596769266377 1596769157081 77 disconnected 13261-13311 // '13261-13311' 부분이 유실된 slot 구간이다.
+7c84d9bb36ae3fa4caaf75318b59d3d2f6c7e9d8 :0 master,fail,noaddr - 1596769266377 1596769157081 77 disconnected 13261-13311 // '13261-13311' is the lost slot range.
 </code></pre>
 
-<p>2) 새로 띄운 프로세스에서 각 slot range를 추가한다.</p>
+<p>2) Add the slot range to the restarted node.</p>
 <pre><code class="bash">&gt; flashbase cli -h 192.168.111.35 -p 18317 cluster addslots {13261..13311}
 </code></pre>
 
-<p>3) 해당 프로세스의 epoch를 올려 클러스터 전체에 동기화가 되도록 한다.</p>
+<p>3) Increase the epoch of the node and update the cluster information.</p>
 <pre><code class="bash">&gt; flashbase cli -h 192.168.111.35 -p 18317 cluster bumpepoch
 BUMPED 321
 </code></pre>
 
-<p>4) 마지막으로 noaddr 노드를 제거한다.</p>
+<p>4) Remove the noaddr node.</p>
 <pre><code class="bash">&gt; flashbase forget-noaddr
 </code></pre>
 
-<h1 id="3">3. 작업 후 최종 점검<a class="headerlink" href="#3" title="Permanent link">&para;</a></h1>
+<h1 id="3-check-the-status">3. Check the status<a class="headerlink" href="#3-check-the-status" title="Permanent link">&para;</a></h1>
 <p><strong> 1) Redis </strong></p>
 <ul>
-<li>'flashbase cluster-rowcount' 이전 기록과 비교</li>
-<li>'flashbase cli-all config get flash-db-ttl' 이전 기록과 비교</li>
+<li>Compare 'flashbase cluster-rowcount' with the previous result.</li>
+<li>Compare 'flashbase cli-all config get flash-db-ttl'  with the previous result.</li>
 <li>flashbase cli-all cluster info | grep state:ok | wc -l</li>
 <li>flashbase cli -h {ip} -p {port} cluster nodes</li>
 <li>flashbase cli-all info memory | grep isOOM:true</li>
 </ul>
 <p><strong> 2) yarn &amp; spark </strong></p>
 <ul>
-<li>web ui 및 'yarn application -list'로 확인</li>
-<li>spark의 경우, spark 의 spark-default.conf 내에 있는 spark.local.dir에 장애난 디스크 포함되어 있으면 해당 디스크 제거하고 설정 파일 수정하여, thrift server 재시작</li>
-<li>spark의 경우, spark-default.conf 문제가 아니더라도, yarn local dir이 문제가 될 경우, 질의 에러 발생되므로, thrift server 재시작 필요</li>
+<li>Check web ui or 'yarn application -list'.</li>
+<li>In case of spark, <ul>
+<li>Remove the disk with HW fault in <code>spark.local.dir</code> of <code>spark-default.conf</code> and restart thriftserver.</li>
+</ul>
+</li>
 </ul>
 <p><strong> 3) Thriftserver </strong></p>
 <ul>
-<li>'crontab -e' 확인</li>
-</ul>
-<pre><code class="bash">#0 0 * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; thriftserver stop &amp;&amp; echo &quot;`date` stop thriftserver by cron&quot; &gt;&gt; /tmp/spark-thrift-alive.log &amp;&amp; sleep 10 &amp;&amp; thriftserver start
-0 0 * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; thriftserver stop &amp;&amp; echo &quot;`date` stop thriftserver by cron&quot; &gt;&gt; /tmp/spark-thrift-alive.log
-30 0 * * * find /data22/thriftserver-event-logs -type f -mtime +7  | xargs rm -rf
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; echo &quot;`date` check-thrift-server-alive&quot; &gt;&gt; /tmp/spark-thrift-alive.log &amp;&amp; /home/nvkvs/utils/cron-job-keep-alive-thriftserver.sh &gt;&gt; /tmp/spark-thrift-alive.log
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; /home/nvkvs/utils/cron-job-check-spark-executor-jvm-status.sh &gt;&gt; /tmp/spark-executor-jvm.log
-* * * * * source /home/nvkvs/.use_cluster 99 &amp;&amp; /home/nvkvs/utils/cron-job-check-spark-driver-jvm-status.sh &gt;&gt; /tmp/spark-driver-jvm.log
-</code></pre>
-
-<ul>
-<li>작업한 클러스터에 있는 테이블별로 질의</li>
+<li>Check cron jobs with 'crontab -e'.</li>
+<li>Check table schema and query.</li>
 </ul>
 <pre><code class="bash">select * from {table name} where ... limit 1;
 </code></pre>
 
 <p><strong> 4) kafka &amp; kaetlyn </strong></p>
 <ul>
-<li>kafka-utils.sh help // options 확인</li>
-<li>kafka-utils.sh topic-check {topic name}    // Partition의 Leader가 골고루 분포되어 있는지 확인</li>
-<li>kafka-utils.sh offset-check      // Consumer LAG 가져와지는지 확인</li>
+<li>kafka-utils.sh help // list up options</li>
+<li>kafka-utils.sh topic-check {topic name}    // Check the distribution of Leaders</li>
+<li>kafka-utils.sh offset-check      // Consumer LAG of each partition</li>
 </ul>
-<p><strong> 5) 시스템 자원 확인 </strong></p>
+<p><strong> 5) System resources </strong></p>
 <ul>
-<li>available 메모리 확인</li>
-<li>disk 사용현황 확인</li>
+<li>Check available memory</li>
+<li>Check the status of disks</li>
 </ul>
               
             </div>
@@ -566,7 +551,7 @@ BUMPED 321
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../kaetlyn/" class="btn btn-neutral float-right" title="Data ingestion with KAFKA (ko)">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../kaetlyn/" class="btn btn-neutral float-right" title="Data ingestion with KAFKA">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../version-update/" class="btn btn-neutral" title="Version update"><span class="icon icon-circle-arrow-left"></span> Previous</a>
