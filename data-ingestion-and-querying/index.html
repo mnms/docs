@@ -89,9 +89,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -166,7 +166,6 @@ OPTIONS (
   `rowstore` 'true'
   )
 </code></pre>
-
 <p>There are various options used to describe storage properties.</p>
 <ul>
 <li>
@@ -203,7 +202,7 @@ The actual data are stored in Lightning DB which consists of Redis &amp; RockDB 
 <p><strong>(1) Insert data with DataFrameWriter</strong></p>
 <p>You can use DataFrameWriter to write data into LightningDB.</p>
 <p>Now, LightingDB only supports "<a href="https://spark.apache.org/docs/2.3.1/api/java/org/apache/spark/sql/SaveMode.html#Append">Append mode</a>".</p>
-<pre><code class="scala">// Create source DataFrame.
+<pre><code class="language-scala">// Create source DataFrame.
 val df = spark.sqlContext.read.format(&quot;csv&quot;)
     .option(&quot;header&quot;, &quot;false&quot;)
     .option(&quot;inferSchema&quot;, &quot;true&quot;)
@@ -212,14 +211,12 @@ val df = spark.sqlContext.read.format(&quot;csv&quot;)
 // &quot;pcell&quot; is a name of table which has R2 options.
 df.write.insertInto(&quot;pcell&quot;)
 </code></pre>
-
 <p><strong>(2) Insert data with INSERT INTO SELECT query</strong></p>
-<pre><code class="sql">-- pcell : table with R2 option
+<pre><code class="language-sql">-- pcell : table with R2 option
 -- csv_table : table with csv option
 -- udf : UDF can be used to transform original data.
 INSERT INTO pcell SELECT *, udf(event_time) FROM csv_table
 </code></pre>
-
 <h1 id="3-querying">3. Querying<a class="headerlink" href="#3-querying" title="Permanent link">&para;</a></h1>
 <p>You can query data with SparkSQL interfaces such as DataFrames and Spark ThriftServer.
 Please refer to <a href="https://spark.apache.org/docs/latest/api/sql/index.html">Spark SQL guide page</a>.</p>

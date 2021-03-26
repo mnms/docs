@@ -87,9 +87,9 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">How to scaleout</a>
     <ul class="current">
@@ -185,7 +185,6 @@
 
    slots:14746-15564 (819 slots) master
 </code></pre>
-
 <h1 id="2-check-the-distribution-of-redis-servers">2. Check the distribution of redis-servers<a class="headerlink" href="#2-check-the-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
 <pre><code>$ flashbase check-distribution
 
@@ -204,12 +203,10 @@ SERVER NAME     | M | S
 Total nodes     | 20 | 20
 
 </code></pre>
-
 <h1 id="3-scale-out">3. Scale out<a class="headerlink" href="#3-scale-out" title="Permanent link">&para;</a></h1>
 <p>Open 'redis.properties' with 'flashbase edit' command.</p>
 <pre><code>$ flashbase edit
 </code></pre>
-
 <p>Add a new node("192.168.111.203").</p>
 <p><strong>As-is</strong></p>
 <pre><code>#!/bin/bash
@@ -222,7 +219,6 @@ export SR2_REDIS_MASTER_PORTS=( $(seq 18800 18809) )
 export SR2_REDIS_SLAVE_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; )
 export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
 </code></pre>
-
 <p><strong>To-be</strong></p>
 <pre><code>#!/bin/bash
 
@@ -235,11 +231,9 @@ export SR2_REDIS_MASTER_PORTS=( $(seq 18800 18809) )
 export SR2_REDIS_SLAVE_HOSTS=( &quot;192.168.111.201&quot; &quot;192.168.111.202&quot; &quot;192.168.111.203&quot; )
 export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
 </code></pre>
-
 <p>Scale out the cluster with a 'flashbase scale-out {new node's IP}' command. If you add more than one node, you can use like 'flashbase scale-out 192.168.111.203 192.168.111.204 192.168.111.205'.</p>
 <pre><code>$ flashbase scale-out 192.168.111.203
 </code></pre>
-
 <h1 id="4-check-the-new-distribution-of-slots">4. Check the new distribution of slots<a class="headerlink" href="#4-check-the-new-distribution-of-slots" title="Permanent link">&para;</a></h1>
 <pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep master | grep slot
    slots:273-818 (546 slots) master
@@ -273,7 +267,6 @@ export SR2_REDIS_SLAVE_PORTS=( $(seq 18850 18859) )
    slots:15838-16383 (546 slots) master
    slots:10104-10649 (546 slots) master
 </code></pre>
-
 <h1 id="5-check-the-new-distribution-of-redis-servers">5. Check the new distribution of redis-servers<a class="headerlink" href="#5-check-the-new-distribution-of-redis-servers" title="Permanent link">&para;</a></h1>
 <pre><code>$ fb check-distribution
 check distribution of masters/slaves...
@@ -295,7 +288,7 @@ Total nodes     |   30  |   30
         <a href="../how-to-use-flashbase/" class="btn btn-neutral float-right" title="How to use flashbase">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../kaetlyn/" class="btn btn-neutral" title="Data ingestion with KAFKA"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../kaetlyn/" class="btn btn-neutral" title="Data ingestion with KAFKA (ko)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   

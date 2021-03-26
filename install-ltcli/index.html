@@ -89,9 +89,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -143,42 +143,37 @@
               
                 <h1 id="1-how-to-run-ltcli">1. How to run LTCLI<a class="headerlink" href="#1-how-to-run-ltcli" title="Permanent link">&para;</a></h1>
 <p>If you try to use LTCLI for the first time after the EC2 instance was created, please update LTCLI like below.</p>
-<pre><code class="bash">pip install ltcli --upgrade --user
+<pre><code class="language-bash">pip install ltcli --upgrade --user
 </code></pre>
-
 <p><strong>(1) Run</strong></p>
 <p>To run LTCLI, ${FBPATH} should be set. If not, the following error messages will be shown.</p>
-<pre><code class="bash">To start using LTCLI, you should set env FBPATH
+<pre><code class="language-bash">To start using LTCLI, you should set env FBPATH
 ex)
 export FBPATH=$HOME/.flashbase
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In the case of EC2 Instance, this path is set automatically.</p>
 </div>
 <p>Run LTCLI by typing 'ltcli'</p>
-<pre><code class="bash">$ ltcli
+<pre><code class="language-bash">$ ltcli
 </code></pre>
-
 <p>When LTCLI starts for the first time,  you need to confirm 'base_directory'.</p>
 <p>[~/tsr2]<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> is default value.</p>
-<pre><code class="bash">Type base directory of LightningDB [~/tsr2]
+<pre><code class="language-bash">Type base directory of LightningDB [~/tsr2]
 ~/tsr2
 OK, ~/tsr2
 </code></pre>
-
 <p>In '${FBPATH}/.flashbase/config', you can modify 'base_directory'.</p>
 <p>If you logs in LTCLI normally, LTCLI starts on the last visited cluster.
 In the case of the first login, '-' is shown instead of cluster number.</p>
-<pre><code class="bash">root@lightningdb:-&gt;
+<pre><code class="language-bash">root@lightningdb:-&gt;
 
 ...
 ...
 
 root@lightningdb:1&gt;
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In this page, '$' means that you are in Centos and '&gt;' means that you are in LTCLI.</p>
@@ -189,9 +184,8 @@ root@lightningdb:1&gt;
 <h1 id="2-deploy-lightningdb">2. Deploy LightningDB<a class="headerlink" href="#2-deploy-lightningdb" title="Permanent link">&para;</a></h1>
 <p>Deploy is the procedure that LightningDB is installed with the specified cluster number.</p>
 <p>You could make LightningDB cluster with the following command.</p>
-<pre><code class="bash">&gt; deploy 1
+<pre><code class="language-bash">&gt; deploy 1
 </code></pre>
-
 <p>After deploy command, you should type the following information that provides its last used value.</p>
 <ul>
 <li>Installer</li>
@@ -202,11 +196,10 @@ root@lightningdb:1&gt;
 <li>The prefix of DB path (used for 'redis data', 'redis DB path' and 'flash DB path')</li>
 </ul>
 <p>Use the below option not to save the last used value.</p>
-<pre><code class="bash">&gt; deploy --history-save=False
+<pre><code class="language-bash">&gt; deploy --history-save=False
 </code></pre>
-
 <p><strong>(1) Select installer</strong></p>
-<pre><code class="bash">Select installer
+<pre><code class="language-bash">Select installer
 
     [ INSTALLER LIST ]
     (1) [DOWNLOAD] lightningdb.release.master.5a6a38.bin
@@ -219,14 +212,13 @@ you can also add file in list by copy to '$FBPATH/releases/'
 1
 OK, lightningdb.release.master.5a6a38.bin
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>LOCAL means installer file under path '$FBPATH/releases/' on your local.
 DOWNLOAD refers to a file that can be downloaded and up to 5 files are displayed in the latest order. To confirm the recommended Lightning DB version, use <a href="../release-note/">Release Notes</a></p>
 </div>
 <p>Select a number to use that file. Type DOWNLOAD will be used after downloading. The downloaded file is saved in path '$FBPATH/releases'.</p>
-<pre><code class="bash">Select installer
+<pre><code class="language-bash">Select installer
 
     [ INSTALLER LIST ]
     (empty)
@@ -238,51 +230,46 @@ Downloading lightningdb.release.master.5a6a38.bin
 [==================================================] 100%
 OK, lightningdb.release.master.5a6a38.bin
 </code></pre>
-
 <p>If the installer list is empty like above, you can also use file path or URL. If you enter URL, download the file and use it. The downloaded file is saved in path '$FBPATH/releases'.</p>
 <p><strong>(2) Type Hosts</strong></p>
 <p>IP address or hostname can be used. In the case of several hosts, the list can be separated by comma(',').</p>
-<pre><code class="bash">Please type host list separated by comma(,) [127.0.0.1]
+<pre><code class="language-bash">Please type host list separated by comma(,) [127.0.0.1]
 
 OK, ['127.0.0.1']
 </code></pre>
-
 <p><strong>(3) Type Masters</strong></p>
-<pre><code class="bash">How many masters would you like to create on each host? [10]
+<pre><code class="language-bash">How many masters would you like to create on each host? [10]
 
 OK, 10
 Please type ports separate with a comma(,) and use a hyphen(-) for range. [18100-18109]
 
 OK, ['18100-18109']
 </code></pre>
-
 <p>Define how many master processes will be created in the cluster per server.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>To create a cluster, 3 master processes should be included at least.</p>
 </div>
 <p><strong>(4) Type information of slave</strong></p>
-<pre><code class="bash">How many replicas would you like to create on each master? [0]
+<pre><code class="language-bash">How many replicas would you like to create on each master? [0]
 
 OK, 0
 </code></pre>
-
 <p>Define how many slave processes will be created for a master process.</p>
 <p><strong>(5) Type the count of SSD(disk) and the path of DB files</strong></p>
-<pre><code class="bash">How many ssd would you like to use? [4]
+<pre><code class="language-bash">How many ssd would you like to use? [4]
 
 OK, 4
 Type prefix of db path [/nvme/data_]
 
 OK, /nvme/data_
 </code></pre>
-
 <p>With this setting, LightningDB will use 4 disk paths('/nvme/data_01', '/nvme/data_02', '/nvme/data_03', '/nvme/data_04'). </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In order to use this setting, the 'nvkvs' directories must be generated under all disk path and the permission setting(chmod/chown) for the directory must be configured as follows.</p>
 </div>
-<pre><code class="bash">$ pwd
+<pre><code class="language-bash">$ pwd
 /nvme/data_01
 $ mkdir nvkvs
 $chown ltdb nvkvs   // The current user is 'ltdb'
@@ -293,10 +280,9 @@ drwxr-xr-x 33 ltdb  ltdb  4.0K  2월  4 10:19 ..
 drwxrwxr-x  3 ltdb  ltdb  4.0K  6월  5 18:36 nvkvs  // The current user is 'ltdb'
 ...
 </code></pre>
-
 <p><strong>(6) Check all settings finally</strong></p>
 <p>Finally, all settings will be shown and confirmation will be requested like below.</p>
-<pre><code class="bash">+--------------+---------------------------------------+
+<pre><code class="language-bash">+--------------+---------------------------------------+
 | NAME         | VALUE                                 |
 +--------------+---------------------------------------+
 | installer    | lightningdb.release.master.5a6a38.bin |
@@ -308,10 +294,9 @@ drwxrwxr-x  3 ltdb  ltdb  4.0K  6월  5 18:36 nvkvs  // The current user is 'ltd
 Do you want to proceed with the deploy accroding to the above information? (y/n)
 y
 </code></pre>
-
 <p><strong>(7) Deploy cluster</strong></p>
 <p>After deploying is completed, the following messages are shown and LTCLI of the cluster is activated.</p>
-<pre><code class="bash">Check status of hosts...
+<pre><code class="language-bash">Check status of hosts...
 +-----------+--------+
 | HOST      | STATUS |
 +-----------+--------+
@@ -331,11 +316,10 @@ Sync conf...
 Complete to deploy cluster 1.
 Cluster '1' selected.
 </code></pre>
-
 <p>When an error occurs during deploying, error messages will be shown like below.</p>
 <p><strong>(8) Errors</strong></p>
 <p><strong>Host connection error</strong></p>
-<pre><code class="bash">Check status of hosts...
+<pre><code class="language-bash">Check status of hosts...
 +-------+------------------+
 | HOST  | STATUS           |
 +-------+------------------+
@@ -346,7 +330,6 @@ Cluster '1' selected.
 +-------+------------------+
 There are unavailable host.
 </code></pre>
-
 <ul>
 <li>SSH ERROR <ul>
 <li>SSH access error. Please check SSH KEY exchange or the status of SSH client/server.</li>
@@ -362,7 +345,7 @@ There are unavailable host.
 </li>
 </ul>
 <p><strong>Cluster already exist</strong></p>
-<pre><code class="bash">Checking for cluster exist...
+<pre><code class="language-bash">Checking for cluster exist...
 +-------+---------------+
 | HOST  | STATUS        |
 +-------+---------------+
@@ -373,7 +356,6 @@ There are unavailable host.
 +-------+---------------+
 Cluster information exist on some hosts.
 </code></pre>
-
 <ul>
 <li>CLUSTER EXIST<ul>
 <li>LightningDB is already deployed in the cluster of the host.</li>
@@ -381,7 +363,7 @@ Cluster information exist on some hosts.
 </li>
 </ul>
 <p><strong>Not include localhost</strong></p>
-<pre><code class="bash"> Check status of hosts...
+<pre><code class="language-bash"> Check status of hosts...
   +-------+------------------+
   | HOST  | STATUS           |
   +-------+------------------+
@@ -391,11 +373,10 @@ Cluster information exist on some hosts.
   +-------+------------------+
   Must include localhost.
 </code></pre>
-
 <p>If the localhost(127.0.0.1) is not included in host information, this error occurs. Please add the localhost in the host list in this case.</p>
 <h1 id="3-start-lightningdb">3. Start LightningDB<a class="headerlink" href="#3-start-lightningdb" title="Permanent link">&para;</a></h1>
 <p>Create a cluster of LightningDB using 'cluster create' command.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster create
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -462,7 +443,6 @@ alive redis 10/10
 
 ec2-user@lightningdb:1&gt;
 </code></pre>
-
 <p>From now, you can try ingestion and query in LightningDB with <a href="../try-with-zeppelin/">Zeppelin</a>. And for further information about commands of LTCLI, please use <a href="../command-line-interface/">Command Line</a>.</p>
 <div class="footnote">
 <hr />

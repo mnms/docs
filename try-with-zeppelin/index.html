@@ -89,9 +89,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -147,7 +147,7 @@
 <p>Secondly, to run LightningDB on the Spark, the jars in the LightningDB should be passed to the Spark.
 When EC2 Instance is initialized, the environment variable (<code>$SPARK_SUBMIT_OPTIONS</code>) is configured for this reason.
 Thus just need to check the setting in <code>zeppelin-env.sh</code>.</p>
-<pre><code class="bash">$ vim $ZEPPELIN_HOME/conf/zeppelin-env.sh 
+<pre><code class="language-bash">$ vim $ZEPPELIN_HOME/conf/zeppelin-env.sh 
 ...
 LIGHTNINGDB_LIB_PATH=$(eval echo $(cat $FBPATH/config | head -n 1 | awk {'print $2'}))/cluster_$(cat $FBPATH/HEAD)/tsr2-assembly-1.0.0-SNAPSHOT/lib/
 if [[ -e $LIGHTNINGDB_LIB_PATH ]]; then
@@ -155,12 +155,10 @@ if [[ -e $LIGHTNINGDB_LIB_PATH ]]; then
 fi
 ...
 </code></pre>
-
 <p>Finally, start Zeppelin daemon.</p>
-<pre><code class="bash">$ cd $ZEPPELIN_HOME/bin
+<pre><code class="language-bash">$ cd $ZEPPELIN_HOME/bin
 $ ./zeppelin-daemon.sh start
 </code></pre>
-
 <h1 id="2-tutorial-with-zeppelin">2. Tutorial with Zeppelin<a class="headerlink" href="#2-tutorial-with-zeppelin" title="Permanent link">&para;</a></h1>
 <p>After starting zeppelin daemon, you can access zeppelin UI using a browser. The URL is <a href="https://your-server-ip:8080">https://your-server-ip:8080</a>.</p>
 <div class="admonition tip">

@@ -89,9 +89,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -147,7 +147,7 @@
 </div>
 <h1 id="1-cluster-commands">1. Cluster Commands<a class="headerlink" href="#1-cluster-commands" title="Permanent link">&para;</a></h1>
 <p>If you want to see the list of cluster commands, use the <code>cluster</code> command without any option.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster
 
 NAME
     ltcli cluster - This is cluster command
@@ -193,12 +193,10 @@ COMMANDS
      use
        Change selected cluster
 </code></pre>
-
 <p><strong>(1) Cluster configure</strong></p>
 <p><code>redis-{port}.conf</code> is generated with using <code>redis-{master/slave}.conf.template</code> and <code>redis.properties</code> files.</p>
-<pre><code class="bash">&gt; cluster configure
+<pre><code class="language-bash">&gt; cluster configure
 </code></pre>
-
 <p><strong>(2) Cluster start</strong></p>
 <ul>
 <li>Backup logs of the previous master/slave nodes<ul>
@@ -215,7 +213,7 @@ COMMANDS
 </li>
 <li>Log files will be saved in <code>${SR2_HOME}/logs/redis/</code></li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster start
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -235,53 +233,48 @@ Wait until all redis process up...
 cur: 5 / total: 5
 Complete all redis process up
 </code></pre>
-
 <p><strong>Errors</strong></p>
 <ul>
 <li>ErrorCode 11</li>
 </ul>
 <p>Redis-server(master) process with the same port is already running. To resolve this error, use <code>cluster stop</code> or <code>kill {pid of the process}</code>.</p>
-<pre><code class="bash">$ cluster start
+<pre><code class="language-bash">$ cluster start
 ...
 ...
 [ErrorCode 11] Fail to start... Must be checked running MASTER redis processes!
 We estimate that redis process is &lt;alive-redis-count&gt;.
 </code></pre>
-
 <ul>
 <li>ErrorCode 12</li>
 </ul>
 <p>Redis-server(slave) process with the same port is already running. To resolve this error, use <code>cluster stop</code> or <code>kill {pid of the process}</code>.</p>
-<pre><code class="bash">$ cluster start
+<pre><code class="language-bash">$ cluster start
 ...
 [ErrorCode 12] Fail to start... Must be checked running SLAVE redis processes!
 We estimate that redis process is &lt;alive-redis-count&gt;.
 </code></pre>
-
 <ul>
 <li>Conf file not exist</li>
 </ul>
 <p>Conf file is not found. To resove this error, use <code>cluster configure</code> and then <code>cluster start</code>.</p>
-<pre><code class="bash">$ cluster start
+<pre><code class="language-bash">$ cluster start
 ...
 FileNotExistError: ${SR2_HOME}/conf/redis/redis-{port}.conf
 </code></pre>
-
 <ul>
 <li>Max try error
 ​
 For detail information, please check the log files.</li>
 </ul>
-<pre><code class="bash">$ cluster start
+<pre><code class="language-bash">$ cluster start
 ...
 ClusterRedisError: Fail to start redis: max try exceed
 Recommendation Command: 'monitor'
 </code></pre>
-
 <p><strong>(3) Cluster create</strong></p>
 <p>After checking the information of the cluster, create a cluster of LightningDB.</p>
 <p><strong>Case 1)</strong> When redis-server processes are running, create a cluster only.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt;cluster create
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt;cluster create
 Check status of hosts...
 OK
 &gt;&gt;&gt; Creating cluster
@@ -314,9 +307,8 @@ Check cluster state and asign slot...
 Ok
 create cluster complete.
 </code></pre>
-
 <p><strong>Case 2)</strong> When redis-server processes are not running, create a cluster after launching redis-server processes with <code>cluster start</code> command.</p>
-<pre><code class="bash">ec2-user@lightningdb:4&gt;cluster create
+<pre><code class="language-bash">ec2-user@lightningdb:4&gt;cluster create
 Check status of hosts...
 OK
 Backup redis master log in each MASTER hosts...
@@ -364,10 +356,9 @@ Check cluster state and asign slot...
 Ok
 create cluster complete.
 </code></pre>
-
 <p><strong>Errors</strong></p>
 <p>When redis servers are not running, this error(Errno 111) will occur. To solve this error, use <code>cluster start</code> command previously.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt;cluster create
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt;cluster create
 Check status of hosts...
 OK
 &gt;&gt;&gt; Creating cluster
@@ -386,11 +377,10 @@ Do you want to proceed with the create according to the above information? (y/n)
 y
 127.0.0.1:18100 - [Errno 111] Connection refused
 </code></pre>
-
 <p><strong>(4) Cluster stop</strong></p>
 <p>​Gracefully kill all redis-servers(master/slave) with SIGINT
 ​​</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster stop
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster stop
 Check status of hosts...
 OK
 Stopping master cluster of redis...
@@ -398,17 +388,15 @@ cur: 5 / total: 5
 cur: 0 / total: 5
 Complete all redis process down
 </code></pre>
-
 <p><strong>Options</strong></p>
 <ul>
 <li>Force to kill all redis-servers(master/slave) with SIGKILL</li>
 </ul>
-<pre><code class="bash">--force
+<pre><code class="language-bash">--force
 </code></pre>
-
 <p><strong>(5) Cluster clean</strong></p>
 <p>Remove conf files for redis-server and all data(aof, rdb, RocksDB) of LightningDB</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster clean
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster clean
 Removing redis generated master configuration files
  - 127.0.0.1
 Removing flash db directory, appendonly and dump.rdb files in master
@@ -416,42 +404,36 @@ Removing flash db directory, appendonly and dump.rdb files in master
 Removing master node configuration
  - 127.0.0.1
 </code></pre>
-
 <p><strong>(6) Cluster restart​</strong></p>
 <p>Process <code>cluster stop</code> and then <code>cluster start</code>.​​</p>
 <p><strong>Options</strong></p>
 <ul>
 <li>Force to kill all redis-servers(master/slave) with SIGKILL and then start again.</li>
 </ul>
-<pre><code class="bash">--force-stop
+<pre><code class="language-bash">--force-stop
 </code></pre>
-
 <ul>
 <li>Remove all data(aof, rdb, RocksDB, conf files) before starting again.</li>
 </ul>
-<pre><code class="bash">--reset
+<pre><code class="language-bash">--reset
 </code></pre>
-
 <ul>
 <li>Process <code>cluster create</code>. This command should be called with <code>--reset</code>.</li>
 </ul>
-<pre><code class="bash">--cluster
+<pre><code class="language-bash">--cluster
 </code></pre>
-
 <p><strong>(7) Cluster ls</strong></p>
 <p>List the deployed clusters.</p>
-<pre><code class="bash">ec2-user@lightningdb:2&gt; cluster ls
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; cluster ls
 [1, 2]
 </code></pre>
-
 <p><strong>(8) Cluster use</strong></p>
 <p>Change the cluster to use LTCLI. Use <code>cluster use</code> or <code>c</code> commands.</p>
-<pre><code class="bash">ec2-user@lightningdb:2&gt; cluster use 1
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; cluster use 1
 Cluster '1' selected.
 ec2-user@lightningdb:1&gt; c 2
 Cluster '2' selected.
 </code></pre>
-
 <p><strong>(9) Cluster add_slave</strong></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -472,7 +454,7 @@ Cluster '2' selected.
 </ul>
 </li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:2&gt; deploy 3
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; deploy 3
 Select installer
 
     [ INSTALLER LIST ]
@@ -533,11 +515,10 @@ Sync conf...
 Complete to deploy cluster 3.
 Cluster '3' selected.
 </code></pre>
-
 <ul>
 <li>When the deploy is complete, start and create the cluster.</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:3&gt; cluster start
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cluster start
 Check status of hosts...
 OK
 Check cluster exist...
@@ -592,16 +573,14 @@ Ok
 create cluster complete.
 ec2-user@lightningdb:3&gt;
 </code></pre>
-
 <ul>
 <li>Add slave info</li>
 </ul>
 <p>Open the conf file.</p>
-<pre><code class="bash">ec2-user@lightningdb:3&gt; conf cluster
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; conf cluster
 </code></pre>
-
 <p>You can modify redis.properties by entering the command as shown above.</p>
-<pre><code class="bash">#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 
 ## Master hosts and ports
 export SR2_REDIS_MASTER_HOSTS=( &quot;127.0.0.1&quot; )
@@ -632,9 +611,8 @@ export SR2_FLASH_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
 #export SR2_FLASH_DB_PATH=&quot;/ssd_&quot;
 #######################################################
 </code></pre>
-
 <p>Modify <code>SR2_REDIS_SLAVE_HOSTS</code> and <code>SR2_REDIS_SLAVE_PORTS</code> as shown below.</p>
-<pre><code class="bash">#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 
 ## Master hosts and ports
 export SR2_REDIS_MASTER_HOSTS=( &quot;127.0.0.1&quot; )
@@ -665,20 +643,18 @@ export SR2_FLASH_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
 #export SR2_FLASH_DB_PATH=&quot;/ssd_&quot;
 #######################################################
 </code></pre>
-
 <p>Save the modification and exit.</p>
-<pre><code class="bash">ec2-user@lightningdb:3&gt; conf cluster
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; conf cluster
 Check status of hosts...
 OK
 sync conf
 OK
 Complete edit
 </code></pre>
-
 <ul>
 <li>Execute <code>cluster add-slave</code> command</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:3&gt; cluster add-slave
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cluster add-slave
 Check status of hosts...
 OK
 Check cluster exist...
@@ -704,11 +680,10 @@ replicate [M] 127.0.0.1 18303 - [S] 127.0.0.1 18353
 replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
 5 / 5 meet complete.
 </code></pre>
-
 <ul>
 <li>Check configuration information</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:3&gt; cli cluster nodes
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cli cluster nodes
 0549ec03031213f95121ceff6c9c13800aef848c 127.0.0.1:18303 master - 0 1574132251126 3 connected 3280-6555
 1b09519d37ebb1c09095158b4f1c9f318ddfc747 127.0.0.1:18352 slave a6a8013cf0032f0f36baec3162122b3d993dd2c8 0 1574132251025 6 connected
 c7dc4815e24054104dff61cac6b13256a84ac4ae 127.0.0.1:18353 slave 0549ec03031213f95121ceff6c9c13800aef848c 0 1574132251126 3 connected
@@ -721,35 +696,31 @@ f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e5
 83b7ef98b80a05a4ee795ae6b399c8cde54ad04e 127.0.0.1:18300 myself,master - 0 1574132250000 1 connected 0-3279
 
 </code></pre>
-
 <p><strong>(10) Cluster rowcount</strong></p>
 <p>Check the count of records that are stored in the cluster.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cluster rowcount
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster rowcount
 0
 </code></pre>
-
 <p><strong>(11) Check the status of cluster</strong></p>
 <p>With the following commands, you can check the status of the cluster.</p>
 <ul>
 <li>Send PING</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cli ping --all
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli ping --all
 alive redis 10/10
 </code></pre>
-
 <p>If a node does not reply, the fail node will be displayed like below.</p>
-<pre><code class="bash">+-------+-----------------+--------+
+<pre><code class="language-bash">+-------+-----------------+--------+
 | TYPE  | ADDR            | RESULT |
 +-------+-----------------+--------+
 | Slave | 127.0.0.1:18352 | FAIL   |
 +-------+-----------------+--------+
 alive redis 9/10
 </code></pre>
-
 <ul>
 <li>Check the status of the cluster</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cli cluster info
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli cluster info
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -767,21 +738,19 @@ cluster_stats_messages_pong_received:12
 cluster_stats_messages_meet_received:4
 cluster_stats_messages_received:26
 </code></pre>
-
 <ul>
 <li>Check the list of the nodes those are organizing the cluster.</li>
 </ul>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; cli cluster nodes
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli cluster nodes
 559af5e90c3f2c92f19c927c29166c268d938e8f 127.0.0.1:18104 master - 0 1574127926000 4 connected 6556-9831
 174e2a62722273fb83814c2f12e2769086c3d185 127.0.0.1:18101 myself,master - 0 1574127925000 3 connected 9832-13107
 35ab4d3f7f487c5332d7943dbf4b20d5840053ea 127.0.0.1:18100 master - 0 1574127926000 1 connected 0-3279
 f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 1574127927172 0 connected 3280-6555
 9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
 </code></pre>
-
 <p><strong>(12) Cluster tree</strong></p>
 <p>User can check the status of master nodes and slaves and show which master and slave nodes are linked. </p>
-<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster tree
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -803,13 +772,12 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 127.0.0.1:18906(connected)
 |__ 127.0.0.1:18956(connected)
 </code></pre>
-
 <p><strong>(13) Cluster failover</strong></p>
 <p>If a master node is killed, its slave node will automatically promote after 'cluster-node-time'<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</p>
 <p>User can promote the slave node immediately by using the 'cluster failover' command.</p>
 <p>Step 1) Check the status of the cluster</p>
 <p>In this case, '127.0.0.1:18902' node is killed.</p>
-<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster tree
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
 |__ 127.0.0.1:18950(connected)
 
@@ -831,9 +799,8 @@ f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 157412792717
 127.0.0.1:18906(connected)
 |__ 127.0.0.1:18956(connected)
 </code></pre>
-
 <p>Step 2) Do failover with 'cluster failover' command</p>
-<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster failover
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster failover
 failover 127.0.0.1:18952 for 127.0.0.1:18902
 OK
 ec2-user@lightningdb:9&gt; cluster tree
@@ -859,10 +826,9 @@ ec2-user@lightningdb:9&gt; cluster tree
 
 127.0.0.1:18952(connected)      &lt;--- Promoted to master!
 </code></pre>
-
 <p><strong>(14) Cluster failback</strong></p>
 <p>With 'cluster failback' command, the killed node is restarted and added to the cluster as the slave node.</p>
-<pre><code class="bash">ec2-user@lightningdb:9&gt; cluster failback
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster failback
 run 127.0.0.1:18902
 ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18900(connected)
@@ -886,10 +852,9 @@ ec2-user@lightningdb:9&gt; cluster tree
 127.0.0.1:18952(connected)       &lt;--- Promoted to master!
 |__ 127.0.0.1:18902(connected)   &lt;--- Failbacked. Now this node is slave!
 </code></pre>
-
 <h1 id="2-thrift-server-commands">2. Thrift Server Commands<a class="headerlink" href="#2-thrift-server-commands" title="Permanent link">&para;</a></h1>
 <p>If you want to see the list of Thrift Server commands, use the the <code>thriftserver</code> command without any option.</p>
-<pre><code class="bash">NAME
+<pre><code class="language-bash">NAME
     ltcli thriftserver
 
 SYNOPSIS
@@ -913,10 +878,9 @@ COMMANDS
      stop
        Stop thriftserver
 </code></pre>
-
 <p><strong>(1) Thriftserver beeline</strong></p>
 <p>Connect to the thrift server</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver beeline
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver beeline
 Connecting...
 Connecting to jdbc:hive2://localhost:13000
 19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
@@ -933,41 +897,36 @@ Beeline version 1.2.1.spark2 by Apache Hive
 +-----------+------------+--------------+--+
 No rows selected (0.55 seconds)
 </code></pre>
-
 <p>Default value of db url to connect is <code>jdbc:hive2://$HIVE_HOST:$HIVE_PORT</code></p>
 <p>You can modify <code>$HIVE_HOST</code> and <code>$HIVE_PORT</code> by the command <code>conf thriftserver</code></p>
 <p><strong>(2) Thriftserver monitor</strong></p>
 <p>You can view the logs of the thrift server in real-time.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver monitor
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver monitor
 Press Ctrl-C for exit.
 19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
 19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
 19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager
 ...
 </code></pre>
-
 <p><strong>(3) Thriftserver restart</strong></p>
 <p>Restart the thrift server.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver restart
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver restart
 no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 </code></pre>
-
 <p><strong>(4) Start thriftserver</strong></p>
 <p>Run the thrift server.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver start
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver start
 starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 </code></pre>
-
 <p>You can view the logs through the command <code>monitor</code>.</p>
 <p><strong>(5) Stop thriftserver</strong></p>
 <p>Shut down the thrift server.</p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; thriftserver stop
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver stop
 stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
 </code></pre>
-
 <p><strong>(6) Conf thriftserver</strong></p>
-<pre><code class="bash">ec2-user@lightningdb:1&gt; conf thriftserver
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; conf thriftserver
 
 #!/bin/bash
 ###############################################################################
@@ -1009,7 +968,6 @@ EXTRACTED_EVENT_LOG_SAVE_DAY=5
 SPARK_LOG_SAVE_MIN=2000
 ##############
 </code></pre>
-
 <div class="footnote">
 <hr />
 <ol>

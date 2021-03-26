@@ -87,9 +87,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -155,7 +155,7 @@
 </div>
 <h1 id="1-optimizing-system-parameters">1. Optimizing System Parameters<a class="headerlink" href="#1-optimizing-system-parameters" title="Permanent link">&para;</a></h1>
 <h3 id="1-edit-etcsysctlconf-like-following">(1) Edit <code>/etc/sysctl.conf</code> like following<a class="headerlink" href="#1-edit-etcsysctlconf-like-following" title="Permanent link">&para;</a></h3>
-<pre><code class="bash">...
+<pre><code class="language-bash">...
 vm.swappiness = 0
 vm.overcommit_memory = 1
 vm.overcommit_ratio = 50
@@ -169,13 +169,12 @@ net.ipv4.tcp_max_syn_backlog = 4096
 net.core.somaxconn = 65535
 ...
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In case of application in runtime, use <code>sudo sysctl -p</code></p>
 </div>
 <h3 id="2-edit-etcsecuritylimitsconf">(2) Edit <code>/etc/security/limits.conf</code><a class="headerlink" href="#2-edit-etcsecuritylimitsconf" title="Permanent link">&para;</a></h3>
-<pre><code class="bash">...
+<pre><code class="language-bash">...
 * soft core     -1
 * soft nofile 262144
 * hard nofile 262144
@@ -187,24 +186,22 @@ net.core.somaxconn = 65535
 [account name] * hard nproc 131072
 ...
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In case of application in runtime, use <code>ulimit -n 65535, ulimit -u 131072</code></p>
 </div>
 <h3 id="3-edit-etcfstab">(3) Edit <code>/etc/fstab</code><a class="headerlink" href="#3-edit-etcfstab" title="Permanent link">&para;</a></h3>
 <p>Remove SWAP Partition (Comment out SWAP partition with using <code>#</code> and reboot)</p>
-<pre><code class="bash">...
+<pre><code class="language-bash">...
 #/dev/mapper/centos-swap swap swap defaults 0 0
 ...
 </code></pre>
-
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>In case of application in runtime, use <code>swapoff -a</code></p>
 </div>
 <h3 id="4-etcinitddisable-transparent-hugepages">(4) <code>/etc/init.d/disable-transparent-hugepages</code><a class="headerlink" href="#4-etcinitddisable-transparent-hugepages" title="Permanent link">&para;</a></h3>
-<pre><code class="bash">root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
+<pre><code class="language-bash">root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
 #!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          disable-transparent-hugepages
@@ -250,27 +247,23 @@ esac
 [root@fbg01 ~] chmod 755 /etc/init.d/disable-transparent-hugepages
 [root@fbg01 ~] chkconfig --add disable-transparent-hugepages
 </code></pre>
-
 <h1 id="2-setup-prerequisites">2. Setup Prerequisites<a class="headerlink" href="#2-setup-prerequisites" title="Permanent link">&para;</a></h1>
 <h3 id="-bash-unzip-ssh">- bash, unzip, ssh<a class="headerlink" href="#-bash-unzip-ssh" title="Permanent link">&para;</a></h3>
 <h3 id="-jdk-18-or-higher">- JDK 1.8 or higher<a class="headerlink" href="#-jdk-18-or-higher" title="Permanent link">&para;</a></h3>
 <h3 id="-gcc-485-or-higher">- gcc 4.8.5 or higher<a class="headerlink" href="#-gcc-485-or-higher" title="Permanent link">&para;</a></h3>
 <h3 id="-glibc-217-or-higher">- glibc 2.17 or higher<a class="headerlink" href="#-glibc-217-or-higher" title="Permanent link">&para;</a></h3>
 <h3 id="-epel-release">- epel-release<a class="headerlink" href="#-epel-release" title="Permanent link">&para;</a></h3>
-<pre><code class="bash">sudo yum install epel-release
+<pre><code class="language-bash">sudo yum install epel-release
 </code></pre>
-
 <h3 id="-boost-boost-thread-boost-devel">- boost, boost-thread, boost-devel<a class="headerlink" href="#-boost-boost-thread-boost-devel" title="Permanent link">&para;</a></h3>
-<pre><code class="bash">sudo yum install boost boost-thread boost-devel
+<pre><code class="language-bash">sudo yum install boost boost-thread boost-devel
 </code></pre>
-
 <h3 id="-exchange-ssh-key">- Exchange SSH Key<a class="headerlink" href="#-exchange-ssh-key" title="Permanent link">&para;</a></h3>
 <p>For all servers that LightningDB will be deployed, SSH key should be exchanged.</p>
-<pre><code class="bash">ssh-keygen -t rsa
+<pre><code class="language-bash">ssh-keygen -t rsa
 chmod 0600 ~/.ssh/authorized_keys
 cat .ssh/id_rsa.pub | ssh {server name} &quot;cat &gt;&gt; .ssh/authorized_keys&quot;
 </code></pre>
-
 <h3 id="-intel-mkl-library">- Intel MKL library<a class="headerlink" href="#-intel-mkl-library" title="Permanent link">&para;</a></h3>
 <p>(1) Intel MKL 2019 library install</p>
 <ul>
@@ -280,13 +273,12 @@ cat .ssh/id_rsa.pub | ssh {server name} &quot;cat &gt;&gt; .ssh/authorized_keys&
 <li>Choose a Version "2019 Update 2" and download</li>
 <li>Unzip the file and execute the install.sh file with root account or (sudo command)</li>
 </ul>
-<pre><code class="bash">    sudo ./install.sh
+<pre><code class="language-bash">    sudo ./install.sh
 </code></pre>
-
 <ul>
 <li>Choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)</li>
 </ul>
-<pre><code class="bash">matthew@fbg05 /opt/intel $ pwd
+<pre><code class="language-bash">matthew@fbg05 /opt/intel $ pwd
 /opt/intel
 
 matthew@fbg05 /opt/intel $ ls -alh
@@ -307,15 +299,13 @@ drwxr-xr-x   5 root root 216  3월 22 01:34 parallel_studio_xe_2019.2.057
 drwxr-xr-x   3 root root  16  3월 22 01:34 samples_2019
 lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -&gt; compilers_and_libraries/linux/tbb
 </code></pre>
-
 <p>(2) Intel MKL 2019 library environment settings</p>
 <ul>
 <li>Append the following statement into ~/.bashrc</li>
 </ul>
-<pre><code class="bash"># INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
+<pre><code class="language-bash"># INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
 source /opt/intel/mkl/bin/mklvars.sh intel64
 </code></pre>
-
 <h3 id="-apache-hadoop-260-or-higher">- <a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.6.0/">Apache Hadoop 2.6.0</a> (or higher)<a class="headerlink" href="#-apache-hadoop-260-or-higher" title="Permanent link">&para;</a></h3>
 <h3 id="-apache-spark-23-on-hadoop-26">- <a href="https://archive.apache.org/dist/spark/spark-2.3.0/">Apache Spark 2.3 on Hadoop 2.6</a><a class="headerlink" href="#-apache-spark-23-on-hadoop-26" title="Permanent link">&para;</a></h3>
 <h3 id="-ntp">- ntp<a class="headerlink" href="#-ntp" title="Permanent link">&para;</a></h3>
@@ -323,17 +313,15 @@ source /opt/intel/mkl/bin/mklvars.sh intel64
 <h3 id="-settings-for-core-dumpoptional">- Settings for core dump(Optional)<a class="headerlink" href="#-settings-for-core-dumpoptional" title="Permanent link">&para;</a></h3>
 <p>(1) <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-abrt-installation">INSTALLING ABRT AND STARTING ITS SERVICES</a></p>
 <p>(2) Set core dump file size</p>
-<pre><code class="bash">ulimit -c unlimited
+<pre><code class="language-bash">ulimit -c unlimited
 </code></pre>
-
 <p>(3) Change the path of core dump files</p>
-<pre><code class="bash">echo /tmp/core.%p &gt; /proc/sys/kernel/core_pattern
+<pre><code class="language-bash">echo /tmp/core.%p &gt; /proc/sys/kernel/core_pattern
 </code></pre>
-
 <h1 id="3-session-configuration-files">3. Session configuration files<a class="headerlink" href="#3-session-configuration-files" title="Permanent link">&para;</a></h1>
 <h3 id="bashrc">'~/.bashrc'<a class="headerlink" href="#bashrc" title="Permanent link">&para;</a></h3>
 <p>Add followings</p>
-<pre><code class="bash"># .bashrc
+<pre><code class="language-bash"># .bashrc
 
 if [ -f /etc/bashrc ]; then
 . /etc/bashrc
@@ -353,13 +341,11 @@ PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$
 export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
 alias cfc='source ~/.use_cluster'
 </code></pre>
-
 <h1 id="4-install-and-start-lightningdb">4. Install and Start LightningDB<a class="headerlink" href="#4-install-and-start-lightningdb" title="Permanent link">&para;</a></h1>
 <p>With LTCLI provided by LightningDB, users can deploy and use LightningDB.</p>
 <p>Install LTCLI with the following command.</p>
-<pre><code class="bash">$ pip install ltcli --upgrade --user
+<pre><code class="language-bash">$ pip install ltcli --upgrade --user
 </code></pre>
-
 <p>After installation is completed, start LTCLI with <a href="../command-line-interface/#command-line-interface">Commands</a></p>
               
             </div>

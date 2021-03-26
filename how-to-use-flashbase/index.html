@@ -87,9 +87,9 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -151,7 +151,7 @@ Therefore, if possible, we recommend LTCLI rather than 'flashbase' script.</p>
 <p>You can download the recommended version of Lightning DB in <a href="../release-note/">Release Notes</a></p>
 <p>Deploy the Lightning DB binary with using <a href="../scripts/deploy-flashbase.sh">deploy-flashbase.sh</a>.</p>
 <p>Type <code>./deploy-flashbase.sh {binary path} {cluster list}</code> to deploy.</p>
-<pre><code class="bash">&gt; ./deploy-flashbase.sh ./lightningdb.release.release.flashbase_v1.2.3.95bfc6.bin 1 2 // deploy cluster 1 and cluster 2 with lightningdb.release.release.flashbase_v1.2.3.95bfc6.bin
+<pre><code class="language-bash">&gt; ./deploy-flashbase.sh ./lightningdb.release.release.flashbase_v1.2.3.95bfc6.bin 1 2 // deploy cluster 1 and cluster 2 with lightningdb.release.release.flashbase_v1.2.3.95bfc6.bin
 
 DATEMIN: 20200811113038
 INSTALLER PATH: ./lightningdb.release.release.flashbase_v1.2.3.95bfc6.bin
@@ -296,29 +296,25 @@ sample-configure/spark/spark-defaults.conf.sample
 sent 992400 bytes  received 2532 bytes  663288.00 bytes/sec
 total size is 1165442  speedup is 1.17
 </code></pre>
-
 <h1 id="2-create-and-start-a-cluster">2. Create and start a cluster<a class="headerlink" href="#2-create-and-start-a-cluster" title="Permanent link">&para;</a></h1>
 <p>If you've deployed Lightning DB successfully, you can create and start the clusters.</p>
 <ul>
 <li><strong>Choose the cluster to use</strong></li>
 </ul>
 <p>To choose the cluster, <a href="https://raw.githubusercontent.com/mnms/docs/master/docs/scripts/.use_cluster">.use_cluster</a> is used.</p>
-<pre><code class="bash">source ~/.use_cluster.sh 1 // 'source ~/.use_cluster.sh {cluster number}
+<pre><code class="language-bash">source ~/.use_cluster.sh 1 // 'source ~/.use_cluster.sh {cluster number}
 </code></pre>
-
 <p>If you add alias in <code>.bashrc.sh</code> like below, you can change the cluster easily.</p>
 <pre><code>alias cfc=&quot;source ~/.use_cluster&quot;
 </code></pre>
-
 <p>and type <code>cfc {cluster number}</code> to use the specified cluster.</p>
-<pre><code class="bash">cfc 1
+<pre><code class="language-bash">cfc 1
 </code></pre>
-
 <ul>
 <li><strong>Configure the cluster for initializing</strong></li>
 </ul>
 <p>Open and modify redis.properties file of the cluster by typing 'flashbase edit'.</p>
-<pre><code class="bash">#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 
 ## Master hosts and ports
 export SR2_REDIS_MASTER_HOSTS=( &quot;127.0.0.1&quot; )          // need to configure
@@ -349,12 +345,11 @@ export SR2_FLASH_DB_PATH=&quot;/sata_ssd/ssd_&quot;   // need to configure
 #export SR2_FLASH_DB_PATH=&quot;/ssd_&quot;
 #######################################################
 </code></pre>
-
 <ul>
 <li><strong>Create the cluster</strong></li>
 </ul>
 <p>Type <code>flashbase restart --reset --cluster --yes</code>.</p>
-<pre><code class="bash">&gt; flashbase restart --reset --cluster --yes
+<pre><code class="language-bash">&gt; flashbase restart --reset --cluster --yes
 \e[01;32mStopping master cluster of redis...\e[00m
 \e[01;33m - Stopping 127.0.0.1[*]...\e[00m
 \e[01;32mStopping slave cluster of redis...\e[00m
@@ -516,20 +511,18 @@ M: 11f3c47b736e37b274bbdef95a580a0c89bc9d9b 127.0.0.1:18159
 &gt;&gt;&gt; Check slots coverage...
 [OK] All 16384 slots covered.
 </code></pre>
-
 <h1 id="3-operations">3. Operations<a class="headerlink" href="#3-operations" title="Permanent link">&para;</a></h1>
 <ul>
 <li><strong> PING</strong></li>
 </ul>
 <p>You can simply check the status of the node with <code>PING</code> command.</p>
-<pre><code class="bash">&gt; flashbase cli -h localhost -p 18101
+<pre><code class="language-bash">&gt; flashbase cli -h localhost -p 18101
 localhost:18101&gt; ping
 PONG
 localhost:18101&gt;
 </code></pre>
-
 <p>With using <code>flashbase cli-all</code>, you can check the status of all nodes.</p>
-<pre><code class="bash">&gt; flashbase cli-all ping
+<pre><code class="language-bash">&gt; flashbase cli-all ping
 redis client for 127.0.0.1:18100
 PONG
 redis client for 127.0.0.1:18101
@@ -571,12 +564,11 @@ PONG
 redis client for 127.0.0.1:18159
 PONG
 </code></pre>
-
 <ul>
 <li><strong> INFO</strong></li>
 </ul>
 <p>With <code>INFO</code> command, you can get all information of each node.</p>
-<pre><code class="bash">&gt; flashbase cli -h localhost -p 18101
+<pre><code class="language-bash">&gt; flashbase cli -h localhost -p 18101
 localhost:18101&gt; info all
 # Server
 redis_version:3.0.7
@@ -711,9 +703,8 @@ CVA_compress_algorithm:zstd
 CVA_comp_avg_ratio cannot be calculated because of not enough # of samples
 localhost:18101&gt;
 </code></pre>
-
 <p>You can also check the specified information of each node.</p>
-<pre><code class="bash">localhost:18101&gt; info memory
+<pre><code class="language-bash">localhost:18101&gt; info memory
 # Memory
 isOOM:false
 used_memory:20751904
@@ -740,12 +731,11 @@ DB0_size(KByte):200
 DB0_numFiles:0
 localhost:18101&gt;
 </code></pre>
-
 <ul>
 <li><strong> CLUSTER</strong></li>
 </ul>
 <p>You can check the status of the cluster with <code>CLUSTER</code> command.</p>
-<pre><code class="bash">localhost:18101&gt; cluster info
+<pre><code class="language-bash">localhost:18101&gt; cluster info
 cluster_state:ok
 cluster_slots_assigned:16384
 cluster_slots_ok:16384
@@ -849,38 +839,34 @@ localhost:18101&gt; cluster slots
        2) (integer) 18158
 localhost:18101&gt;
 </code></pre>
-
 <ul>
 <li><strong> CONFIG</strong></li>
 </ul>
 <p>With <code>CONFIG</code> command, you can set or get the configuration of each feature.</p>
 <p>1) Get </p>
-<pre><code class="bash">localhost:18101&gt; config get maxmemory
+<pre><code class="language-bash">localhost:18101&gt; config get maxmemory
 1) &quot;maxmemory&quot;
 2) &quot;300mb&quot;
 localhost:18101&gt; config set maxmemory 310mb
 OK
 </code></pre>
-
 <p>2) Set</p>
-<pre><code class="bash">localhost:18101&gt; config set maxmemory 310mb
+<pre><code class="language-bash">localhost:18101&gt; config set maxmemory 310mb
 OK
 localhost:18101&gt; config get maxmemory
 1) &quot;maxmemory&quot;
 2) &quot;310mb&quot;
 </code></pre>
-
 <p>3) Rewrite</p>
 <p>With <code>config set</code> command, you can change the configuration only in memory.</p>
 <p>To save the modification on disk, use <code>config rewrite</code> after setting.</p>
-<pre><code class="bash">localhost:18101&gt; config rewrite
+<pre><code class="language-bash">localhost:18101&gt; config rewrite
 OK
 localhost:18101&gt;
 </code></pre>
-
 <p>4) DIR</p>
 <p>With <code>DIR</code> command, you can check the path of directory that each node uses to save <em>.rdb, </em>.aof, db and *.conf files.</p>
-<pre><code class="bash">localhost:18101&gt; config get dir
+<pre><code class="language-bash">localhost:18101&gt; config get dir
 1) &quot;dir&quot;
 2) &quot;/sata_ssd/ssd_03/nvkvs/myaccount&quot;
 </code></pre>

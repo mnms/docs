@@ -87,9 +87,9 @@
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">How to scaleout</a>
                     </li>
@@ -163,7 +163,6 @@ then
 fi
 tsr2-tools insert java_options &quot;-Xms1g -Xmx32g&quot; -d $1 -s &quot;|&quot; -t $2 -p 40 -c 1 -i
 </code></pre>
-
 <ul>
 <li>사용방법</li>
 </ul>
@@ -196,7 +195,6 @@ Warning: delimiter is '|'
 SLF4J: Class path contains multiple SLF4J bindings.
 SLF4J: Found binding in [jar:file:/home/ltdb/tsr2/cluster_6/tsr2-assembly-1.0.0-SNAPSHOT/lib/logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
 </code></pre>
-
 <h3 id="kafka-kafkacat-tsr2-kaetlyn">kafka &amp; kafkacat &amp; tsr2-kaetlyn<a class="headerlink" href="#kafka-kafkacat-tsr2-kaetlyn" title="Permanent link">&para;</a></h3>
 <ul>
 <li>zookeeper/kafka</li>
@@ -250,14 +248,12 @@ KAFKA_ERROR_REPORT_TOPIC_NAME=topic-error
 TEST_MODE=false
 EXCUTOR_LOCALITY=false
 </code></pre>
-
 <ul>
 <li>kafka producer
 기본적으로 kafka producing은 아래와 같은 방법으로 할 수 있음</li>
 </ul>
 <pre><code>kafka-console-producer.sh --broker-list localhost:9092 --topic {topic name} &lt; {적재할 filename}
 </code></pre>
-
 <p>하지만, kaetlyn 적재를 위해서는 메시지에 아래 헤더 정보가 포함되어야 한다.</p>
 <ul>
 <li>TABLE_ID</li>
@@ -326,27 +322,22 @@ $kafkacat
 
 Kafkacat에 대한 명령어가 나오면 성공
 </code></pre>
-
 <p>kafkacat이 정상 설치되었으면 아래와 같이 producing이 가능함</p>
 <p>file 하나만 적재할 경우</p>
 <pre><code>kafkacat -b localhost:9092 -t {topic name} -T -P -H TABLE_ID='{table id}' -H  SEPARATOR='|' -l {적재할 filename}
 </code></pre>
-
 <p>2. dir에 있는 모든 파일을 적재할 때에는 해당 dir로 이동한 후에,</p>
 <pre><code>ls | xargs -n 1 kafkacat -q -b localhost:9092 -t {topic name} -P -H TABLE_ID='{table id}' -H  SEPARATOR='|' -l
 </code></pre>
-
 <p>** 기본적인 가이드는 <a href="../kaetlyn/">Kafka&amp;Kaetlyn 설치</a>에 있으므로 개념 이해를 위해서는 이 페이지를 참고하면 되지만 좀 더 편리하게 사용하기 위해 kafka-utils.sh를 제공하고 있어 운영 시에는  kafka-utils.sh를 사용하면 됨.</p>
 <p>'kafka-utils.sh'는 각 클러스터별 sbin에 있으므로, 'cfc'로 cluster 설정 후 사용이 가능함.</p>
 <pre><code>[C:6][ltdb@d205 ~]$ which kafka-utils.sh
 ~/tsr2/cluster_6/tsr2-assembly-1.0.0-SNAPSHOT/sbin/kafka-utils.sh
 </code></pre>
-
 <p>아래와 같이 'CONSUMER_GROUP_ID'가 지정되어 있지 않으면 실행이 되지 않으므로,</p>
 <pre><code>[C:6][ltdb@d205 ~]$ kafka-utils.sh help
 Please, set $CONSUMER_GROUP_ID first.
 </code></pre>
-
 <p>아래와 같이 'kafka-utils.sh'를 열어서 수정을 해야 함.</p>
 <pre><code>#!/bin/bash
 
@@ -354,7 +345,6 @@ CONSUMER_GROUP_ID='nvkvs_redis_connector'  // 수정 필요
 KAFKA_SERVER=localhost:9092
 ZOOKEEPER_SERVER=localhost:2181...
 </code></pre>
-
 <p>'help'를 통해 가능한 커맨드를 확인할 수 있음.</p>
 <pre><code>[C:6][ltdb@d205 ~/kafka/config]$ kafka-utils.sh help
 kafka-utils.sh offset-check
@@ -374,7 +364,6 @@ kafka-utils.sh topic-list
 kafka-utils.sh message-earliest topic_name
 kafka-utils.sh message-latest topic_name
 </code></pre>
-
 <p>command에 args가 필요한 경우, args없이 입력하면 아래와 같이 가이드 문구가 나옴.</p>
 <pre><code>[C:6][ltdb@d205 ~/kafka/config]$ kafka-utils.sh offset-move 
 Please, specify topic name &amp; the size of moving offset (ex) kafka-utils.sh offset-move my-topic 100
@@ -382,7 +371,6 @@ Please, specify topic name &amp; the size of moving offset (ex) kafka-utils.sh o
 Please, specify topic name and its partition count. (ex) kafka-utils.sh topic-create topic-new 10
 [C:6][ltdb@d205 ~/kafka/config]$
 </code></pre>
-
 <p>사용 예,</p>
 <pre><code>[C:6][ltdb@d205 ~]$ kafka-utils.sh message-earliest nvkvs3
 20160711055950|ELG|2635055200|34317|5|6091|1|25|0|11|0|100.0|0.0|0|2846|3|33|0|5|0|-1000|0.0|0.0|94932|1027|0|176|35.2|40|0|7818000000|109816071|10|0|6000000.0|164843|2.75|0|2592|6000000|0.04|1288488|1303|1338|0|530|1|88.33|0|721|67948|428|0|1|108|108.0|108|0|0.0|0|0|0|-1000|1|1|100.0|62|39.0|62.9|23.0|37.1|0|0|0|0|29|10|-7022851.0|59998.0|-117.05|-6865443.5|59998.0|-114.43|4|198060.0|59998.0|22.5|3.3|0|1|5.82|3|1.94||0|0|0|0|0|0|0|0|4|0|0|0|15|14|231|140|0|0|0|0|0|0|0|0|4|0|0|0|15|13|174|110|1|0|0|0|0|0|0|0|0|0|0|0|0|0|1|0|0|0|0|0|0|0|1|0|0|0|0|0|0|0|0|0|0.0|0.0|0.0|0.0|0.0|0.0|570.0|0.0|3.0|0.0|0.0|0.0|0.0|2.0|3.0|3.0|0.0|15.73|0.0|0.0|0.0|0.0|0.0|12.0|22.0|68.0|83.0|339.0|205.0|144.0|54.0|38.0|12.0|0.0|0.0|0.0|0.0|0.0|0.0|100.0|50.55|1:22,2:7|1.0|||||1:1,17:1,23:1|13.67|0|0|0.0|0.0|-1000||-1000||-1000|11|2|05
@@ -421,7 +409,6 @@ Topic:ksh   PartitionCount:18   ReplicationFactor:2 Configs:
     Topic: ksh  Partition: 16   Leader: 2   Replicas: 2,3   Isr: 2,3
     Topic: ksh  Partition: 17   Leader: 3   Replicas: 3,1   Isr: 3,1
 </code></pre>
-
 <h1 id="4-query">4. Query<a class="headerlink" href="#4-query" title="Permanent link">&para;</a></h1>
 <h3 id="thriftserver">thriftserver<a class="headerlink" href="#thriftserver" title="Permanent link">&para;</a></h3>
 <p>thriftserver를 사용하여 질의를 수행할 수 있으며, hive-metastore를 사용해서 메타정보를 관리할 수 있습니다.</p>
@@ -430,7 +417,6 @@ Topic:ksh   PartitionCount:18   ReplicationFactor:2 Configs:
 &gt; which thriftserver
 ~/tsr2/cluster_6/tsr2-assembly-1.0.0-SNAPSHOT/sbin/thriftserver
 </code></pre>
-
 <p>실행 전, 'thriftserver edit'을 통해 설정값을 변경합니다.</p>
 <pre><code>#!/bin/bash
 ###############################################################################
@@ -473,19 +459,16 @@ SPARK_LOG_SAVE_MIN=2000
 ##############
 
 </code></pre>
-
 <ul>
 <li>start 방법</li>
 </ul>
 <pre><code>thriftserver start
 </code></pre>
-
 <ul>
 <li>stop 방법</li>
 </ul>
 <pre><code>thriftserver stop
 </code></pre>
-
 <ul>
 <li>yarn application 확인</li>
 </ul>
@@ -495,7 +478,6 @@ Total number of applications (application-types: [] and states: [SUBMITTED, ACCE
                 Application-Id      Application-Name        Application-Type          User       Queue               State         Final-State         Progress                        Tracking-URL
 application_1592880218288_0002   ThriftServer_d205_6                   SPARK          ltdb     default             RUNNING           UNDEFINED              10%                   http://d205:14050
 </code></pre>
-
 <ul>
 <li>table properties 확인</li>
 </ul>
@@ -572,7 +554,6 @@ Error: com.skt.spark.r2.exception.UnsupportedQueryTypeException: at least one pa
 3 rows selected (0.149 seconds)
 0: jdbc:hive2://0.0.0.0:13000&gt;
 </code></pre>
-
 <h1 id="5-zeppelin">5. Zeppelin<a class="headerlink" href="#5-zeppelin" title="Permanent link">&para;</a></h1>
 <p>Zeppelin 튜토리얼을 진행하기 전, <a href="https://docs.lightningdb.io/try-with-zeppelin/#1-setting-for-zeppelin">Zeppelin에 Lightning DB 관련 Jar 파일들이 추가하도록 설정</a>하였는지 확인해주세요.</p>
 <p>아래와 같이 <a href="https://docs.lightningdb.io/scripts/tutorial_ko.json">튜토리얼 노트 파일</a>을 내려받거나 아래 URL을 입력하여 Zeppelin에서 불러옵니다.</p>
