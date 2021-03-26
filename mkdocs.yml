@@ -12,22 +12,33 @@ nav:
   - Introduction:
     - Overview: index.md
     - Release Notes: release-note.md
+
   - Getting Started:
-    - Prerequisite: prerequisite.md 
-    - Installation: install-ltcli.md 
-  - Tutorial:
-    - Try out with Zeppelin: try-with-zeppelin.md 
-  - Interface:
-    - Command Line: command-line-interface.md
+    - Prerequisite: prerequisite.md
+    - Installation: install-ltcli.md
     - Data Ingestion and querying: data-ingestion-and-querying.md
-  - Operation:
-    - Version update:  version-update.md
-    - How to manage failover (ko): manage-failover.md
-    - Data ingestion with KAFKA (ko): kaetlyn.md
-    - How to scaleout: how-to-scaleout.md 
-    - How to use flashbase: how-to-use-flashbase.md
+
+  - Tutorial:
+    - Try out with Zeppelin: try-with-zeppelin.md
+
+  - Command Line Interface:
+    - Version: cli-version.md
+    - Configuration: cli-conf.md
+    - Redis cli: cli-cli.md
+    - Cluster: cli-cluster.md
+    - Thriftserver: cli-thriftserver.md
+
+  - Ecosystem:
+    - Data ingestion with KAFKA: kaetlyn.md
+    - Zeppelin: 
+      - 'NYC TAXI Benchmark': zeppelin-example-nyctaxi.md
+      - 'KNN SEARCH': zeppelin-example-face-data.md
+
   - Additional Resources:
     - Manual Installation: get-started-with-scratch.md
+    - Install with flashbase: how-to-use-flashbase.md
+    - Failover with flashbase: manage-failover.md
+    - Scaleout with flashbase: how-to-scaleout.md
 
 plugins:
   - search

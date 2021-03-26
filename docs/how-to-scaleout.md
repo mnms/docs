@@ -1,3 +1,8 @@
+!!! Note
+    This document guides how to use 'flashbase' script for scale-out.
+    If you use LTCLI, you can operate Lightning DB more easily and powerfully. 
+    Therefore, if possible, we recommend LTCLI rather than 'flashbase' script.
+
 # 1. Check the distribution of slots
 
 You can use 'redis-trib.rb check {master's IP}:{master's Port} | grep slots | grep master' command to check slots assigned to each master. Any master can be used for '{master's IP}:{master's Port}'.

@@ -25,3 +25,5 @@ Spark with Redis/Rocksdb key-value stores
 - DRAM - SSD - HDD Tiering
 - High  compression  ratio  and  compression  speed  (Gzip  level  compression ratio w/ LZ4 level speed)
 - Low Write Amplification for SSD lifetime
+- Asynchronous replication with low latency and high performance
+- Node-based scale-out(Adding new nodes and scale out without data rebalancing )
