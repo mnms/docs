@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Lightning DB Team">
-  <link rel="canonical" href="https://mnms.github.io/docs/version-update/">
+  <link rel="canonical" href="https://mnms.github.io/docs/cli-conf/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Version update - Lightning DB Docs</title>
+  <title>Configuration - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Version update";
-    var mkdocs_page_input_path = "version-update.md";
-    var mkdocs_page_url = "/docs/version-update/";
+    var mkdocs_page_name = "Configuration";
+    var mkdocs_page_input_path = "cli-conf.md";
+    var mkdocs_page_url = "/docs/cli-conf/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -79,10 +79,12 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Command Line Interface</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../cli-version/">Version</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../cli-conf/">Configuration</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Configuration</a>
+    <ul class="current">
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cli-cli/">Redis cli</a>
                     </li>
@@ -135,11 +137,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Command Line Interface &raquo;</li>
+        
+      
     
-    <li>Version update</li>
+    <li>Configuration</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/version-update.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/cli-conf.md"> Edit on source repository</a>
       
     </li>
   </ul>
@@ -149,92 +155,164 @@
           <div role="main">
             <div class="section">
               
-                <p>You can update LightningDB by using the 'deploy' command.</p>
-<pre><code class="language-bash">&gt; c 1 // alias of 'cluster use 1'
-&gt; deploy
-(Watch out) Cluster 1 is already deployed. Do you want to deploy again? (y/n) [n]
-y
-</code></pre>
-<p><strong>(1) Select installer</strong></p>
-<pre><code class="language-bash">Select installer
-
-    [ INSTALLER LIST ]
-    (1) lightningdb.release.master.5a6a38.bin
-    (2) lightningdb.trial.master.dbcb9e-dirty.bin
-    (3) lightningdb.trial.master.dbcb9e.bin
-
-Please enter the number, file path or URL of the installer you want to use.
-you can also add a file in list by copy to '$FBPATH/releases/'
-1
-OK, lightningdb.release.master.5a6a38.bin
-</code></pre>
-<p><strong>(2) Restore</strong></p>
-<pre><code class="language-bash">Do you want to restore conf? (y/n)
-y
-</code></pre>
-<p>If the current settings will be reused, type 'y'.</p>
-<p><strong>(3) Check all settings finally</strong></p>
-<pre><code class="language-bash">+-----------------+---------------------------------------------------+
-| NAME            | VALUE                                             |
-+-----------------+---------------------------------------------------+
-| installer       | lightningdb.release.master.5a6a38.bin             |
-| nodes           | nodeA                                             |
-|                 | nodeB                                             |
-|                 | nodeC                                             |
-|                 | nodeD                                             |
-| master ports    | 18100                                             |
-| slave ports     | 18150-18151                                       |
-| ssd count       | 3                                                 |
-| redis data path | ~/sata_ssd/ssd_                                   |
-| redis db path   | ~/sata_ssd/ssd_                                   |
-| flash db path   | ~/sata_ssd/ssd_                                   |
-+-----------------+---------------------------------------------------+
-Do you want to proceed with the deploy accroding to the above information? (y/n)
-y
+                <p>With <code>conf</code> commands, you can configure out the cluster.</p>
+<p>You can open the template file with the below options(<code>cluster</code>/<code>master</code>/<code>slave</code>/<code>thriftserver</code>)</p>
+<p>After saving the template file, the configuration will be synchronized with all nodes in the current cluster.</p>
+<h1 id="1-cluster">1. cluster<a class="headerlink" href="#1-cluster" title="Permanent link">&para;</a></h1>
+<p><code>conf cluster</code> will open <code>redis.properties</code> file of the current cluster.</p>
+<pre><code>matthew@lightningdb:21&gt; conf cluster
 Check status of hosts...
-+-----------+--------+
-| HOST      | STATUS |
-+-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
-+-----------+--------+
-Checking for cluster exist...
-+------+--------+
-| HOST | STATUS |
-+------+--------+
-Backup conf of cluster 1...
-OK, cluster_1_conf_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeA...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeB...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeC...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeD...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Transfer installer and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
+OK
 Sync conf...
-Complete to deploy cluster 1.
-Cluster 1 selected.
+OK
+Complete edit.
 </code></pre>
 <ul>
-<li>Backup path of cluster: ${base-directory}/backup/cluster_${cluster-id}_bak_${time-stamp}</li>
-<li>Backup path of conf files: $FBAPTH/conf_backup/cluster_${cluster-id}_conf_bak_${time-stamp}</li>
+<li>Example of <code>redis.properties</code></li>
 </ul>
-<p><strong>(4) Restart</strong></p>
-<pre><code class="language-bash">&gt; cluster restart
+<pre><code>#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( &quot;192.168.111.41&quot; &quot;192.168.111.44&quot; )
+export SR2_REDIS_MASTER_PORTS=( $(seq 20100 20102) )
+
+## Slave hosts and ports (optional)
+export SR2_REDIS_SLAVE_HOSTS=( &quot;192.168.111.41&quot;  &quot;192.168.111.44&quot; )
+export SR2_REDIS_SLAVE_PORTS=( $(seq 20150 20152) )
+
+
+## multiple data directory in redis db and flash db
+export SSD_COUNT=3
+export SR2_REDIS_DATA=&quot;/sata_ssd/ssd_02/matthew&quot;
+export SR2_REDIS_DB_PATH=&quot;/sata_ssd/ssd_02/matthew&quot;
+export SR2_FLASH_DB_PATH=&quot;/sata_ssd/ssd_02/matthew&quot;
 </code></pre>
-<p>After the restart, the new version will be applied.</p>
+<h1 id="2-master">2. master<a class="headerlink" href="#2-master" title="Permanent link">&para;</a></h1>
+<p><code>conf master</code> will open <code>redis-master.conf.template</code> file of the current cluster.</p>
+<pre><code>matthew@lightningdb:21&gt; conf master
+Check status of hosts...
+OK
+Sync conf...
+OK
+Complete edit.
+</code></pre>
+<ul>
+<li>Example of <code>redis-master.conf.template</code></li>
+</ul>
+<pre><code># In short... if you have slaves attached it is suggested that you set a lower
+# limit for maxmemory so that there is some free RAM on the system for slave
+# output buffers (but this is not needed if the policy is 'noeviction').
+#
+# maxmemory &lt;bytes&gt;
+# maxmemory should be greater than 51mb in TSR2
+maxmemory 300mb
+</code></pre>
+<h1 id="3-slave">3. slave<a class="headerlink" href="#3-slave" title="Permanent link">&para;</a></h1>
+<p><code>conf slave</code> will open <code>redis-slave.conf.template</code> file of the current cluster.</p>
+<pre><code>matthew@lightningdb:21&gt; conf slave
+Check status of hosts...
+OK
+Sync conf...
+OK
+Complete edit.
+</code></pre>
+<ul>
+<li>Example of <code>redis-slave.conf.template</code></li>
+</ul>
+<pre><code># In short... if you have slaves attached it is suggested that you set a lower
+# limit for maxmemory so that there is some free RAM on the system for slave
+# output buffers (but this is not needed if the policy is 'noeviction').
+#
+# maxmemory &lt;bytes&gt;
+# maxmemory should be greater than 51mb in TSR2
+maxmemory 300mb
+</code></pre>
+<h1 id="4-thrifserver">4. thrifserver<a class="headerlink" href="#4-thrifserver" title="Permanent link">&para;</a></h1>
+<p><code>conf thrifserver</code> will open <code>thriftserver.properties</code> file of the current thriftserver.</p>
+<pre><code>matthew@lightningdb:21&gt; conf thriftserver
+Check status of hosts...
+OK
+Sync conf...
+OK
+Complete edit.
+</code></pre>
+<ul>
+<li>Example of <code>thriftserver.properties</code></li>
+</ul>
+<pre><code>#!/bin/bash
+###############################################################################
+# Common variables
+SPARK_CONF=${SPARK_CONF:-$SPARK_HOME/conf}
+SPARK_BIN=${SPARK_BIN:-$SPARK_HOME/bin}
+SPARK_SBIN=${SPARK_SBIN:-$SPARK_HOME/sbin}
+SPARK_LOG=${SPARK_LOG:-$SPARK_HOME/logs}
+
+SPARK_METRICS=${SPARK_CONF}/metrics.properties
+SPARK_UI_PORT=${SPARK_UI_PORT:-14050}
+EXECUTERS=12
+EXECUTER_CORES=32
+
+HIVE_METASTORE_URL=''
+HIVE_HOST=${HIVE_HOST:-localhost}
+HIVE_PORT=${HIVE_PORT:-13000}
+
+COMMON_CLASSPATH=$(find $SR2_LIB -name 'tsr2*' -o -name 'spark-r2*' -o -name '*jedis*' -o -name 'commons*' -o -name 'jdeferred*' \
+-o -name 'geospark*' -o -name 'gt-*' | tr '\n' ':')
+
+###############################################################################
+# Driver
+DRIVER_MEMORY=6g
+DRIVER_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Execute
+EXECUTOR_MEMORY=2g
+EXECUTOR_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Thrift Server logs
+EVENT_LOG_ENABLED=false
+EVENT_LOG_DIR=/nvdrive0/thriftserver-event-logs
+EVENT_LOG_ROLLING_DIR=/nvdrive0/thriftserver-event-logs-rolling
+EVENT_LOG_SAVE_MIN=60
+EXTRACTED_EVENT_LOG_SAVE_DAY=5
+SPARK_LOG_SAVE_MIN=2000
+##############
+
+########################
+# Thrift Name
+cluster_id=$(echo $SR2_HOME | awk -F &quot;cluster_&quot; '{print $2}' | awk -F '/' '{print $1}')
+host=$(hostname)
+THRIFT_NAME=&quot;ThriftServer_${host}_${cluster_id}&quot;
+########################
+
+###############################################################################
+# AGGREGATION PUSHDOWN
+AGG_PUSHDOWN=true
+###############################################################################
+</code></pre>
+<h1 id="5-sync">5. sync<a class="headerlink" href="#5-sync" title="Permanent link">&para;</a></h1>
+<p>With <code>sync {IP address}</code> or <code>sync {hostname}</code> command, you can load the configurations of all clusters from the remote server to localhost.</p>
+<pre><code>matthew@lightningdb:21&gt; sync fbg04
+Localhost already has the information on the cluster 21. Do you want to overwrite? (y/n) [n]
+y
+Localhost already has the information on the cluster 20. Do you want to overwrite? (y/n) [n]
+n
+Importing cluster complete...
+</code></pre>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cli-cli/" class="btn btn-neutral float-right" title="Redis cli">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cli-version/" class="btn btn-neutral" title="Version"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -260,6 +338,10 @@ Cluster 1 selected.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../cli-version/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../cli-cli/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

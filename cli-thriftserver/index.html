@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Lightning DB Team">
-  <link rel="canonical" href="https://mnms.github.io/docs/version-update/">
+  <link rel="canonical" href="https://mnms.github.io/docs/cli-thriftserver/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Version update - Lightning DB Docs</title>
+  <title>Thriftserver - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Version update";
-    var mkdocs_page_input_path = "version-update.md";
-    var mkdocs_page_url = "/docs/version-update/";
+    var mkdocs_page_name = "Thriftserver";
+    var mkdocs_page_input_path = "cli-thriftserver.md";
+    var mkdocs_page_url = "/docs/cli-thriftserver/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -79,7 +79,7 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Command Line Interface</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../cli-version/">Version</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cli-conf/">Configuration</a>
@@ -88,7 +88,9 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cli-cluster/">Cluster</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../cli-thriftserver/">Thriftserver</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Thriftserver</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Ecosystem</span></p>
@@ -135,11 +137,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Command Line Interface &raquo;</li>
+        
+      
     
-    <li>Version update</li>
+    <li>Thriftserver</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/version-update.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/cli-thriftserver.md"> Edit on source repository</a>
       
     </li>
   </ul>
@@ -149,92 +155,91 @@
           <div role="main">
             <div class="section">
               
-                <p>You can update LightningDB by using the 'deploy' command.</p>
-<pre><code class="language-bash">&gt; c 1 // alias of 'cluster use 1'
-&gt; deploy
-(Watch out) Cluster 1 is already deployed. Do you want to deploy again? (y/n) [n]
-y
-</code></pre>
-<p><strong>(1) Select installer</strong></p>
-<pre><code class="language-bash">Select installer
+                <p>If you want to see the list of Thrift Server commands, use the the <code>thriftserver</code> command without any option.</p>
+<pre><code class="language-bash">NAME
+    ltcli thriftserver
 
-    [ INSTALLER LIST ]
-    (1) lightningdb.release.master.5a6a38.bin
-    (2) lightningdb.trial.master.dbcb9e-dirty.bin
-    (3) lightningdb.trial.master.dbcb9e.bin
+SYNOPSIS
+    ltcli thriftserver COMMAND
 
-Please enter the number, file path or URL of the installer you want to use.
-you can also add a file in list by copy to '$FBPATH/releases/'
-1
-OK, lightningdb.release.master.5a6a38.bin
+COMMANDS
+    COMMAND is one of the following:
+
+     beeline
+       Connect to thriftserver command line
+
+     monitor
+       Show thriftserver log
+
+     restart
+       Thriftserver restart
+
+     start
+       Start thriftserver
+
+     stop
+       Stop thriftserver
 </code></pre>
-<p><strong>(2) Restore</strong></p>
-<pre><code class="language-bash">Do you want to restore conf? (y/n)
-y
+<h1 id="1-thriftserver-beeline">1. Thriftserver beeline<a class="headerlink" href="#1-thriftserver-beeline" title="Permanent link">&para;</a></h1>
+<p>Connect to the thrift server</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver beeline
+Connecting...
+Connecting to jdbc:hive2://localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Resolved authority: localhost:13000
+19/11/19 04:45:18 INFO jdbc.HiveConnection: Will try to open client transport with JDBC Uri: jdbc:hive2://localhost:13000
+Connected to: Spark SQL (version 2.3.1)
+Driver: Hive JDBC (version 1.2.1.spark2)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.2.1.spark2 by Apache Hive
+0: jdbc:hive2://localhost:13000&gt; show tables;
++-----------+------------+--------------+--+
+| database  | tableName  | isTemporary  |
++-----------+------------+--------------+--+
++-----------+------------+--------------+--+
+No rows selected (0.55 seconds)
 </code></pre>
-<p>If the current settings will be reused, type 'y'.</p>
-<p><strong>(3) Check all settings finally</strong></p>
-<pre><code class="language-bash">+-----------------+---------------------------------------------------+
-| NAME            | VALUE                                             |
-+-----------------+---------------------------------------------------+
-| installer       | lightningdb.release.master.5a6a38.bin             |
-| nodes           | nodeA                                             |
-|                 | nodeB                                             |
-|                 | nodeC                                             |
-|                 | nodeD                                             |
-| master ports    | 18100                                             |
-| slave ports     | 18150-18151                                       |
-| ssd count       | 3                                                 |
-| redis data path | ~/sata_ssd/ssd_                                   |
-| redis db path   | ~/sata_ssd/ssd_                                   |
-| flash db path   | ~/sata_ssd/ssd_                                   |
-+-----------------+---------------------------------------------------+
-Do you want to proceed with the deploy accroding to the above information? (y/n)
-y
-Check status of hosts...
-+-----------+--------+
-| HOST      | STATUS |
-+-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
-+-----------+--------+
-Checking for cluster exist...
-+------+--------+
-| HOST | STATUS |
-+------+--------+
-Backup conf of cluster 1...
-OK, cluster_1_conf_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeA...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeB...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeC...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeD...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Transfer installer and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
-Sync conf...
-Complete to deploy cluster 1.
-Cluster 1 selected.
+<p>Default value of db url to connect is <code>jdbc:hive2://$HIVE_HOST:$HIVE_PORT</code></p>
+<p>You can modify <code>$HIVE_HOST</code> and <code>$HIVE_PORT</code> by the command <code>conf thriftserver</code></p>
+<h1 id="2-thriftserver-monitor">2. Thriftserver monitor<a class="headerlink" href="#2-thriftserver-monitor" title="Permanent link">&para;</a></h1>
+<p>You can view the logs of the thrift server in real-time.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver monitor
+Press Ctrl-C for exit.
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
+19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager
+...
 </code></pre>
-<ul>
-<li>Backup path of cluster: ${base-directory}/backup/cluster_${cluster-id}_bak_${time-stamp}</li>
-<li>Backup path of conf files: $FBAPTH/conf_backup/cluster_${cluster-id}_conf_bak_${time-stamp}</li>
-</ul>
-<p><strong>(4) Restart</strong></p>
-<pre><code class="language-bash">&gt; cluster restart
+<h1 id="3-thriftserver-restart">3. Thriftserver restart<a class="headerlink" href="#3-thriftserver-restart" title="Permanent link">&para;</a></h1>
+<p>Restart the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver restart
+no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
 </code></pre>
-<p>After the restart, the new version will be applied.</p>
+<h1 id="4-start-thriftserver">4. Start thriftserver<a class="headerlink" href="#4-start-thriftserver" title="Permanent link">&para;</a></h1>
+<p>Run the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver start
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
+</code></pre>
+<p>You can view the logs through the command <code>monitor</code>.</p>
+<h1 id="5-stop-thriftserver">5. Stop thriftserver<a class="headerlink" href="#5-stop-thriftserver" title="Permanent link">&para;</a></h1>
+<p>Shut down the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver stop
+stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
+</code></pre>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../kaetlyn/" class="btn btn-neutral float-right" title="Data ingestion with KAFKA">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cli-cluster/" class="btn btn-neutral" title="Cluster"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -260,6 +265,10 @@ Cluster 1 selected.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../cli-cluster/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../kaetlyn/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

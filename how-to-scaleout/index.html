@@ -9,7 +9,7 @@
   <meta name="author" content="Lightning DB Team">
   <link rel="canonical" href="https://mnms.github.io/docs/how-to-scaleout/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>How to scaleout - Lightning DB Docs</title>
+  <title>Scaleout with flashbase - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "How to scaleout";
+    var mkdocs_page_name = "Scaleout with flashbase";
     var mkdocs_page_input_path = "how-to-scaleout.md";
     var mkdocs_page_url = "/docs/how-to-scaleout/";
   </script>
@@ -70,37 +70,51 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../install-ltcli/">Installation</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Tutorial</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../try-with-zeppelin/">Try out with Zeppelin</a>
                     </li>
                 </ul>
-                <p class="caption"><span class="caption-text">Interface</span></p>
+                <p class="caption"><span class="caption-text">Command Line Interface</span></p>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../command-line-interface/">Command Line</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-version/">Version</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-conf/">Configuration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-cli/">Redis cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-cluster/">Cluster</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-thriftserver/">Thriftserver</a>
                     </li>
                 </ul>
-                <p class="caption"><span class="caption-text">Operation</span></p>
-                <ul class="current">
-                    <li class="toctree-l1"><a class="reference internal" href="../version-update/">Version update</a>
+                <p class="caption"><span class="caption-text">Ecosystem</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">How to manage failover (ko)</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA (ko)</a>
-                    </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">How to scaleout</a>
-    <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Zeppelin</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../zeppelin-example-nyctaxi/">NYC TAXI Benchmark</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../zeppelin-example-face-data/">KNN SEARCH</a>
+                </li>
     </ul>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../how-to-use-flashbase/">How to use flashbase</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Additional Resources</span></p>
-                <ul>
+                <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../get-started-with-scratch/">Manual Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../how-to-use-flashbase/">Install with flashbase</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">Failover with flashbase</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Scaleout with flashbase</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -124,11 +138,11 @@
     
       
         
-          <li>Operation &raquo;</li>
+          <li>Additional Resources &raquo;</li>
         
       
     
-    <li>How to scaleout</li>
+    <li>Scaleout with flashbase</li>
     <li class="wy-breadcrumbs-aside">
       
         <a href="https://github.com/mnms/docs/edit/master/docs/how-to-scaleout.md"> Edit on source repository</a>
@@ -141,7 +155,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="1-check-the-distribution-of-slots">1. Check the distribution of slots<a class="headerlink" href="#1-check-the-distribution-of-slots" title="Permanent link">&para;</a></h1>
+                <div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This document guides how to use 'flashbase' script for scale-out.
+If you use LTCLI, you can operate Lightning DB more easily and powerfully. 
+Therefore, if possible, we recommend LTCLI rather than 'flashbase' script.</p>
+</div>
+<h1 id="1-check-the-distribution-of-slots">1. Check the distribution of slots<a class="headerlink" href="#1-check-the-distribution-of-slots" title="Permanent link">&para;</a></h1>
 <p>You can use 'redis-trib.rb check {master's IP}:{master's Port} | grep slots | grep master' command to check slots assigned to each master. Any master can be used for '{master's IP}:{master's Port}'.</p>
 <pre><code>$ redis-trib.rb check 192.168.111.201:18800 | grep slots | grep master
 
@@ -285,10 +305,8 @@ Total nodes     |   30  |   30
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../how-to-use-flashbase/" class="btn btn-neutral float-right" title="How to use flashbase">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../kaetlyn/" class="btn btn-neutral" title="Data ingestion with KAFKA (ko)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../manage-failover/" class="btn btn-neutral" title="Failover with flashbase"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -316,10 +334,8 @@ Total nodes     |   30  |   30
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../kaetlyn/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../manage-failover/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../how-to-use-flashbase/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

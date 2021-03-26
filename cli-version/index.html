@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Lightning DB Team">
-  <link rel="canonical" href="https://mnms.github.io/docs/version-update/">
+  <link rel="canonical" href="https://mnms.github.io/docs/cli-version/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Version update - Lightning DB Docs</title>
+  <title>Version - Lightning DB Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Version update";
-    var mkdocs_page_input_path = "version-update.md";
-    var mkdocs_page_url = "/docs/version-update/";
+    var mkdocs_page_name = "Version";
+    var mkdocs_page_input_path = "cli-version.md";
+    var mkdocs_page_url = "/docs/cli-version/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -79,8 +79,10 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Command Line Interface</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../cli-version/">Version</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Version</a>
+    <ul class="current">
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cli-conf/">Configuration</a>
                     </li>
@@ -135,11 +137,15 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Command Line Interface &raquo;</li>
+        
+      
     
-    <li>Version update</li>
+    <li>Version</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mnms/docs/edit/master/docs/version-update.md"> Edit on source repository</a>
+        <a href="https://github.com/mnms/docs/edit/master/docs/cli-version.md"> Edit on source repository</a>
       
     </li>
   </ul>
@@ -149,92 +155,35 @@
           <div role="main">
             <div class="section">
               
-                <p>You can update LightningDB by using the 'deploy' command.</p>
-<pre><code class="language-bash">&gt; c 1 // alias of 'cluster use 1'
-&gt; deploy
-(Watch out) Cluster 1 is already deployed. Do you want to deploy again? (y/n) [n]
-y
+                <h1 id="1-ltcli">1. LTCLI<a class="headerlink" href="#1-ltcli" title="Permanent link">&para;</a></h1>
+<p>You can check the version of <b>LTCLI</b> tool.</p>
+<pre><code>$ ltcli --version
+ltcli version 1.1.5
 </code></pre>
-<p><strong>(1) Select installer</strong></p>
-<pre><code class="language-bash">Select installer
-
-    [ INSTALLER LIST ]
-    (1) lightningdb.release.master.5a6a38.bin
-    (2) lightningdb.trial.master.dbcb9e-dirty.bin
-    (3) lightningdb.trial.master.dbcb9e.bin
-
-Please enter the number, file path or URL of the installer you want to use.
-you can also add a file in list by copy to '$FBPATH/releases/'
-1
-OK, lightningdb.release.master.5a6a38.bin
+<h1 id="2-lightning-db">2. Lightning DB<a class="headerlink" href="#2-lightning-db" title="Permanent link">&para;</a></h1>
+<p>You can check the version of <b>Lightning DB</b> that is deployed in each cluster.</p>
+<pre><code>$ ltcli
+Cluster '21' selected.
+matthew@lightningdb:21&gt; cluster version
+- build date : 20200820-173819
+- branch: release.flashbase_v1.2.3
+- last commit-id: 45814d
+- output binary: lightningdb.release.release.flashbase_v1.2.3.45814d.bin
+matthew@lightningdb:21&gt;
 </code></pre>
-<p><strong>(2) Restore</strong></p>
-<pre><code class="language-bash">Do you want to restore conf? (y/n)
-y
-</code></pre>
-<p>If the current settings will be reused, type 'y'.</p>
-<p><strong>(3) Check all settings finally</strong></p>
-<pre><code class="language-bash">+-----------------+---------------------------------------------------+
-| NAME            | VALUE                                             |
-+-----------------+---------------------------------------------------+
-| installer       | lightningdb.release.master.5a6a38.bin             |
-| nodes           | nodeA                                             |
-|                 | nodeB                                             |
-|                 | nodeC                                             |
-|                 | nodeD                                             |
-| master ports    | 18100                                             |
-| slave ports     | 18150-18151                                       |
-| ssd count       | 3                                                 |
-| redis data path | ~/sata_ssd/ssd_                                   |
-| redis db path   | ~/sata_ssd/ssd_                                   |
-| flash db path   | ~/sata_ssd/ssd_                                   |
-+-----------------+---------------------------------------------------+
-Do you want to proceed with the deploy accroding to the above information? (y/n)
-y
-Check status of hosts...
-+-----------+--------+
-| HOST      | STATUS |
-+-----------+--------+
-| nodeA     | OK     |
-| nodeB     | OK     |
-| nodeC     | OK     |
-| nodeD     | OK     |
-+-----------+--------+
-Checking for cluster exist...
-+------+--------+
-| HOST | STATUS |
-+------+--------+
-Backup conf of cluster 1...
-OK, cluster_1_conf_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeA...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeB...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeC...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Backup info of cluster 1 at nodeD...
-OK, cluster_1_bak_&lt;time-stamp&gt;
-Transfer installer and execute...
- - nodeA
- - nodeB
- - nodeC
- - nodeD
-Sync conf...
-Complete to deploy cluster 1.
-Cluster 1 selected.
-</code></pre>
-<ul>
-<li>Backup path of cluster: ${base-directory}/backup/cluster_${cluster-id}_bak_${time-stamp}</li>
-<li>Backup path of conf files: $FBAPTH/conf_backup/cluster_${cluster-id}_conf_bak_${time-stamp}</li>
-</ul>
-<p><strong>(4) Restart</strong></p>
-<pre><code class="language-bash">&gt; cluster restart
-</code></pre>
-<p>After the restart, the new version will be applied.</p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cli-conf/" class="btn btn-neutral float-right" title="Configuration">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../try-with-zeppelin/" class="btn btn-neutral" title="Try out with Zeppelin"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -260,6 +209,10 @@ Cluster 1 selected.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../try-with-zeppelin/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../cli-conf/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

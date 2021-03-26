@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Lightning DB Team">
+  <link rel="canonical" href="https://mnms.github.io/docs/zeppelin-example-face-data/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>KNN SEARCH - Lightning DB Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "KNN SEARCH";
+    var mkdocs_page_input_path = "zeppelin-example-face-data.md";
+    var mkdocs_page_url = "/docs/zeppelin-example-face-data/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-152587413-1', 'lightningdb.io');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Lightning DB Docs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../release-note/">Release Notes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../prerequisite/">Prerequisite</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../install-ltcli/">Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../data-ingestion-and-querying/">Data Ingestion and querying</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorial</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../try-with-zeppelin/">Try out with Zeppelin</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Command Line Interface</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-version/">Version</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-conf/">Configuration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-cli/">Redis cli</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-cluster/">Cluster</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cli-thriftserver/">Thriftserver</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Ecosystem</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../kaetlyn/">Data ingestion with KAFKA</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Zeppelin</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../zeppelin-example-nyctaxi/">NYC TAXI Benchmark</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">KNN SEARCH</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Additional Resources</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../get-started-with-scratch/">Manual Installation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../how-to-use-flashbase/">Install with flashbase</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../manage-failover/">Failover with flashbase</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../how-to-scaleout/">Scaleout with flashbase</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Lightning DB Docs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Zeppelin &raquo;</li>
+        
+      
+        
+          <li>Ecosystem &raquo;</li>
+        
+      
+    
+    <li>KNN SEARCH</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/mnms/docs/edit/master/docs/zeppelin-example-face-data.md"> Edit on source repository</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>In Zeppelin, you can import the <code>Face data</code> file with below link.</p>
+<p><a href="https://raw.githubusercontent.com/mnms/ecosystem/master/Zeppelin/FACE_DATA/KNN_SEARCH_TEST.json">KNN_SEARCH_TEST.json</a></p>
+<p><strong>1. Put csv files into HDFS</strong></p>
+<pre><code>hdfs dfs -mkdir /face_data
+
+hdfs dfs -put /face_data/csv/* /face_data
+</code></pre>
+<p><strong>2. Load face data</strong></p>
+<pre><code>%spark
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.r2.UDF.R2UDFs
+
+val toFloatArray = udf(R2UDFs.toFloatArray)
+val fnvHash = udf(R2UDFs.fnvHash)
+
+R2UDFs.register()
+val r2Option = Map(&quot;table&quot; -&gt; &quot;300&quot;,
+      &quot;host&quot; -&gt; &quot;d201&quot;,
+      &quot;port&quot; -&gt; &quot;18400&quot;,
+      &quot;partitions&quot; -&gt; &quot;nvhash&quot;,
+      &quot;mode&quot; -&gt; &quot;nvkvs&quot;,
+      &quot;at_least_one_partition_enabled&quot; -&gt; &quot;no&quot;)
+
+spark.sqlContext.read.format(&quot;csv&quot;)
+  .option(&quot;sep&quot;, &quot;|&quot;)
+  .option(&quot;header&quot;, &quot;false&quot;)
+  .option(&quot;inferSchema&quot;, &quot;true&quot;)
+  .load(&quot;/face_data/csv/*.csv&quot;)
+  .withColumnRenamed(&quot;_c0&quot;, &quot;group&quot;)
+  .withColumnRenamed(&quot;_c1&quot;, &quot;subgroup&quot;)
+  .withColumnRenamed(&quot;_c2&quot;, &quot;subject&quot;)
+  .withColumnRenamed(&quot;_c3&quot;, &quot;face&quot;)
+  .withColumnRenamed(&quot;_c4&quot;, &quot;raw_feature&quot;)
+  .withColumn(&quot;feature&quot;, toFloatArray(split(col(&quot;raw_feature&quot;), &quot;,&quot;)))
+  .select(&quot;group&quot;, &quot;subgroup&quot;, &quot;subject&quot;, &quot;face&quot;, &quot;feature&quot;)
+  .withColumn(&quot;nvhash&quot;, fnvHash(col(&quot;face&quot;), functions.lit(30)))
+  .write
+  .format(&quot;r2&quot;)
+  .options(r2Options)
+  .mode(&quot;append&quot;)
+  .save()
+</code></pre>
+<p><strong>3. Create table</strong></p>
+<pre><code>%spark
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.r2.UDF.R2UDFs
+
+val fields = &quot;group_id,app_id,subject_id,face_id,feature,nvhash&quot;.split(&quot;,&quot;).map(
+  fieldName =&gt; {
+    if (&quot;feature&quot;.equals(fieldName)) {
+      StructField(fieldName, ArrayType(FloatType))
+    } else {
+      StructField(fieldName, StringType)
+    }
+  }
+)
+val faceTableSchema = StructType(fields)
+
+
+spark.sqlContext.read.format(&quot;r2&quot;)
+  .schema(faceTableSchema)
+  .options(r2Option)
+  .load()
+  .createOrReplaceTempView(&quot;face_1m&quot;)
+</code></pre>
+<p><strong>4. Enable ‘KNN SEARCH PUSHDOWN’ feature</strong></p>
+<pre><code>%sql
+SET spark.r2.knn.pushdown=true
+</code></pre>
+<p><strong>5. KNN search with using the udf(cosineDistance) of Lightning DB</strong></p>
+<pre><code>%sql
+SELECT group_id, app_id, subject_id, face_id, cosineDistance(feature, toFloatArray(array(0.04074662,0.07717144,-0.01387950,0.01287790,0.04414229,0.03390900,0.03808868,0.03956917,0.00592308,-0.00935156,0.04414903,-0.01830893,-0.01918902,0.00154574,-0.02383651,-0.01054291,0.12655860,0.02075430,0.10315673,0.01371782,0.01522089,0.04304991,0.03376650,0.06703991,0.03827063,-0.00063873,0.02516229,0.07061137,0.08456459,-0.04103030,0.03004974,0.00297395,0.00295535,0.01112351,0.02805021,0.04350155,-0.00448326,0.04780317,0.10815978,-0.01784242,0.03320745,0.02912348,0.00183310,0.05318154,0.00922967,-0.04507693,0.01333585,0.00048346,-0.04612860,0.00427735,0.01232839,-0.00100568,0.03865110,0.01765136,-0.00942758,0.02383475,-0.01068696,0.08959154,0.08527020,0.03379998,-0.03852739,0.00607160,0.01309861,-0.01262910,0.00418265,0.03614477,-0.02971224,0.03703139,0.04333942,-0.03143747,0.06752674,-0.02173617,0.03583429,0.07731125,-0.02637132,-0.00395790,-0.04447101,0.03351297,0.08787052,0.00647665,0.03660145,-0.00640601,-0.01004024,0.00763107,0.04762240,-0.00068071,0.00863653,0.06126453,0.04588475,-0.03891076,0.07472295,0.02470182,0.08828569,0.01660202,0.02419317,0.09363404,0.05495216,0.01202847,0.00120040,-0.02136896,0.03100559,0.07371868,0.00986731,0.03934553,0.01289396,0.04705510,-0.02040175,0.01501585,0.00678832,0.03882410,0.02261387,0.02165552,-0.05097445,0.00240807,-0.04210005,0.00760698,-0.02904095,0.06572093,0.03549200,0.06070529,0.06948626,0.02832109,0.01669887,0.00914011,-0.00024529,-0.00124402,0.06481186,0.08246713,0.07499877,0.13112830,0.01034968,0.04224777,0.01175614,0.07395388,0.04937797,0.01561183,-0.03251049,0.05449009,0.04767901,-0.01149555,-0.02055555,-0.05990825,0.06633005,0.07592525,-0.04504610,0.03348448,0.04178635,0.01327751,0.02208084,0.08780535,-0.00799043,0.02236966,0.01560906,0.01171102,0.00814554,-0.00257578,0.08387835,-0.01018093,-0.02170087,0.03230520,0.00955880,-0.01824543,0.05438962,0.01805668,0.02112979,-0.01372666,-0.01057472,0.05453142,0.03742066,0.05534794,0.00977020,0.01991821,-0.00884413,0.09644359,0.02875310,0.10519003,0.05280351,-0.01918891,0.03197290,0.02722778,0.03450845,0.02669794,0.08618007,0.09387484,0.05103674,-0.01431658,0.00783211,-0.00434245,0.02062620,-0.00611403,0.06696083,0.01333337,-0.00156842,0.04325287,-0.05481976,0.01642864,-0.02679648,-0.00642413,0.03808333,0.06134293,0.06049823,0.03818581,0.03599750,-0.01651556,0.06601544,0.01385061,0.00730943,0.03045858,-0.00200028,0.04009718,0.04393080,-0.02568381,-0.01271287,-0.01860873,0.03669106,0.00154059,-0.04202117,0.07374570,-0.00380450,0.03164477,0.00637422,-0.02361638,0.01918917,0.01680134,0.01346881,0.02424449,-0.00504802,-0.06241146,0.08241857,0.02817723,0.02132487,0.08051144,0.06332499,0.02585857,-0.04057337,0.00279212,-0.00005161,-0.06566417,0.07860317,-0.01276221,0.06822366,-0.00191142,0.08534018,0.06014366,0.07053877,-0.01962799,0.08602677,-0.00817098,0.00302233,-0.10041475,-0.01908947,0.03235617,0.00931559,0.05451865,0.02233902,-0.01173994))) AS distance
+FROM face_1m
+ORDER BY distance DESC
+LIMIT 20
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../get-started-with-scratch/" class="btn btn-neutral float-right" title="Manual Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../zeppelin-example-nyctaxi/" class="btn btn-neutral" title="NYC TAXI Benchmark"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.</p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../zeppelin-example-nyctaxi/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../get-started-with-scratch/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

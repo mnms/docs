@@ -16,23 +16,31 @@
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://mnms.github.io/docs/try-with-zeppelin/</loc>
-     <lastmod>2021-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
-     <loc>https://mnms.github.io/docs/command-line-interface/</loc>
-     <lastmod>2021-03-26</lastmod>
-     <changefreq>daily</changefreq>
-    </url><url>
      <loc>https://mnms.github.io/docs/data-ingestion-and-querying/</loc>
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://mnms.github.io/docs/version-update/</loc>
+     <loc>https://mnms.github.io/docs/try-with-zeppelin/</loc>
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://mnms.github.io/docs/manage-failover/</loc>
+     <loc>https://mnms.github.io/docs/cli-version/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/cli-conf/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/cli-cli/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/cli-cluster/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/cli-thriftserver/</loc>
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
@@ -40,7 +48,15 @@
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://mnms.github.io/docs/how-to-scaleout/</loc>
+     <loc>https://mnms.github.io/docs/zeppelin-example-nyctaxi/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/zeppelin-example-face-data/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/get-started-with-scratch/</loc>
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
@@ -48,7 +64,11 @@
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
-     <loc>https://mnms.github.io/docs/get-started-with-scratch/</loc>
+     <loc>https://mnms.github.io/docs/manage-failover/</loc>
+     <lastmod>2021-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://mnms.github.io/docs/how-to-scaleout/</loc>
      <lastmod>2021-03-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
