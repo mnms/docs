@@ -1,7 +1,7 @@
 
 With `conf` commands, you can configure out the cluster.
 
-You can open the template file with the below options(`cluster`/`master`/`slave`/`thriftserver`)
+You can open the template file with the below options(`cluster`/`master`/`thriftserver`)
 
 After saving the template file, the configuration will be synchronized with all nodes in the current cluster.
 
