@@ -41,7 +41,7 @@ export SR2_FLASH_DB_PATH="/sata_ssd/ssd_02/matthew"
 
 # 2. master
 
-`conf master` will open `redis-master.conf.template` file of the current cluster.
+`conf master` will open `redis-master.conf.template` file of the current cluster. This file will configure all redis-servers in the current cluster.
 
 ```
 matthew@lightningdb:21> conf master
@@ -64,33 +64,7 @@ Complete edit.
 maxmemory 300mb
 ```
 
-# 3. slave
-
-`conf slave` will open `redis-slave.conf.template` file of the current cluster.
-
-```
-matthew@lightningdb:21> conf slave
-Check status of hosts...
-OK
-Sync conf...
-OK
-Complete edit.
-```
-
-- Example of `redis-slave.conf.template`
-
-```
-# In short... if you have slaves attached it is suggested that you set a lower
-# limit for maxmemory so that there is some free RAM on the system for slave
-# output buffers (but this is not needed if the policy is 'noeviction').
-#
-# maxmemory <bytes>
-# maxmemory should be greater than 51mb in TSR2
-maxmemory 300mb
-```
-
-
-# 4. thrifserver
+# 3. thrifserver
 
 `conf thrifserver` will open `thriftserver.properties` file of the current thriftserver.
 
@@ -159,7 +133,7 @@ AGG_PUSHDOWN=true
 ###############################################################################
 ```
 
-# 5. sync
+# 4. sync
 
 With `sync {IP address}` or `sync {hostname}` command, you can load the configurations of all clusters from the remote server to localhost.
 
