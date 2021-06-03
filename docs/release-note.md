@@ -1,6 +1,6 @@
-# 1. Recommended Versions
+# 1. Recommended Version
 
-[LightningDB ver 1.2.3](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.release.flashbase_v1.2.3.45814d.bin)[^1]
+[LightningDB ver 1.3.1](https://flashbase.s3.ap-northeast-2.amazonaws.com/latest/lightningdb.release.release.flashbase_v1.3.1.44c438.bin)[^1]
 
 # 2. Release Notes
 
