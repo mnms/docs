@@ -194,23 +194,23 @@ export SR2_REDIS_SLAVE_PORTS=( $(seq 18150 18159) )     // need to configure in 
 
 ## only single data directory in redis db and flash db
 ## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
-#export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
-#export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
-#export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+[[export]] SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+[[export]] SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+[[export]] SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
 
 ## multiple data directory in redis db and flash db
 export SSD_COUNT=3     // need to configure
-#export HDD_COUNT=3
+[[export]] HDD_COUNT=3
 export SR2_REDIS_DATA="/sata_ssd/ssd_"      // need to configure. With this settings, '/sata_ssd/ssd_01', '/sata_ssd/ssd_02' and '/sata_ssd/ssd_03' are used. 
 export SR2_REDIS_DB_PATH="/sata_ssd/ssd_"   // need to configure
 export SR2_FLASH_DB_PATH="/sata_ssd/ssd_"   // need to configure
 
 #######################################################
 # Example : only SSD data directory
-#export SSD_COUNT=3
-#export SR2_REDIS_DATA="/ssd_"
-#export SR2_REDIS_DB_PATH="/ssd_"
-#export SR2_FLASH_DB_PATH="/ssd_"
+[[export]] SSD_COUNT=3
+[[export]] SR2_REDIS_DATA="/ssd_"
+[[export]] SR2_REDIS_DB_PATH="/ssd_"
+[[export]] SR2_FLASH_DB_PATH="/ssd_"
 #######################################################
 ```
 

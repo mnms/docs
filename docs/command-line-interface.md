@@ -491,28 +491,28 @@ export SR2_REDIS_MASTER_HOSTS=( "127.0.0.1" )
 export SR2_REDIS_MASTER_PORTS=( $(seq 18300 18304) )
 
 ## Slave hosts and ports (optional)
-#export SR2_REDIS_SLAVE_HOSTS=( "127.0.0.1" )
-#export SR2_REDIS_SLAVE_PORTS=( $(seq 18600 18609) )
+[[export]] SR2_REDIS_SLAVE_HOSTS=( "127.0.0.1" )
+[[export]] SR2_REDIS_SLAVE_PORTS=( $(seq 18600 18609) )
 
 ## only single data directory in redis db and flash db
 ## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
-#export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
-#export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
-#export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+[[export]] SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+[[export]] SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+[[export]] SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
 
 ## multiple data directory in redis db and flash db
 export SSD_COUNT=3
-#export HDD_COUNT=3
+[[export]] HDD_COUNT=3
 export SR2_REDIS_DATA="~/sata_ssd/ssd_"
 export SR2_REDIS_DB_PATH="~/sata_ssd/ssd_"
 export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
 
 #######################################################
 # Example : only SSD data directory
-#export SSD_COUNT=3
-#export SR2_REDIS_DATA="/ssd_"
-#export SR2_REDIS_DB_PATH="/ssd_"
-#export SR2_FLASH_DB_PATH="/ssd_"
+[[export]] SSD_COUNT=3
+[[export]] SR2_REDIS_DATA="/ssd_"
+[[export]] SR2_REDIS_DB_PATH="/ssd_"
+[[export]] SR2_FLASH_DB_PATH="/ssd_"
 #######################################################
 ```
 
@@ -531,23 +531,23 @@ export SR2_REDIS_SLAVE_PORTS=( $(seq 18350 18354) )
 
 ## only single data directory in redis db and flash db
 ## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
-#export SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
-#export SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
-#export SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
+[[export]] SR2_REDIS_DATA="/nvdrive0/nvkvs/redis"
+[[export]] SR2_REDIS_DB_PATH="/nvdrive0/nvkvs/redis"
+[[export]] SR2_FLASH_DB_PATH="/nvdrive0/nvkvs/flash"
 
 ## multiple data directory in redis db and flash db
 export SSD_COUNT=3
-#export HDD_COUNT=3
+[[export]] HDD_COUNT=3
 export SR2_REDIS_DATA="~/sata_ssd/ssd_"
 export SR2_REDIS_DB_PATH="~/sata_ssd/ssd_"
 export SR2_FLASH_DB_PATH="~/sata_ssd/ssd_"
 
 #######################################################
 # Example : only SSD data directory
-#export SSD_COUNT=3
-#export SR2_REDIS_DATA="/ssd_"
-#export SR2_REDIS_DB_PATH="/ssd_"
-#export SR2_FLASH_DB_PATH="/ssd_"
+[[export]] SSD_COUNT=3
+[[export]] SR2_REDIS_DATA="/ssd_"
+[[export]] SR2_REDIS_DB_PATH="/ssd_"
+[[export]] SR2_FLASH_DB_PATH="/ssd_"
 #######################################################
 ```
 

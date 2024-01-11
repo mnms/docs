@@ -118,9 +118,9 @@ EXECUTOR_MEMORY=1g                               // 수정 필요
 EXECUTORS=12                               // 수정 필요
 EXECUTOR_CORES=12                               // 수정 필요
 
-#JSON_PATH=~/Flashbase/flashbase-benchmark/json/load_no_skew
+[[JSON_PATH]]=~/Flashbase/flashbase-benchmark/json/load_no_skew
 JSON_PATH=/home/ltdb/tsr2-test/json                               // 수정 필요, json file 업데이트 시 kaetlyn 재시작 필요!
-#HIVE_METASTORE_URI=thrift://localhost:9083
+[[HIVE_METASTORE_URI]]=thrift://localhost:9083
 HIVE_METASTORE_URI=''                               // 수정 필요
 KAFKA_CONSUMER_GROUP_ID=nvkvs_redis_connector                               // 수정 필요
 KAFKA_CONSUMING_TOPIC_LIST=nvkvs3                               // 수정 필요

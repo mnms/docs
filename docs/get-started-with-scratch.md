@@ -48,7 +48,7 @@ Remove SWAP Partition (Comment out SWAP partition with using `#` and reboot)
 
 ``` bash
 ...
-#/dev/mapper/centos-swap swap swap defaults 0 0
+[[/dev/mapper/centos-swap]] swap swap defaults 0 0
 ...
 ```
 
