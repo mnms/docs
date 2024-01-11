@@ -9,46 +9,47 @@ repo_name: source repository
 repo_url: https://github.com/mnms/docs
 
 nav:
-  - Introduction:
-    - Overview: index.md
-    - Release Notes: release-note.md
+- Introduction:
+  - Overview: index.md
+  - Release Notes: release-note.md
 
-  - Getting Started:
-    - Prerequisite: prerequisite.md
-    - Installation: install-ltcli.md
-    - Data Ingestion and querying: data-ingestion-and-querying.md
+- Getting Started:
+  - Prerequisite: prerequisite.md
+  - Installation: install-ltcli.md
+  - Data Ingestion and querying: data-ingestion-and-querying.md
 
-  - Tutorial:
-    - Try out with Zeppelin: try-with-zeppelin.md
+- Tutorial:
+  - Try out with Zeppelin: try-with-zeppelin.md
 
-  - Command Line Interface:
-    - Version: cli-version.md
-    - Configuration: cli-conf.md
-    - Redis cli: cli-cli.md
-    - Cluster: cli-cluster.md
-    - Thriftserver: cli-thriftserver.md
+- Command Line Interface:
+  - Version: cli-version.md
+  - Configuration: cli-conf.md
+  - Redis3 cli (LightningDB v1.x): cli-cli.md
+  - Redis5 cli (LightningDB v2.x): cli-cli2.md
+  - Cluster: cli-cluster.md
+  - Thriftserver: cli-thriftserver.md
 
-  - Ecosystem:
-    - Data ingestion with KAFKA: kaetlyn.md
-    - Zeppelin: 
-      - 'NYC TAXI Benchmark': zeppelin-example-nyctaxi.md
-      - 'KNN SEARCH': zeppelin-example-face-data.md
+- Ecosystem:
+  - Data ingestion with KAFKA: kaetlyn.md
+  - Zeppelin:
+    - 'NYC TAXI Benchmark': zeppelin-example-nyctaxi.md
+    - 'KNN SEARCH': zeppelin-example-face-data.md
 
-  - Additional Resources:
-    - Manual Installation: get-started-with-scratch.md
-    - Install with flashbase: how-to-use-flashbase.md
-    - Failover with flashbase: manage-failover.md
-    - Scaleout with flashbase: how-to-scaleout.md
+- Additional Resources:
+  - Manual Installation: get-started-with-scratch.md
+  - Install with flashbase: how-to-use-flashbase.md
+  - Failover with flashbase: manage-failover.md
+  - Scaleout with flashbase: how-to-scaleout.md
 
 plugins:
-  - search
+- search
 markdown_extensions:
-  - meta
-  - toc:
-      permalink: true
-      baselevel: 1
-  - admonition
-  - footnotes
+- meta
+- toc:
+    permalink: true
+    baselevel: 1
+- admonition
+- footnotes
 
 theme:
   name: readthedocs

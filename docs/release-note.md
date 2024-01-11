@@ -1,8 +1,21 @@
 # 1. Recommended Version
 
-[LightningDB ver 1.3.1](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)[^1]
+[LightningDB ver 1.4.2](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)[^1]
 
 # 2. Release Notes
+
+**Ver 2.0.0**
+
+- Date: 2024.01.11
+- Download: [LightningDB ver 2.0.0](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)
+- License: free
+- Description
+    - Support ANN(Aproximate Nearest Neighbor) Search
+    - Support Thunderquery CLI without Spark
+    - Use Apache Spark 3.x and CatalogPlugin
+    - Use Apache Arrow
+    - Support Interfaces for CXL memory and CMS of SK Hynix
+
 
 **Ver 1.4.2**
 
@@ -19,7 +32,7 @@
 - Download: [LightningDB ver 1.3.1](https://drive.google.com/file/d/1BDXVLmPygd7YrthI5e4vIN09xBummRGN/view?usp=sharing)
 - License: free
 - Description
-    - Support k-NN Search
+    - Support Exact KNN Search
     - Recommended Spark version: 2.3.4
     - Support the permanent storage
 
