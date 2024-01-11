@@ -1,0 +1,9 @@
+  {
+      "endpoint": "127.0.0.1:18101",
+      "id": "101",
+      "columns": 10,
+      "partitions": [
+          3, 0
+      ],
+      "rowStore" : true
+  }
