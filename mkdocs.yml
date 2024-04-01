@@ -35,11 +35,15 @@ nav:
     - 'NYC TAXI Benchmark': zeppelin-example-nyctaxi.md
     - 'KNN SEARCH': zeppelin-example-face-data.md
 
+- Build and deploy on Kubernetes:
+  - Build LightningDB(Admin Only): build-lightningdb-on-k8s.md
+  - Deploy LightningDB: deploy-lightningdb-on-k8s.md
+
 - Additional Resources:
   - Manual Installation: get-started-with-scratch.md
-  - Install with flashbase: how-to-use-flashbase.md
-  - Failover with flashbase: manage-failover.md
-  - Scaleout with flashbase: how-to-scaleout.md
+  - Install with LightningDB: how-to-use-flashbase.md
+  - Failover with LightningDB: manage-failover.md
+  - Scaleout with LightningDB: how-to-scaleout.md
 
 plugins:
 - search
