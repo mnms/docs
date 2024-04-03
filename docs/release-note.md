@@ -1,6 +1,6 @@
 # 1. Recommended Version
 
-[LightningDB ver 1.4.2](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)[^1]
+[LightningDB ver 1.4.3](https://drive.google.com/file/d/16NHNNWCMs1VE8xaD87XfslGsheUY_9vT/view?usp=sharing)[^1]
 
 # 2. Release Notes
 
@@ -16,7 +16,7 @@
 **Ver 2.0.0**
 
 - Date: 2024.01.11
-- Download: [LightningDB ver 2.0.0](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)
+- Download: [LightningDB ver 2.0.0](https://drive.google.com/file/d/1QNvaozCsmDVOtMgKOgKWXCDzSDrL8MjD/view?usp=sharing)
 - License: free
 - Description
     - Support ANN(Aproximate Nearest Neighbor) Search
