@@ -4,6 +4,15 @@
 
 # 2. Release Notes
 
+**Ver 2.0.0 CXL-CMS**
+
+- Date: 2024.03.21
+- Download: [LightningDB ver 2.0.0 CXL-CMS](https://drive.google.com/file/d/1GipNo0Xt_DSQZ-y_WfjQnE8uhwsGD16F/view?usp=sharing)
+- License: free
+- Description
+    - Support Interfaces for CXL memory and CMS of SK Hynix
+
+
 **Ver 2.0.0**
 
 - Date: 2024.01.11
@@ -14,13 +23,12 @@
     - Support Thunderquery CLI without Spark
     - Use Apache Spark 3.x and CatalogPlugin
     - Use Apache Arrow
-    - Support Interfaces for CXL memory and CMS of SK Hynix
 
 
-**Ver 1.4.2**
+**Ver 1.4.3**
 
-- Date: 2022.06.01
-- Download: [LightningDB ver 1.4.2](https://drive.google.com/file/d/171jadrc0FI1EESCNBUaYsN--HQnWD-MA/view?usp=sharing)
+- Date: 2024.03.21
+- Download: [LightningDB ver 1.4.3](https://drive.google.com/file/d/16NHNNWCMs1VE8xaD87XfslGsheUY_9vT/view?usp=sharing)
 - License: free
 - Description
     - Support Kubernetes
