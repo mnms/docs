@@ -12,6 +12,7 @@ nav:
 - Introduction:
   - Overview: index.md
   - Release Notes: release-note.md
+  - Awards and Recognition: awards-recognition.md
 
 - Getting Started:
   - Prerequisite: prerequisite.md
@@ -36,8 +37,10 @@ nav:
     - 'KNN SEARCH': zeppelin-example-face-data.md
 
 - Build and deploy on Kubernetes:
+  - Why Kubernetes?: why-k8s.md
   - Build LightningDB(Admin Only): build-lightningdb-on-k8s.md
   - Deploy LightningDB: deploy-lightningdb-on-k8s.md
+  - How to use LightningDB: how-to-use-lightningdb-on-k8s.md
 
 - Additional Resources:
   - Manual Installation: get-started-with-scratch.md
