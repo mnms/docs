@@ -1,0 +1,965 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/zeppelin-example-face-data/">
+      
+      
+        <link rel="prev" href="../zeppelin-example-nyctaxi/">
+      
+      
+        <link rel="next" href="../why-k8s/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>KNN SEARCH - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KNN SEARCH
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="true">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaetlyn/" class="md-nav__link">
+        Data ingestion with KAFKA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="true">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        KNN SEARCH
+      </a>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="false">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-lightningdb-on-k8s/" class="md-nav__link">
+        Deploy LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started-with-scratch/" class="md-nav__link">
+        Manual Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-failover/" class="md-nav__link">
+        Failover with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<p>In Zeppelin, you can import the <code>Face data</code> file with below link.</p>
+<p><a href="https://raw.githubusercontent.com/mnms/ecosystem/master/Zeppelin/FACE_DATA/KNN_SEARCH_TEST.json">KNN_SEARCH_TEST.json</a></p>
+<p><strong>1. Put csv files into HDFS</strong></p>
+<pre><code>hdfs dfs -mkdir /face_data
+
+hdfs dfs -put /face_data/csv/* /face_data
+</code></pre>
+<p><strong>2. Load face data</strong></p>
+<pre><code>%spark
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.r2.UDF.R2UDFs
+
+val toFloatArray = udf(R2UDFs.toFloatArray)
+val fnvHash = udf(R2UDFs.fnvHash)
+
+R2UDFs.register()
+val r2Option = Map(&quot;table&quot; -&gt; &quot;300&quot;,
+      &quot;host&quot; -&gt; &quot;d201&quot;,
+      &quot;port&quot; -&gt; &quot;18400&quot;,
+      &quot;partitions&quot; -&gt; &quot;nvhash&quot;,
+      &quot;mode&quot; -&gt; &quot;nvkvs&quot;,
+      &quot;at_least_one_partition_enabled&quot; -&gt; &quot;no&quot;)
+
+spark.sqlContext.read.format(&quot;csv&quot;)
+  .option(&quot;sep&quot;, &quot;|&quot;)
+  .option(&quot;header&quot;, &quot;false&quot;)
+  .option(&quot;inferSchema&quot;, &quot;true&quot;)
+  .load(&quot;/face_data/csv/*.csv&quot;)
+  .withColumnRenamed(&quot;_c0&quot;, &quot;group&quot;)
+  .withColumnRenamed(&quot;_c1&quot;, &quot;subgroup&quot;)
+  .withColumnRenamed(&quot;_c2&quot;, &quot;subject&quot;)
+  .withColumnRenamed(&quot;_c3&quot;, &quot;face&quot;)
+  .withColumnRenamed(&quot;_c4&quot;, &quot;raw_feature&quot;)
+  .withColumn(&quot;feature&quot;, toFloatArray(split(col(&quot;raw_feature&quot;), &quot;,&quot;)))
+  .select(&quot;group&quot;, &quot;subgroup&quot;, &quot;subject&quot;, &quot;face&quot;, &quot;feature&quot;)
+  .withColumn(&quot;nvhash&quot;, fnvHash(col(&quot;face&quot;), functions.lit(30)))
+  .write
+  .format(&quot;r2&quot;)
+  .options(r2Options)
+  .mode(&quot;append&quot;)
+  .save()
+</code></pre>
+<p><strong>3. Create table</strong></p>
+<pre><code>%spark
+import org.apache.spark.sql.types._
+import org.apache.spark.sql.r2.UDF.R2UDFs
+
+val fields = &quot;group_id,app_id,subject_id,face_id,feature,nvhash&quot;.split(&quot;,&quot;).map(
+  fieldName =&gt; {
+    if (&quot;feature&quot;.equals(fieldName)) {
+      StructField(fieldName, ArrayType(FloatType))
+    } else {
+      StructField(fieldName, StringType)
+    }
+  }
+)
+val faceTableSchema = StructType(fields)
+
+
+spark.sqlContext.read.format(&quot;r2&quot;)
+  .schema(faceTableSchema)
+  .options(r2Option)
+  .load()
+  .createOrReplaceTempView(&quot;face_1m&quot;)
+</code></pre>
+<p><strong>4. Enable ‘KNN SEARCH PUSHDOWN’ feature</strong></p>
+<pre><code>%sql
+SET spark.r2.knn.pushdown=true
+</code></pre>
+<p><strong>5. KNN search with using the udf(cosineDistance) of Lightning DB</strong></p>
+<pre><code>%sql
+SELECT group_id, app_id, subject_id, face_id, cosineDistance(feature, toFloatArray(array(0.04074662,0.07717144,-0.01387950,0.01287790,0.04414229,0.03390900,0.03808868,0.03956917,0.00592308,-0.00935156,0.04414903,-0.01830893,-0.01918902,0.00154574,-0.02383651,-0.01054291,0.12655860,0.02075430,0.10315673,0.01371782,0.01522089,0.04304991,0.03376650,0.06703991,0.03827063,-0.00063873,0.02516229,0.07061137,0.08456459,-0.04103030,0.03004974,0.00297395,0.00295535,0.01112351,0.02805021,0.04350155,-0.00448326,0.04780317,0.10815978,-0.01784242,0.03320745,0.02912348,0.00183310,0.05318154,0.00922967,-0.04507693,0.01333585,0.00048346,-0.04612860,0.00427735,0.01232839,-0.00100568,0.03865110,0.01765136,-0.00942758,0.02383475,-0.01068696,0.08959154,0.08527020,0.03379998,-0.03852739,0.00607160,0.01309861,-0.01262910,0.00418265,0.03614477,-0.02971224,0.03703139,0.04333942,-0.03143747,0.06752674,-0.02173617,0.03583429,0.07731125,-0.02637132,-0.00395790,-0.04447101,0.03351297,0.08787052,0.00647665,0.03660145,-0.00640601,-0.01004024,0.00763107,0.04762240,-0.00068071,0.00863653,0.06126453,0.04588475,-0.03891076,0.07472295,0.02470182,0.08828569,0.01660202,0.02419317,0.09363404,0.05495216,0.01202847,0.00120040,-0.02136896,0.03100559,0.07371868,0.00986731,0.03934553,0.01289396,0.04705510,-0.02040175,0.01501585,0.00678832,0.03882410,0.02261387,0.02165552,-0.05097445,0.00240807,-0.04210005,0.00760698,-0.02904095,0.06572093,0.03549200,0.06070529,0.06948626,0.02832109,0.01669887,0.00914011,-0.00024529,-0.00124402,0.06481186,0.08246713,0.07499877,0.13112830,0.01034968,0.04224777,0.01175614,0.07395388,0.04937797,0.01561183,-0.03251049,0.05449009,0.04767901,-0.01149555,-0.02055555,-0.05990825,0.06633005,0.07592525,-0.04504610,0.03348448,0.04178635,0.01327751,0.02208084,0.08780535,-0.00799043,0.02236966,0.01560906,0.01171102,0.00814554,-0.00257578,0.08387835,-0.01018093,-0.02170087,0.03230520,0.00955880,-0.01824543,0.05438962,0.01805668,0.02112979,-0.01372666,-0.01057472,0.05453142,0.03742066,0.05534794,0.00977020,0.01991821,-0.00884413,0.09644359,0.02875310,0.10519003,0.05280351,-0.01918891,0.03197290,0.02722778,0.03450845,0.02669794,0.08618007,0.09387484,0.05103674,-0.01431658,0.00783211,-0.00434245,0.02062620,-0.00611403,0.06696083,0.01333337,-0.00156842,0.04325287,-0.05481976,0.01642864,-0.02679648,-0.00642413,0.03808333,0.06134293,0.06049823,0.03818581,0.03599750,-0.01651556,0.06601544,0.01385061,0.00730943,0.03045858,-0.00200028,0.04009718,0.04393080,-0.02568381,-0.01271287,-0.01860873,0.03669106,0.00154059,-0.04202117,0.07374570,-0.00380450,0.03164477,0.00637422,-0.02361638,0.01918917,0.01680134,0.01346881,0.02424449,-0.00504802,-0.06241146,0.08241857,0.02817723,0.02132487,0.08051144,0.06332499,0.02585857,-0.04057337,0.00279212,-0.00005161,-0.06566417,0.07860317,-0.01276221,0.06822366,-0.00191142,0.08534018,0.06014366,0.07053877,-0.01962799,0.08602677,-0.00817098,0.00302233,-0.10041475,-0.01908947,0.03235617,0.00931559,0.05451865,0.02233902,-0.01173994))) AS distance
+FROM face_1m
+ORDER BY distance DESC
+LIMIT 20
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>

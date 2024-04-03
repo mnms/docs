@@ -1,0 +1,1156 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/deploy-lightningdb-on-k8s/">
+      
+      
+        <link rel="prev" href="../build-lightningdb-on-k8s/">
+      
+      
+        <link rel="next" href="../how-to-use-lightningdb-on-k8s/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Deploy LightningDB - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploy-lightningdb-and-api-server" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deploy LightningDB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="false">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaetlyn/" class="md-nav__link">
+        Data ingestion with KAFKA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="false">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-face-data/" class="md-nav__link">
+        KNN SEARCH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="true">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Deploy LightningDB
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Deploy LightningDB
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-kubernetes-manifest-github" class="md-nav__link">
+    1. Kubernetes manifest github
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-lightningdb-v1" class="md-nav__link">
+    2. Install LightningDB v1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-lightningdb-v2-thunderquery" class="md-nav__link">
+    3. Install LightningDB v2 / Thunderquery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-install-ltdb-http-v1" class="md-nav__link">
+    4. Install ltdb-http v1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-install-ltdb-http-v2" class="md-nav__link">
+    5. Install ltdb-http v2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-install-ltdb-http-v2-cxl-cms" class="md-nav__link">
+    6. Install ltdb-http v2 CXL-CMS
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started-with-scratch/" class="md-nav__link">
+        Manual Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-failover/" class="md-nav__link">
+        Failover with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-kubernetes-manifest-github" class="md-nav__link">
+    1. Kubernetes manifest github
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-lightningdb-v1" class="md-nav__link">
+    2. Install LightningDB v1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-install-lightningdb-v2-thunderquery" class="md-nav__link">
+    3. Install LightningDB v2 / Thunderquery
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-install-ltdb-http-v1" class="md-nav__link">
+    4. Install ltdb-http v1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-install-ltdb-http-v2" class="md-nav__link">
+    5. Install ltdb-http v2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-install-ltdb-http-v2-cxl-cms" class="md-nav__link">
+    6. Install ltdb-http v2 CXL-CMS
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<h1 id="deploy-lightningdb-and-api-server">Deploy LightningDB and API Server<a class="headerlink" href="#deploy-lightningdb-and-api-server" title="Permanent link">&para;</a></h1>
+<h2 id="1-kubernetes-manifest-github">1. Kubernetes manifest github<a class="headerlink" href="#1-kubernetes-manifest-github" title="Permanent link">&para;</a></h2>
+<pre><code>$ git clone https://github.com/mnms/metavision2_k8s_manifests
+</code></pre>
+<h2 id="2-install-lightningdb-v1">2. Install LightningDB v1<a class="headerlink" href="#2-install-lightningdb-v1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Install ltdb-operator</li>
+</ul>
+<pre><code>$ cd ltdb-operator
+$ kubectl create -f ltdb-operator-controller-manager.yaml
+</code></pre>
+<ul>
+<li>deploy LightningDB with CRD</li>
+</ul>
+<pre><code>$ cd ltdb
+$ kubectl create -f ltdb.yaml -n {namespace}
+</code></pre>
+<ul>
+<li>참조<ul>
+<li>size / storageClass / maxMemory 등 통해 클러스터 설정 조정</li>
+<li>AOF/RDB 는 디폴트 옵션 on</li>
+<li>fs 내 redis/rocksdb mount 위치<ul>
+<li>/tmp-redis_rocksdb_integration_0: redis's aof/rdb, conf</li>
+<li>/tmp-redis_rocksdb_integration_1: rocksdb's sst/wal</li>
+</ul>
+</li>
+<li>rdb 명시적 명령: bash flashbase cli-all bgsave</li>
+<li>on-premise 경우, 아래 URL 처럼 system 튜닝이 들어감. k8s 운영 상황에서도 튜닝 여부 확인 필요<ul>
+<li>https://docs.lightningdb.io/get-started-with-scratch/</li>
+</ul>
+</li>
+<li>삭제<ul>
+<li>STS 는 PVC 가 자동으로 삭제되지 않으므로 완전히 삭제하려면 해당 PVC 수동 삭제 필요</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ kubectl delete -f ltdb.yaml
+or
+$ kubectl delete ltdb ltdb -n metavision
+$ for i in {0..39}; do kubectl delete pvc &quot;ltdb-data-logging-ltdb-$i&quot; -n metavision; done
+$ for i in {0..39}; do kubectl delete pvc &quot;ltdb-data-ltdb-$i&quot; -n metavision; done
+</code></pre>
+<h2 id="3-install-lightningdb-v2-thunderquery">3. Install LightningDB v2 / Thunderquery<a class="headerlink" href="#3-install-lightningdb-v2-thunderquery" title="Permanent link">&para;</a></h2>
+<pre><code>$ cd ltdbv2
+$ kubectl create -f ltdbv2-all-in-one.yaml
+$ kubectl -n metavision exec -it ltdbv2-0 -- redis-cli --cluster-yes --cluster create `kubectl -n metavision get po -o wide -l app=ltdbv2 | grep ltdbv2 | awk '{print $6&quot;:6379&quot;}' | tr '\n' ' '`
+</code></pre>
+<ul>
+<li>참조<ul>
+<li>Operator 없이 수동 설치</li>
+<li>namespace 가 metavision 으로 명시적으로 되어 있음. namespace 를 바꾸고 싶으면 해당 부분 수정</li>
+<li>최신 버전은 ann 을 사용한다 하더라도 maxmemory-policy 를 noeviction 으로 바꿀 필요 없이 eviction rule 정상 작동하면서 사용하면 됨</li>
+<li>AOF/RDB 는 디폴트 옵션 on</li>
+<li>fs 내 redis/rocksdb mount 위치<ul>
+<li>/tmp/redis: redis's aof/rdb, conf, rocksdb's sst/wal</li>
+</ul>
+</li>
+<li>rdb 명시적 명령: flashbase cli-all bgrewriteaof</li>
+<li>삭제<ul>
+<li>STS 는 PVC 가 자동으로 삭제되지 않으므로 완전히 삭제하려면 해당 PVC 수동 삭제 필요</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ kubectl delete -f ltdbv2-all-in-one.yaml
+$ for i in {0..99}; do kubectl delete pvc &quot;ltdbv2-pvc-ltdbv2-$i&quot; -n metavision; done
+</code></pre>
+<h2 id="4-install-ltdb-http-v1">4. Install ltdb-http v1<a class="headerlink" href="#4-install-ltdb-http-v1" title="Permanent link">&para;</a></h2>
+<pre><code>$ cd ltdb-http
+$ ls -alh
+total 32
+drwxr-xr-x   6 1111462  1437349805   192B  8 31 17:53 .
+drwxr-xr-x  11 1111462  1437349805   352B  8 31 17:54 ..
+-rw-r--r--   1 1111462  1437349805   1.3K  8 31 17:53 ltdb-http-configmap.yaml
+-rw-r--r--   1 1111462  1437349805   1.5K  8 31 17:53 ltdb-http.yaml
+-rw-r--r--   1 1111462  1437349805   259B  8 31 17:53 pvc.yaml
+-rw-r--r--   1 1111462  1437349805   342B  8 31 17:53 spark-rbac.yaml
+</code></pre>
+<ul>
+<li>ltdb-http.yaml만 가장 나중에 apply</li>
+</ul>
+<pre><code>kubectl -n metavision apply -f ltdb-http-configmap.yaml
+kubectl -n metavision apply -f spark-rbac.yaml
+kubectl -n metavision apply -f pvc.yaml
+
+kubectl -n metavision apply -f ltdb-http.yaml  // 가장 나중에...
+</code></pre>
+<h2 id="5-install-ltdb-http-v2">5. Install ltdb-http v2<a class="headerlink" href="#5-install-ltdb-http-v2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>참조: https://www.notion.so/ltdb/LTDB-HTTP-V2-0-K8S-b47ad5741e9a43668c7bee4d40e1616e?pvs=4</li>
+<li>아이스버그 사용 안할 시, ltdb-postgresql.yaml 제외 가능</li>
+<li>namespace 가 metavision 으로 명시적으로 되어 있음. namespace 를 바꾸고 싶으면 해당 부분 수정</li>
+<li>s3 기능을 사용하고 싶으면, app/s3-secret.yaml 설치 필요 (분당 9층 TB에는 이미 설치 됨)</li>
+<li>s3 region 은 기본값으로 ap-northeast-2 설정 됨</li>
+</ul>
+<pre><code>$ cd ltdbv2-http
+$ kubectl create -f ltdb-http-configmap.yaml
+$ kubectl create -f ltdb-http.yaml
+$ kubectl create -f ltdbv2-http-vs.yaml
+</code></pre>
+<ul>
+<li>삭제</li>
+</ul>
+<pre><code>$ kubectl delete -f ltdbv2-http-vs.yaml
+$ kubectl delete -f ltdb-http.yaml
+$ kubectl delete -f ltdb-http-configmap.yaml
+</code></pre>
+<h2 id="6-install-ltdb-http-v2-cxl-cms">6. Install ltdb-http v2 CXL-CMS<a class="headerlink" href="#6-install-ltdb-http-v2-cxl-cms" title="Permanent link">&para;</a></h2>
+<pre><code>$ cd hynix
+$ kubectl create -f ltdbv2.yaml
+$ kubectl -n hynix exec -it ltdbv2-0 -- redis-cli --cluster-yes --cluster create `kubectl -n hynix get po -o wide -l app=ltdbv2 | grep ltdbv2 | awk '{print $6&quot;:6379&quot;}' | tr '\n' ' '`
+$ kubectl create -f thunderquery.yaml
+$ kubectl create -f ltdbv2-http.yaml
+$ kubectl create -f istio-ingress.yaml
+</code></pre>
+<ul>
+<li>참조<ul>
+<li>cxl-cms 에서 추가 된 config 값은 아래 같으며, cxl-cms dev 용 CSI 드라이버가 없기 때문에 STS 에서 수동으로 pod 개수 및 Node Affinity 설정 하면서 테스트 해야 함</li>
+<li>dax-device-name /dev/xxx, cms-device-name /dev/yyy 형태로 잡아짐</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ vi ltdbv2.yaml
+...
+cms-enabled no
+dax-device-name no
+cms-device-name no
+</code></pre>
+<ul>
+<li>삭제<ul>
+<li>STS 는 PVC 가 자동으로 삭제되지 않으므로 완전히 삭제하려면 해당 PVC 수동 삭제 필요</li>
+</ul>
+</li>
+</ul>
+<pre><code>$ cd hynix
+$ kubectl delete -f ltdbv2-http.yaml
+$ kubectl delete -f thunderquery.yaml
+$ kubectl delete -f ltdbv2.yaml
+for i in {0..9}; do kubectl delete pvc &quot;ltdbv2-pvc-ltdbv2-$i&quot; -n hynix; done
+$ kubectl delete -f istio-ingress.yaml
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>

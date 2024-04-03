@@ -1,0 +1,1279 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/manage-failover/">
+      
+      
+        <link rel="prev" href="../how-to-use-flashbase/">
+      
+      
+        <link rel="next" href="../how-to-scaleout/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Failover with LightningDB - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-prerequisite" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Failover with LightningDB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="false">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaetlyn/" class="md-nav__link">
+        Data ingestion with KAFKA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="false">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-face-data/" class="md-nav__link">
+        KNN SEARCH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="false">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-lightningdb-on-k8s/" class="md-nav__link">
+        Deploy LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="true">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started-with-scratch/" class="md-nav__link">
+        Manual Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Failover with LightningDB
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This document guides how to use 'flashbase' script for failover.
+If you use LTCLI, you can check the status of failure and operate Lightning DB more easily and powerfully. 
+Therefore, if possible, we recommend LTCLI rather than 'flashbase' script.</p>
+</div>
+<h1 id="1-prerequisite">1. Prerequisite<a class="headerlink" href="#1-prerequisite" title="Permanent link">&para;</a></h1>
+<p><strong> 1) Redis </strong></p>
+<ul>
+<li>Check 'flashbase cluster-rowcount'</li>
+<li>Check 'flashbase cli-all config get flash-db-ttl'</li>
+<li>Check 'flashbase cli-all info keyspace' // 'memKeys'(the number of in-memory data keys)</li>
+<li>Check 'flashbase cli-all info tablespace' // 'totalRowgroups', 'totalRows'</li>
+<li>Check 'flashbase cli-all info eviction' // 'avg full percent'</li>
+</ul>
+<p><strong> 2) Thriftserver </strong></p>
+<ul>
+<li>Check cron jobs with 'crontab -e'.</li>
+<li>Check table schema and query.</li>
+</ul>
+<pre><code class="language-bash">select * from {table name} where ... limit 1;
+</code></pre>
+<p><strong> 3) System resources </strong></p>
+<ul>
+<li>Check available memory(nmon, 'free -h')</li>
+<li>check the status of disks(nmon, 'df -h')</li>
+</ul>
+<h1 id="2-check-the-status-and-failover">2. Check the status and failover<a class="headerlink" href="#2-check-the-status-and-failover" title="Permanent link">&para;</a></h1>
+<p><strong> 1) Background </strong></p>
+<ul>
+<li>If a redis-server is killed, a status of the node is changed to 'disconnected'.</li>
+</ul>
+<pre><code class="language-bash">543f81b6c5d6e29b9871ddbbd07a4524508d27e5 127.0.0.1:18202 master - 1585787616744 1585787612000 0 disconnected
+</code></pre>
+<ul>
+<li>After a single node checked that a redis-server is disconnected, the status of the redis-server is changed to <code>pFail</code>.</li>
+<li>After all nodes inf the cluster checked that the node is disconnected,  the status of the redis-server is changed to <code>Fail</code>.</li>
+<li>If the node is replicated, the slave of the node is failovered.</li>
+<li>With 'cluster-failover.sh', you can do failover regardless of the status(pFail/Fail).</li>
+</ul>
+<pre><code class="language-bash">543f81b6c5d6e29b9871ddbbd07a4524508d27e5 127.0.0.1:18202 master,fail - 1585787616744 1585787612000 0 disconnected
+</code></pre>
+<ul>
+<li>If <code>node-{port}.conf</code> file is lost by disk failure, the redis-server using the conf file creates new uuid.</li>
+<li>Because the previous uuid in the cluster is lost, the uuid is changed to <code>noaddr</code>. This <code>noaddr</code> uuid should be removed with using <code>cluster forget</code> command.</li>
+</ul>
+<pre><code class="language-bash">// previous uuid of 18202
+543f81b6c5d6e29b9871ddbbd07a4524508d27e5 :0 master,fail,noaddr - 1585787799235 1585787799235 0 disconnected
+
+// new uuid of 18202
+001ce4a87de2f2fc62ff44e2b5387a3f0bb9837c 127.0.0.1:18202 master - 0 1585787800000 0 connected
+</code></pre>
+<p><strong> 2) Check the status of the cluster </strong></p>
+<p>1) check-distribution</p>
+<p>Show the distribution of master/slave in each server.</p>
+<pre><code class="language-bash">&gt; flashbase check-distribution
+check distribution of masters/slaves...
+SERVER NAME | M | S
+--------------------------------
+127.0.0.1   | 5 | 3
+--------------------------------
+Total nodes | 5 | 3
+</code></pre>
+<p>2) find-masters</p>
+<ul>
+<li>options</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters
+Use options(no-slave|no-slot|failovered)
+</code></pre>
+<ul>
+<li>no-slave (masters without slaves. Need to add the failbacked slaves to this node)</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters no-slave
+127.0.0.1:18203
+127.0.0.1:18252
+</code></pre>
+<ul>
+<li>no-slot (Not yet added into the cluster or masters without slot)</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters no-slot
+127.0.0.1:18202
+127.0.0.1:18253
+</code></pre>
+<ul>
+<li>failovered (When the cluster is initialized, this node was a slave. But now, the nodes is a master by failover)</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters failovered
+127.0.0.1:18250
+127.0.0.1:18252
+127.0.0.1:18253
+</code></pre>
+<p>3) find-slaves</p>
+<ul>
+<li>options</li>
+</ul>
+<pre><code class="language-bash">flashbase find-slaves
+Use options(failbacked)
+</code></pre>
+<ul>
+<li>failbacked (When the cluster is initialized, this node was a master. But now, the nodes is a slave by failback)</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-slaves failbacked
+127.0.0.1:18200
+</code></pre>
+<p>4) find-masters-with-dir</p>
+<ul>
+<li>List up the redis-servers with using the disk with HW fault.</li>
+<li>After HW fault, some of these nodes are already killed and the others will be killed in a few minutes.</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters-with-dir
+Error) Invalid arguments.
+ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
+
+&gt; flashbase find-masters-with-dir 127.0.0.1 /nvdrive0/ssd_01/nvkvs/nvkvs
+18200
+18204
+</code></pre>
+<p><strong> 3) How to handle HW fault(in case of replication) </strong></p>
+<p>1) cluster-failover.sh</p>
+<p>If some redis-servers are disconnected(killed/paused), you can do failover immediately and make the status of the cluster 'ok'.</p>
+<p>2) find-nodes-with-dir / find-masters-with-dir / failover-with-dir / kill-with-dir</p>
+<ul>
+<li>List up all nodes or master those are using the disk with HW fault.</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-masters-with-dir
+Error) Invalid arguments.
+ex. 'flashbase find-masters-with-dir 127.0.0.1 /DATA01/nvkvs/nvkvs'
+
+&gt; flashbase find-masters-with-dir 127.0.0.1 /nvdrive0/ssd_02/nvkvs/nvkvs
+18200
+18204
+</code></pre>
+<ul>
+<li>Do failover and change the master using the error disk to the slave</li>
+</ul>
+<pre><code>&gt; failover-with-dir 127.0.0.1 /nvdrive0/ssd_02/nvkvs/nvkvs
+127.0.0.1:18250 will be master
+127.0.0.1:18254 will be master
+OK
+</code></pre>
+<ul>
+<li>with <code>kill-with-dir</code>, kill all nodes that use the error disk.</li>
+</ul>
+<pre><code>&gt; flashbase kill-with-dir 127.0.0.1 /nvdrive0/ssd_02/nvkvs/nvkvs
+flashbase kill 18200
+flashbase kill 18204
+flashbase kill 18253
+
+&gt; flashbase cli-all ping
+redis client for 127.0.0.1:18200
+Could not connect to Redis at 127.0.0.1:18200: Connection refused
+redis client for 127.0.0.1:18201
+PONG
+redis client for 127.0.0.1:18202
+PONG
+redis client for 127.0.0.1:18203
+PONG
+redis client for 127.0.0.1:18204
+Could not connect to Redis at 127.0.0.1:18204: Connection refused
+redis client for 127.0.0.1:18250
+PONG
+redis client for 127.0.0.1:18251
+PONG
+redis client for 127.0.0.1:18252
+PONG
+redis client for 127.0.0.1:18253
+Could not connect to Redis at 127.0.0.1:18253: Connection refused
+redis client for 127.0.0.1:18254
+PONG
+</code></pre>
+<p>3) find-noaddr / forget-noaddr</p>
+<ul>
+<li>Remove 'noaddr' node</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase find-noaddr  // The prev uuid. Now not used anymore.
+1b5d70b57079a4549a1d2e8d0ac2bd7c50986372 :0 master,fail,noaddr - 1589853266724 1589853265000 1 disconnected
+
+&gt; flashbase forget-noaddr // Remove the 'noaddr' uuid.
+(error) ERR Unknown node 1b5d70b57079a4549a1d2e8d0ac2bd7c50986372  // Because newly added node does not know the previous uuid.
+OK
+OK
+OK
+OK
+
+&gt; flashbase find-noaddr // Check that the noaddr uuid is removed
+
+</code></pre>
+<p>4) do-replicate</p>
+<ul>
+<li>First of all, make the master/slave pair. If there are many nodes to replicate, <a href="../scripts/pairing.py">pairing.py</a> is helpful.</li>
+</ul>
+<pre><code>&gt; flashbase find-noslot &gt; slaves
+
+&gt; flashbase find-noslave &gt; masters
+
+&gt; python pairing.py slaves masters
+flashbase do-replicate 192.168.0.2:19003 192.168.0.4:19053
+flashbase do-replicate 192.168.0.2:19004 192.168.0.4:19054
+flashbase do-replicate 192.168.0.2:19005 192.168.0.4:19055
+...
+</code></pre>
+<ul>
+<li>Add no-slot master as the slave to no-slave master(replicate)</li>
+</ul>
+<pre><code class="language-bash">&gt; flashbase do-replicate 127.0.0.1:18202 127.0.0.1:18252
+Add 127.0.0.1:18202 as slave of master(127.0.0.1:18252)
+OK
+
+&gt; flashbase cli -p 18202 info replication
+# Replication
+role:slave
+master_host:127.0.0.1
+master_port:18252
+master_link_status:down
+master_last_io_seconds_ago:-1
+master_sync_in_progress:0
+slave_repl_offset:1
+master_link_down_since_seconds:1585912329
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+&gt; flashbase do-replicate 127.0.0.1:18253 127.0.0.1:18203
+Add 127.0.0.1:18253 as slave of master(127.0.0.1:18203)
+OK
+
+&gt; flashbase cli -p 18253 info replication
+# Replication
+role:slave
+master_host:127.0.0.1
+master_port:18203
+master_link_status:up
+master_last_io_seconds_ago:5
+master_sync_in_progress:0
+slave_repl_offset:29
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+</code></pre>
+<p>If the slave candidate is not included in the cluster, 'do-replicate' is done after 'cluster meet'.</p>
+<pre><code class="language-bash">&gt; flashbase do-replicate 127.0.0.1:18252 127.0.0.1:18202
+Add 127.0.0.1:18252 as slave of master(127.0.0.1:18202)
+Fail to get masters uuid
+'cluster meet' is done
+OK // 'cluster meet' is done successfully
+OK // 'cluster replicate' is done successfully
+</code></pre>
+<p>5) reset-distribution</p>
+<p>To initialize the node distribution, use 'reset-distribution'.</p>
+<pre><code class="language-bash">// Check the distribution of cluster nodes.
+&gt; flashbase check-distribution
+check distribution of masters/slaves...
+SERVER NAME | M | S
+--------------------------------
+192.168.111.35 | 4 | 4
+192.168.111.38 | 0 | 8
+192.168.111.41 | 8 | 0
+--------------------------------
+Total nodes | 12 | 12
+
+...
+
+&gt; flashbase reset-distribution
+192.168.111.38:20600
+OK
+192.168.111.38:20601
+OK
+192.168.111.38:20602
+OK
+192.168.111.38:20603
+OK
+
+...
+
+// Check the distribution of cluster nodes again.
+&gt; flashbase check-distribution
+check distribution of masters/slaves...
+SERVER NAME | M | S
+--------------------------------
+192.168.111.35 | 4 | 4
+192.168.111.38 | 4 | 4
+192.168.111.41 | 4 | 4
+--------------------------------
+Total nodes | 12 | 12
+</code></pre>
+<p>6) force-failover</p>
+<p>When a server need to be shutdown by HW fault or checking, change all masters in the server to slaves by failover of those slaves.</p>
+<pre><code class="language-bash">&gt; flashbase check-distribution
+check distribution of masters/slaves...
+SERVER NAME | M | S
+--------------------------------
+192.168.111.35 | 4 | 4
+192.168.111.38 | 4 | 4
+192.168.111.41 | 4 | 4
+--------------------------------
+Total nodes | 12 | 12
+
+&gt; flashbase force-failover 192.168.111.41
+all masters in 192.168.111.41 will be slaves and their slaves will promote to masters
+192.168.111.35:20651 node will be master!
+OK
+192.168.111.38:20651 node will be master!
+OK
+192.168.111.35:20653 node will be master!
+OK
+192.168.111.38:20653 node will be master!
+OK
+
+&gt; flashbase check-distribution
+check distribution of masters/slaves...
+SERVER NAME | M | S
+--------------------------------
+192.168.111.35 | 6 | 2
+192.168.111.38 | 6 | 2
+192.168.111.41 | 0 | 5
+--------------------------------
+Total nodes | 12 | 9
+</code></pre>
+<p><strong> 4) How to handle HW fault(in case of no replication) </strong></p>
+<p>After disk replacement, <code>nodes-{port number}.conf</code> is lost.</p>
+<p>Therefore a new uuid is generated after restart.</p>
+<p>Because the previous uuid in the cluster is lost, the uuid is changed to <code>noaddr</code>. This <code>noaddr</code> uuid should be removed with using <code>cluster forget</code> command.</p>
+<p>Because the restarted node with the new uuid has no slot information, a slot range should be assigned by using 'addslots'. </p>
+<p>1) Find <code>noaddr</code> node and check its slot range.</p>
+<pre><code class="language-bash">&gt; flashbase find-noaddr
+7c84d9bb36ae3fa4caaf75318b59d3d2f6c7e9d8 :0 master,fail,noaddr - 1596769266377 1596769157081 77 disconnected 13261-13311 // '13261-13311' is the lost slot range.
+</code></pre>
+<p>2) Add the slot range to the restarted node.</p>
+<pre><code class="language-bash">&gt; flashbase cli -h 192.168.111.35 -p 18317 cluster addslots {13261..13311}
+</code></pre>
+<p>3) Increase the epoch of the node and update the cluster information.</p>
+<pre><code class="language-bash">&gt; flashbase cli -h 192.168.111.35 -p 18317 cluster bumpepoch
+BUMPED 321
+</code></pre>
+<p>4) Remove the noaddr node.</p>
+<pre><code class="language-bash">&gt; flashbase forget-noaddr
+</code></pre>
+<h1 id="3-check-the-status">3. Check the status<a class="headerlink" href="#3-check-the-status" title="Permanent link">&para;</a></h1>
+<p><strong> 1) Redis </strong></p>
+<ul>
+<li>Compare 'flashbase cluster-rowcount' with the previous result.</li>
+<li>Compare 'flashbase cli-all config get flash-db-ttl'  with the previous result.</li>
+<li>flashbase cli-all cluster info | grep state:ok | wc -l</li>
+<li>flashbase cli -h {ip} -p {port} cluster nodes</li>
+<li>flashbase cli-all info memory | grep isOOM:true</li>
+</ul>
+<p><strong> 2) yarn &amp; spark </strong></p>
+<ul>
+<li>Check web ui or 'yarn application -list'.</li>
+<li>In case of spark, <ul>
+<li>Remove the disk with HW fault in <code>spark.local.dir</code> of <code>spark-default.conf</code> and restart thriftserver.</li>
+</ul>
+</li>
+</ul>
+<p><strong> 3) Thriftserver </strong></p>
+<ul>
+<li>Check cron jobs with 'crontab -e'.</li>
+<li>Check table schema and query.</li>
+</ul>
+<pre><code class="language-bash">select * from {table name} where ... limit 1;
+</code></pre>
+<p><strong> 4) kafka &amp; kaetlyn </strong></p>
+<ul>
+<li>kafka-utils.sh help // list up options</li>
+<li>kafka-utils.sh topic-check {topic name}    // Check the distribution of Leaders</li>
+<li>kafka-utils.sh offset-check      // Consumer LAG of each partition</li>
+</ul>
+<p><strong> 5) System resources </strong></p>
+<ul>
+<li>Check available memory</li>
+<li>Check the status of disks</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>

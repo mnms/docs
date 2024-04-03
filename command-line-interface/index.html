@@ -1,0 +1,1718 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/command-line-interface/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Command line interface - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-cluster-commands" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Command line interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="false">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaetlyn/" class="md-nav__link">
+        Data ingestion with KAFKA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="false">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-face-data/" class="md-nav__link">
+        KNN SEARCH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="false">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-lightningdb-on-k8s/" class="md-nav__link">
+        Deploy LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started-with-scratch/" class="md-nav__link">
+        Manual Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-failover/" class="md-nav__link">
+        Failover with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Command Line Interface(CLI) of LightningDB supports not only deploy and start command but also many commands to access and manipulate data in LightningDB.</p>
+</div>
+<h1 id="1-cluster-commands">1. Cluster Commands<a class="headerlink" href="#1-cluster-commands" title="Permanent link">&para;</a></h1>
+<p>If you want to see the list of cluster commands, use the <code>cluster</code> command without any option.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster
+
+NAME
+    ltcli cluster - This is cluster command
+
+SYNOPSIS
+    ltcli cluster COMMAND
+
+DESCRIPTION
+    This is cluster command
+
+COMMANDS
+    COMMAND is one of the following:
+
+     add_slave
+       Add slaves to cluster additionally
+
+     clean
+       Clean cluster
+
+     configure
+
+     create
+       Create cluster
+
+     ls
+       Check cluster list
+
+     rebalance
+       Rebalance
+
+     restart
+       Restart redist cluster
+
+     rowcount
+       Query and show cluster row count
+
+     start
+       Start cluster
+
+     stop
+       Stop cluster
+
+     use
+       Change selected cluster
+</code></pre>
+<p><strong>(1) Cluster configure</strong></p>
+<p><code>redis-{port}.conf</code> is generated with using <code>redis-{master/slave}.conf.template</code> and <code>redis.properties</code> files.</p>
+<pre><code class="language-bash">&gt; cluster configure
+</code></pre>
+<p><strong>(2) Cluster start</strong></p>
+<ul>
+<li>Backup logs of the previous master/slave nodes<ul>
+<li>All log files of previous master/slave nodes in <code>${SR2_HOME}/logs/redis/</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> will be moved to <code>${SR2_HOME}/logs/redis/backup/</code>.</li>
+</ul>
+</li>
+<li>Generate directories to save data<ul>
+<li>Save aof and rdb files of redis-server and RocksDB files in <code>${SR2_REDIS_DATA}</code></li>
+</ul>
+</li>
+<li>Start redis-server process<ul>
+<li>Start master and slave redis-server with <code>${SR2_HOME}/conf/redis/redis-{port}.conf</code> file</li>
+</ul>
+</li>
+<li>Log files will be saved in <code>${SR2_HOME}/logs/redis/</code></li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster start
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+Generate redis configuration files for master hosts
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
+</code></pre>
+<p><strong>Errors</strong></p>
+<ul>
+<li>ErrorCode 11</li>
+</ul>
+<p>Redis-server(master) process with the same port is already running. To resolve this error, use <code>cluster stop</code> or <code>kill {pid of the process}</code>.</p>
+<pre><code class="language-bash">$ cluster start
+...
+...
+[ErrorCode 11] Fail to start... Must be checked running MASTER redis processes!
+We estimate that redis process is &lt;alive-redis-count&gt;.
+</code></pre>
+<ul>
+<li>ErrorCode 12</li>
+</ul>
+<p>Redis-server(slave) process with the same port is already running. To resolve this error, use <code>cluster stop</code> or <code>kill {pid of the process}</code>.</p>
+<pre><code class="language-bash">$ cluster start
+...
+[ErrorCode 12] Fail to start... Must be checked running SLAVE redis processes!
+We estimate that redis process is &lt;alive-redis-count&gt;.
+</code></pre>
+<ul>
+<li>Conf file not exist</li>
+</ul>
+<p>Conf file is not found. To resove this error, use <code>cluster configure</code> and then <code>cluster start</code>.</p>
+<pre><code class="language-bash">$ cluster start
+...
+FileNotExistError: ${SR2_HOME}/conf/redis/redis-{port}.conf
+</code></pre>
+<ul>
+<li>Max try error
+​
+For detail information, please check the log files.</li>
+</ul>
+<pre><code class="language-bash">$ cluster start
+...
+ClusterRedisError: Fail to start redis: max try exceed
+Recommendation Command: 'monitor'
+</code></pre>
+<p><strong>(3) Cluster create</strong></p>
+<p>After checking the information of the cluster, create a cluster of LightningDB.</p>
+<p><strong>Case 1)</strong> When redis-server processes are running, create a cluster only.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt;cluster create
+Check status of hosts...
+OK
+&gt;&gt;&gt; Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18100 | MASTER |
+| 127.0.0.1 | 18101 | MASTER |
+| 127.0.0.1 | 18102 | MASTER |
+| 127.0.0.1 | 18103 | MASTER |
+| 127.0.0.1 | 18104 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18100
+ - 127.0.0.1:18103
+ - 127.0.0.1:18104
+ - 127.0.0.1:18101
+ - 127.0.0.1:18102
+Adding slots...
+ - 127.0.0.1:18100, 3280
+ - 127.0.0.1:18103, 3276
+ - 127.0.0.1:18104, 3276
+ - 127.0.0.1:18101, 3276
+ - 127.0.0.1:18102, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
+</code></pre>
+<p><strong>Case 2)</strong> When redis-server processes are not running, create a cluster after launching redis-server processes with <code>cluster start</code> command.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:4&gt;cluster create
+Check status of hosts...
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+create redis data directory in each MASTER hosts
+ - 127.0.0.1
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Starting master nodes : 127.0.0.1 : 18100|18101|18102|18103|18104 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
+&gt;&gt;&gt; Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18100 | MASTER |
+| 127.0.0.1 | 18101 | MASTER |
+| 127.0.0.1 | 18102 | MASTER |
+| 127.0.0.1 | 18103 | MASTER |
+| 127.0.0.1 | 18104 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18103
+ - 127.0.0.1:18104
+ - 127.0.0.1:18101
+ - 127.0.0.1:18102
+ - 127.0.0.1:18100
+Adding slots...
+ - 127.0.0.1:18103, 3280
+ - 127.0.0.1:18104, 3276
+ - 127.0.0.1:18101, 3276
+ - 127.0.0.1:18102, 3276
+ - 127.0.0.1:18100, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
+</code></pre>
+<p><strong>Errors</strong></p>
+<p>When redis servers are not running, this error(Errno 111) will occur. To solve this error, use <code>cluster start</code> command previously.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt;cluster create
+Check status of hosts...
+OK
+&gt;&gt;&gt; Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18100 | MASTER |
+| 127.0.0.1 | 18101 | MASTER |
+| 127.0.0.1 | 18102 | MASTER |
+| 127.0.0.1 | 18103 | MASTER |
+| 127.0.0.1 | 18104 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+127.0.0.1:18100 - [Errno 111] Connection refused
+</code></pre>
+<p><strong>(4) Cluster stop</strong></p>
+<p>​Gracefully kill all redis-servers(master/slave) with SIGINT
+​​</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster stop
+Check status of hosts...
+OK
+Stopping master cluster of redis...
+cur: 5 / total: 5
+cur: 0 / total: 5
+Complete all redis process down
+</code></pre>
+<p><strong>Options</strong></p>
+<ul>
+<li>Force to kill all redis-servers(master/slave) with SIGKILL</li>
+</ul>
+<pre><code class="language-bash">--force
+</code></pre>
+<p><strong>(5) Cluster clean</strong></p>
+<p>Remove conf files for redis-server and all data(aof, rdb, RocksDB) of LightningDB</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster clean
+Removing redis generated master configuration files
+ - 127.0.0.1
+Removing flash db directory, appendonly and dump.rdb files in master
+ - 127.0.0.1
+Removing master node configuration
+ - 127.0.0.1
+</code></pre>
+<p><strong>(6) Cluster restart​</strong></p>
+<p>Process <code>cluster stop</code> and then <code>cluster start</code>.​​</p>
+<p><strong>Options</strong></p>
+<ul>
+<li>Force to kill all redis-servers(master/slave) with SIGKILL and then start again.</li>
+</ul>
+<pre><code class="language-bash">--force-stop
+</code></pre>
+<ul>
+<li>Remove all data(aof, rdb, RocksDB, conf files) before starting again.</li>
+</ul>
+<pre><code class="language-bash">--reset
+</code></pre>
+<ul>
+<li>Process <code>cluster create</code>. This command should be called with <code>--reset</code>.</li>
+</ul>
+<pre><code class="language-bash">--cluster
+</code></pre>
+<p><strong>(7) Cluster ls</strong></p>
+<p>List the deployed clusters.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; cluster ls
+[1, 2]
+</code></pre>
+<p><strong>(8) Cluster use</strong></p>
+<p>Change the cluster to use LTCLI. Use <code>cluster use</code> or <code>c</code> commands.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; cluster use 1
+Cluster '1' selected.
+ec2-user@lightningdb:1&gt; c 2
+Cluster '2' selected.
+</code></pre>
+<p><strong>(9) Cluster add_slave</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Before using the <code>add-slave</code> command, ingestion to master nodes should be stopped. After replication and sync between master and slave are completed, ingestion will be available again.</p>
+</div>
+<p>You can add a slave to a cluster that is configured only with the master without redundancy.</p>
+<ul>
+<li>
+<p>Create cluster only with masters</p>
+<ul>
+<li>Procedure for configuring the test environment. If cluster with the only masters already exists, go to the <strong>add slave info</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Proceed with the deploy.</p>
+<ul>
+<li>Enter 0 in replicas as shown below when deploy.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:2&gt; deploy 3
+Select installer
+
+    [ INSTALLER LIST ]
+    (1) lightningdb.dev.master.5a6a38.bin
+
+Please enter the number, file path or url of the installer you want to use.
+you can also add file in list by copy to '$FBPATH/releases/'
+https://flashbase.s3.ap-northeast-2.amazonaws.com/lightningdb.release.master.5a6a38.bin
+Downloading lightningdb.release.master.5a6a38.bin
+[==================================================] 100%
+OK, lightningdb.release.master.5a6a38.bin
+Please type host list separated by comma(,) [127.0.0.1]
+
+OK, ['127.0.0.1']
+How many masters would you like to create on each host? [5]
+
+OK, 5
+Please type ports separate with comma(,) and use hyphen(-) for range. [18300-18304]
+
+OK, ['18300-18304']
+How many replicas would you like to create on each master? [0]
+
+OK, 0
+How many ssd would you like to use? [3]
+
+OK, 3
+Type prefix of db path [~/sata_ssd/ssd_]
+
+OK, ~/sata_ssd/ssd_
++--------------+---------------------------------+
+| NAME         | VALUE                           |
++--------------+---------------------------------+
+| installer    | lightningdb.dev.master.5a6a38.bin |
+| hosts        | 127.0.0.1                       |
+| master ports | 18300-18304                     |
+| ssd count    | 3                               |
+| db path      | ~/sata_ssd/ssd_                 |
++--------------+---------------------------------+
+Do you want to proceed with the deploy accroding to the above information? (y/n)
+y
+Check status of hosts...
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Checking for cluster exist...
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | CLEAN  |
++-----------+--------+
+OK
+Transfer installer and execute...
+ - 127.0.0.1
+Sync conf...
+Complete to deploy cluster 3.
+Cluster '3' selected.
+</code></pre>
+<ul>
+<li>When the deploy is complete, start and create the cluster.</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cluster start
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+Backup redis master log in each MASTER hosts...
+ - 127.0.0.1
+create redis data directory in each MASTER hosts
+ - 127.0.0.1
+sync conf
++-----------+--------+
+| HOST      | STATUS |
++-----------+--------+
+| 127.0.0.1 | OK     |
++-----------+--------+
+OK
+Starting master nodes : 127.0.0.1 : 18300|18301|18302|18303|18304 ...
+Wait until all redis process up...
+cur: 5 / total: 5
+Complete all redis process up
+ec2-user@lightningdb:3&gt; cluster create
+Check status of hosts...
+OK
+&gt;&gt;&gt; Creating cluster
++-----------+-------+--------+
+| HOST      | PORT  | TYPE   |
++-----------+-------+--------+
+| 127.0.0.1 | 18300 | MASTER |
+| 127.0.0.1 | 18301 | MASTER |
+| 127.0.0.1 | 18302 | MASTER |
+| 127.0.0.1 | 18303 | MASTER |
+| 127.0.0.1 | 18304 | MASTER |
++-----------+-------+--------+
+replicas: 0
+
+Do you want to proceed with the create according to the above information? (y/n)
+y
+Cluster meet...
+ - 127.0.0.1:18300
+ - 127.0.0.1:18303
+ - 127.0.0.1:18304
+ - 127.0.0.1:18301
+ - 127.0.0.1:18302
+Adding slots...
+ - 127.0.0.1:18300, 3280
+ - 127.0.0.1:18303, 3276
+ - 127.0.0.1:18304, 3276
+ - 127.0.0.1:18301, 3276
+ - 127.0.0.1:18302, 3276
+Check cluster state and asign slot...
+Ok
+create cluster complete.
+ec2-user@lightningdb:3&gt;
+</code></pre>
+<ul>
+<li>Add slave info</li>
+</ul>
+<p>Open the conf file.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; conf cluster
+</code></pre>
+<p>You can modify redis.properties by entering the command as shown above.</p>
+<pre><code class="language-bash">#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( &quot;127.0.0.1&quot; )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18300 18304) )
+
+## Slave hosts and ports (optional)
+[[export]] SR2_REDIS_SLAVE_HOSTS=( &quot;127.0.0.1&quot; )
+[[export]] SR2_REDIS_SLAVE_PORTS=( $(seq 18600 18609) )
+
+## only single data directory in redis db and flash db
+## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
+[[export]] SR2_REDIS_DATA=&quot;/nvdrive0/nvkvs/redis&quot;
+[[export]] SR2_REDIS_DB_PATH=&quot;/nvdrive0/nvkvs/redis&quot;
+[[export]] SR2_FLASH_DB_PATH=&quot;/nvdrive0/nvkvs/flash&quot;
+
+## multiple data directory in redis db and flash db
+export SSD_COUNT=3
+[[export]] HDD_COUNT=3
+export SR2_REDIS_DATA=&quot;~/sata_ssd/ssd_&quot;
+export SR2_REDIS_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
+export SR2_FLASH_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
+
+#######################################################
+# Example : only SSD data directory
+[[export]] SSD_COUNT=3
+[[export]] SR2_REDIS_DATA=&quot;/ssd_&quot;
+[[export]] SR2_REDIS_DB_PATH=&quot;/ssd_&quot;
+[[export]] SR2_FLASH_DB_PATH=&quot;/ssd_&quot;
+#######################################################
+</code></pre>
+<p>Modify <code>SR2_REDIS_SLAVE_HOSTS</code> and <code>SR2_REDIS_SLAVE_PORTS</code> as shown below.</p>
+<pre><code class="language-bash">#!/bin/bash
+
+## Master hosts and ports
+export SR2_REDIS_MASTER_HOSTS=( &quot;127.0.0.1&quot; )
+export SR2_REDIS_MASTER_PORTS=( $(seq 18300 18304) )
+
+## Slave hosts and ports (optional)
+export SR2_REDIS_SLAVE_HOSTS=( &quot;127.0.0.1&quot; )
+export SR2_REDIS_SLAVE_PORTS=( $(seq 18350 18354) )
+
+## only single data directory in redis db and flash db
+## Must exist below variables; 'SR2_REDIS_DATA', 'SR2_REDIS_DB_PATH' and 'SR2_FLASH_DB_PATH'
+[[export]] SR2_REDIS_DATA=&quot;/nvdrive0/nvkvs/redis&quot;
+[[export]] SR2_REDIS_DB_PATH=&quot;/nvdrive0/nvkvs/redis&quot;
+[[export]] SR2_FLASH_DB_PATH=&quot;/nvdrive0/nvkvs/flash&quot;
+
+## multiple data directory in redis db and flash db
+export SSD_COUNT=3
+[[export]] HDD_COUNT=3
+export SR2_REDIS_DATA=&quot;~/sata_ssd/ssd_&quot;
+export SR2_REDIS_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
+export SR2_FLASH_DB_PATH=&quot;~/sata_ssd/ssd_&quot;
+
+#######################################################
+# Example : only SSD data directory
+[[export]] SSD_COUNT=3
+[[export]] SR2_REDIS_DATA=&quot;/ssd_&quot;
+[[export]] SR2_REDIS_DB_PATH=&quot;/ssd_&quot;
+[[export]] SR2_FLASH_DB_PATH=&quot;/ssd_&quot;
+#######################################################
+</code></pre>
+<p>Save the modification and exit.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; conf cluster
+Check status of hosts...
+OK
+sync conf
+OK
+Complete edit
+</code></pre>
+<ul>
+<li>Execute <code>cluster add-slave</code> command</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cluster add-slave
+Check status of hosts...
+OK
+Check cluster exist...
+ - 127.0.0.1
+OK
+clean redis conf, node conf, db data of master
+clean redis conf, node conf, db data of slave
+ - 127.0.0.1
+Backup redis slave log in each SLAVE hosts...
+ - 127.0.0.1
+create redis data directory in each SLAVE hosts
+ - 127.0.0.1
+sync conf
+OK
+Starting slave nodes : 127.0.0.1 : 18350|18351|18352|18353|18354 ...
+Wait until all redis process up...
+cur: 10 / total: 10
+Complete all redis process up
+replicate [M] 127.0.0.1 18300 - [S] 127.0.0.1 18350
+replicate [M] 127.0.0.1 18301 - [S] 127.0.0.1 18351
+replicate [M] 127.0.0.1 18302 - [S] 127.0.0.1 18352
+replicate [M] 127.0.0.1 18303 - [S] 127.0.0.1 18353
+replicate [M] 127.0.0.1 18304 - [S] 127.0.0.1 18354
+5 / 5 meet complete.
+</code></pre>
+<ul>
+<li>Check configuration information</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:3&gt; cli cluster nodes
+0549ec03031213f95121ceff6c9c13800aef848c 127.0.0.1:18303 master - 0 1574132251126 3 connected 3280-6555
+1b09519d37ebb1c09095158b4f1c9f318ddfc747 127.0.0.1:18352 slave a6a8013cf0032f0f36baec3162122b3d993dd2c8 0 1574132251025 6 connected
+c7dc4815e24054104dff61cac6b13256a84ac4ae 127.0.0.1:18353 slave 0549ec03031213f95121ceff6c9c13800aef848c 0 1574132251126 3 connected
+0ab96cb79165ddca7d7134f80aea844bd49ae2e1 127.0.0.1:18351 slave 7e97f8a8799e1e28feee630b47319e6f5e1cfaa7 0 1574132250724 4 connected
+7e97f8a8799e1e28feee630b47319e6f5e1cfaa7 127.0.0.1:18301 master - 0 1574132250524 4 connected 9832-13107
+e67005a46984445e559a1408dd0a4b24a8c92259 127.0.0.1:18304 master - 0 1574132251126 5 connected 6556-9831
+a6a8013cf0032f0f36baec3162122b3d993dd2c8 127.0.0.1:18302 master - 0 1574132251126 2 connected 13108-16383
+492cdf4b1dedab5fb94e7129da2a0e05f6c46c4f 127.0.0.1:18350 slave 83b7ef98b80a05a4ee795ae6b399c8cde54ad04e 0 1574132251126 6 connected
+f9f7fcee9009f25618e63d2771ee2529f814c131 127.0.0.1:18354 slave e67005a46984445e559a1408dd0a4b24a8c92259 0 1574132250724 5 connected
+83b7ef98b80a05a4ee795ae6b399c8cde54ad04e 127.0.0.1:18300 myself,master - 0 1574132250000 1 connected 0-3279
+
+</code></pre>
+<p><strong>(10) Cluster rowcount</strong></p>
+<p>Check the count of records that are stored in the cluster.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cluster rowcount
+0
+</code></pre>
+<p><strong>(11) Check the status of cluster</strong></p>
+<p>With the following commands, you can check the status of the cluster.</p>
+<ul>
+<li>Send PING</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli ping --all
+alive redis 10/10
+</code></pre>
+<p>If a node does not reply, the fail node will be displayed like below.</p>
+<pre><code class="language-bash">+-------+-----------------+--------+
+| TYPE  | ADDR            | RESULT |
++-------+-----------------+--------+
+| Slave | 127.0.0.1:18352 | FAIL   |
++-------+-----------------+--------+
+alive redis 9/10
+</code></pre>
+<ul>
+<li>Check the status of the cluster</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli cluster info
+cluster_state:ok
+cluster_slots_assigned:16384
+cluster_slots_ok:16384
+cluster_slots_pfail:0
+cluster_slots_fail:0
+cluster_known_nodes:5
+cluster_size:5
+cluster_current_epoch:4
+cluster_my_epoch:2
+cluster_stats_messages_ping_sent:12
+cluster_stats_messages_pong_sent:14
+cluster_stats_messages_sent:26
+cluster_stats_messages_ping_received:10
+cluster_stats_messages_pong_received:12
+cluster_stats_messages_meet_received:4
+cluster_stats_messages_received:26
+</code></pre>
+<ul>
+<li>Check the list of the nodes those are organizing the cluster.</li>
+</ul>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; cli cluster nodes
+559af5e90c3f2c92f19c927c29166c268d938e8f 127.0.0.1:18104 master - 0 1574127926000 4 connected 6556-9831
+174e2a62722273fb83814c2f12e2769086c3d185 127.0.0.1:18101 myself,master - 0 1574127925000 3 connected 9832-13107
+35ab4d3f7f487c5332d7943dbf4b20d5840053ea 127.0.0.1:18100 master - 0 1574127926000 1 connected 0-3279
+f39ed05ace18e97f74c745636ea1d171ac1d456f 127.0.0.1:18103 master - 0 1574127927172 0 connected 3280-6555
+9fd612b86a9ce1b647ba9170b8f4a8bfa5c875fc 127.0.0.1:18102 master - 0 1574127926171 2 connected 13108-16383
+</code></pre>
+<p><strong>(12) Cluster tree</strong></p>
+<p>User can check the status of master nodes and slaves and show which master and slave nodes are linked. </p>
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(connected)
+|__ 127.0.0.1:18952(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+</code></pre>
+<p><strong>(13) Cluster failover</strong></p>
+<p>If a master node is killed, its slave node will automatically promote after 'cluster-node-time'<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</p>
+<p>User can promote the slave node immediately by using the 'cluster failover' command.</p>
+<p>Step 1) Check the status of the cluster</p>
+<p>In this case, '127.0.0.1:18902' node is killed.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(disconnected)   &lt;--- Killed!
+|__ 127.0.0.1:18952(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+</code></pre>
+<p>Step 2) Do failover with 'cluster failover' command</p>
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster failover
+failover 127.0.0.1:18952 for 127.0.0.1:18902
+OK
+ec2-user@lightningdb:9&gt; cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18902(disconnected)   &lt;--- Killed!
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+
+127.0.0.1:18952(connected)      &lt;--- Promoted to master!
+</code></pre>
+<p><strong>(14) Cluster failback</strong></p>
+<p>With 'cluster failback' command, the killed node is restarted and added to the cluster as the slave node.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:9&gt; cluster failback
+run 127.0.0.1:18902
+ec2-user@lightningdb:9&gt; cluster tree
+127.0.0.1:18900(connected)
+|__ 127.0.0.1:18950(connected)
+
+127.0.0.1:18901(connected)
+|__ 127.0.0.1:18951(connected)
+
+127.0.0.1:18903(connected)
+|__ 127.0.0.1:18953(connected)
+
+127.0.0.1:18904(connected)
+|__ 127.0.0.1:18954(connected)
+
+127.0.0.1:18905(connected)
+|__ 127.0.0.1:18955(connected)
+
+127.0.0.1:18906(connected)
+|__ 127.0.0.1:18956(connected)
+
+127.0.0.1:18952(connected)       &lt;--- Promoted to master!
+|__ 127.0.0.1:18902(connected)   &lt;--- Failbacked. Now this node is slave!
+</code></pre>
+<h1 id="2-thrift-server-commands">2. Thrift Server Commands<a class="headerlink" href="#2-thrift-server-commands" title="Permanent link">&para;</a></h1>
+<p>If you want to see the list of Thrift Server commands, use the the <code>thriftserver</code> command without any option.</p>
+<pre><code class="language-bash">NAME
+    ltcli thriftserver
+
+SYNOPSIS
+    ltcli thriftserver COMMAND
+
+COMMANDS
+    COMMAND is one of the following:
+
+     beeline
+       Connect to thriftserver command line
+
+     monitor
+       Show thriftserver log
+
+     restart
+       Thriftserver restart
+
+     start
+       Start thriftserver
+
+     stop
+       Stop thriftserver
+</code></pre>
+<p><strong>(1) Thriftserver beeline</strong></p>
+<p>Connect to the thrift server</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver beeline
+Connecting...
+Connecting to jdbc:hive2://localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Supplied authorities: localhost:13000
+19/11/19 04:45:18 INFO jdbc.Utils: Resolved authority: localhost:13000
+19/11/19 04:45:18 INFO jdbc.HiveConnection: Will try to open client transport with JDBC Uri: jdbc:hive2://localhost:13000
+Connected to: Spark SQL (version 2.3.1)
+Driver: Hive JDBC (version 1.2.1.spark2)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+Beeline version 1.2.1.spark2 by Apache Hive
+0: jdbc:hive2://localhost:13000&gt; show tables;
++-----------+------------+--------------+--+
+| database  | tableName  | isTemporary  |
++-----------+------------+--------------+--+
++-----------+------------+--------------+--+
+No rows selected (0.55 seconds)
+</code></pre>
+<p>Default value of db url to connect is <code>jdbc:hive2://$HIVE_HOST:$HIVE_PORT</code></p>
+<p>You can modify <code>$HIVE_HOST</code> and <code>$HIVE_PORT</code> by the command <code>conf thriftserver</code></p>
+<p><strong>(2) Thriftserver monitor</strong></p>
+<p>You can view the logs of the thrift server in real-time.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver monitor
+Press Ctrl-C for exit.
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager ip-172-31-39-147.ap-northeast-2.compute.internal:35909 with 912.3 MB RAM, BlockManagerId(4, ip-172-31-39-147.ap-northeast-2.compute.internal, 35909, None)
+19/11/19 04:43:33 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.31.39.147:53604) with ID 5
+19/11/19 04:43:33 INFO storage.BlockManagerMasterEndpoint: Registering block manager
+...
+</code></pre>
+<p><strong>(3) Thriftserver restart</strong></p>
+<p>Restart the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver restart
+no org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 to stop
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
+</code></pre>
+<p><strong>(4) Start thriftserver</strong></p>
+<p>Run the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver start
+starting org.apache.spark.sql.hive.thriftserver.HiveThriftServer2, logging to /opt/spark/logs/spark-ec2-user-org.apache.spark.sql.hive.thriftserver.HiveThriftServer2-1-ip-172-31-39-147.ap-northeast-2.compute.internal.out
+</code></pre>
+<p>You can view the logs through the command <code>monitor</code>.</p>
+<p><strong>(5) Stop thriftserver</strong></p>
+<p>Shut down the thrift server.</p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; thriftserver stop
+stopping org.apache.spark.sql.hive.thriftserver.HiveThriftServer2
+</code></pre>
+<p><strong>(6) Conf thriftserver</strong></p>
+<pre><code class="language-bash">ec2-user@lightningdb:1&gt; conf thriftserver
+
+#!/bin/bash
+###############################################################################
+# Common variables
+SPARK_CONF=${SPARK_CONF:-$SPARK_HOME/conf}
+SPARK_BIN=${SPARK_BIN:-$SPARK_HOME/bin}
+SPARK_SBIN=${SPARK_SBIN:-$SPARK_HOME/sbin}
+SPARK_LOG=${SPARK_LOG:-$SPARK_HOME/logs}
+
+SPARK_METRICS=${SPARK_CONF}/metrics.properties
+SPARK_UI_PORT=${SPARK_UI_PORT:-14050}
+EXECUTERS=12
+EXECUTER_CORES=32
+
+HIVE_METASTORE_URL=''
+HIVE_HOST=${HIVE_HOST:-localhost}
+HIVE_PORT=${HIVE_PORT:-13000}
+
+COMMON_CLASSPATH=$(find $SR2_LIB -name 'tsr2*' -o -name 'spark-r2*' -o -name '*jedis*' -o -name 'commons*' -o -name 'jdeferred*' \
+-o -name 'geospark*' -o -name 'gt-*' | tr '\n' ':')
+
+###############################################################################
+# Driver
+DRIVER_MEMORY=6g
+DRIVER_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Execute
+EXECUTOR_MEMORY=2g
+EXECUTOR_CLASSPATH=$COMMON_CLASSPATH
+
+###############################################################################
+# Thrift Server logs
+EVENT_LOG_ENABLED=false
+EVENT_LOG_DIR=/nvdrive0/thriftserver-event-logs
+EVENT_LOG_ROLLING_DIR=/nvdrive0/thriftserver-event-logs-rolling
+EVENT_LOG_SAVE_MIN=60
+EXTRACTED_EVENT_LOG_SAVE_DAY=5
+SPARK_LOG_SAVE_MIN=2000
+##############
+</code></pre>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>If user types 'cfc 1', ${SR2_HOME} will be '~/tsr2/cluster_1/tsr2-assembly-1.0.0-SNAPSHOT'.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>'cluster-node-time' can be set with using 'config set' command. Its default time is 1200,000 msec.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>

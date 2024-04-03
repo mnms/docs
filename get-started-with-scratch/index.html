@@ -1,0 +1,1094 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/get-started-with-scratch/">
+      
+      
+        <link rel="prev" href="../how-to-use-lightningdb-on-k8s/">
+      
+      
+        <link rel="next" href="../how-to-use-flashbase/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Manual Installation - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-optimizing-system-parameters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manual Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="false">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaetlyn/" class="md-nav__link">
+        Data ingestion with KAFKA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="false">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-face-data/" class="md-nav__link">
+        KNN SEARCH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="false">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-lightningdb-on-k8s/" class="md-nav__link">
+        Deploy LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="true">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Manual Installation
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-failover/" class="md-nav__link">
+        Failover with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This page guides how to start LightningDB on CentOS manually. In case of using <strong>AWS EC2 Instance</strong>, please use <a href="../install-ltcli/">Installation</a></p>
+</div>
+<h1 id="1-optimizing-system-parameters">1. Optimizing System Parameters<a class="headerlink" href="#1-optimizing-system-parameters" title="Permanent link">&para;</a></h1>
+<p><strong> (1) Edit <code>/etc/sysctl.conf</code> like following</strong></p>
+<pre><code class="language-bash">...
+vm.swappiness = 0
+vm.overcommit_memory = 1
+vm.overcommit_ratio = 50
+fs.file-max = 6815744
+net.ipv4.ip_local_port_range = 32768 65535
+net.core.rmem_default = 262144
+net.core.wmem_default = 262144
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_max_syn_backlog = 4096
+net.core.somaxconn = 65535
+...
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In case of application in runtime, use <code>sudo sysctl -p</code></p>
+</div>
+<p><strong> (2) Edit <code>/etc/security/limits.conf</code></strong></p>
+<pre><code class="language-bash">...
+* soft core     -1
+* soft nofile 262144
+* hard nofile 262144
+* soft nproc 131072
+* hard nproc 131072
+[account name] * soft nofile 262144
+[account name] * hard nofile 262144
+[account name] * soft nproc 131072
+[account name] * hard nproc 131072
+...
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In case of application in runtime, use <code>ulimit -n 65535, ulimit -u 131072</code></p>
+</div>
+<p><strong> (3) Edit <code>/etc/fstab</code></strong></p>
+<p>Remove SWAP Partition (Comment out SWAP partition with using <code>#</code> and reboot)</p>
+<pre><code class="language-bash">...
+[[/dev/mapper/centos-swap]] swap swap defaults 0 0
+...
+</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In case of application in runtime, use <code>swapoff -a</code></p>
+</div>
+<p><strong> (4) <code>/etc/init.d/disable-transparent-hugepages</code></strong></p>
+<pre><code class="language-bash">root@fbg01 ~] cat /etc/init.d/disable-transparent-hugepages
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          disable-transparent-hugepages
+# Required-Start:    $local_fs
+# Required-Stop:
+# X-Start-Before:    mongod mongodb-mms-automation-agent
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Disable Linux transparent huge pages
+# Description:       Disable Linux transparent huge pages, to improve
+#                    database performance.
+### END INIT INFO
+
+case $1 in
+start)
+    if [ -d /sys/kernel/mm/transparent_hugepage ]; then
+    thp_path=/sys/kernel/mm/transparent_hugepage
+    elif [ -d /sys/kernel/mm/redhat_transparent_hugepage ]; then
+    thp_path=/sys/kernel/mm/redhat_transparent_hugepage
+    else
+    return 0
+    fi
+
+    echo 'never' &gt; ${thp_path}/enabled
+    echo 'never' &gt; ${thp_path}/defrag
+
+    re='^[0-1]+$'
+    if [[ $(cat ${thp_path}/khugepaged/defrag) =~ $re ]]
+    then
+    # RHEL 7
+    echo 0  &gt; ${thp_path}/khugepaged/defrag
+    else
+    # RHEL 6
+    echo 'no' &gt; ${thp_path}/khugepaged/defrag
+    fi
+
+    unset re
+    unset thp_path
+    ;;
+esac
+[root@fbg01 ~]
+[root@fbg01 ~]
+[root@fbg01 ~] chmod 755 /etc/init.d/disable-transparent-hugepages
+[root@fbg01 ~] chkconfig --add disable-transparent-hugepages
+</code></pre>
+<h1 id="2-setup-prerequisites">2. Setup Prerequisites<a class="headerlink" href="#2-setup-prerequisites" title="Permanent link">&para;</a></h1>
+<p><strong> - bash, unzip, ssh</strong></p>
+<p><strong> - JDK 1.8 or higher</strong></p>
+<p><strong> - gcc 4.8.5 or higher</strong></p>
+<p><strong> - glibc 2.17 or higher</strong></p>
+<p><strong> - epel-release</strong></p>
+<pre><code class="language-bash">sudo yum install epel-release
+</code></pre>
+<p><strong> - boost, boost-thread, boost-devel</strong></p>
+<pre><code class="language-bash">sudo yum install boost boost-thread boost-devel
+</code></pre>
+<p><strong> - Exchange SSH Key</strong></p>
+<p>For all servers that LightningDB will be deployed, SSH key should be exchanged.</p>
+<pre><code class="language-bash">ssh-keygen -t rsa
+chmod 0600 ~/.ssh/authorized_keys
+cat .ssh/id_rsa.pub | ssh {server name} &quot;cat &gt;&gt; .ssh/authorized_keys&quot;
+</code></pre>
+<p><strong> - Intel MKL library</strong></p>
+<p>(1) Intel MKL 2019 library install</p>
+<ul>
+<li>Go to the website: https://software.intel.com/en-us/mkl/choose-download/macos</li>
+<li>Register and login</li>
+<li>Select product named "Intel * Math Kernel Library for Linux" or "Intel * Math Kernel Library for Mac" from the select box "Choose Product to Download"</li>
+<li>Choose a Version "2019 Update 2" and download</li>
+<li>Unzip the file and execute the install.sh file with root account or (sudo command)</li>
+</ul>
+<pre><code class="language-bash">    sudo ./install.sh
+</code></pre>
+<ul>
+<li>Choose custom install and configure the install directory /opt/intel (with sudo, /opt/intel is the default installation path, just confirm it)</li>
+</ul>
+<pre><code class="language-bash">matthew@fbg05 /opt/intel $ pwd
+/opt/intel
+
+matthew@fbg05 /opt/intel $ ls -alh
+합계 0
+drwxr-xr-x  10 root root 307  3월 22 01:34 .
+drwxr-xr-x.  5 root root  83  3월 22 01:34 ..
+drwxr-xr-x   6 root root  72  3월 22 01:35 .pset
+drwxr-xr-x   2 root root  53  3월 22 01:34 bin
+lrwxrwxrwx   1 root root  28  3월 22 01:34 compilers_and_libraries -&gt; compilers_and_libraries_2019
+drwxr-xr-x   3 root root  19  3월 22 01:34 compilers_and_libraries_2019
+drwxr-xr-x   4 root root  36  1월 24 23:04 compilers_and_libraries_2019.2.187
+drwxr-xr-x   6 root root  63  1월 24 22:50 conda_channel
+drwxr-xr-x   4 root root  26  1월 24 23:01 documentation_2019
+lrwxrwxrwx   1 root root  33  3월 22 01:34 lib -&gt; compilers_and_libraries/linux/lib
+lrwxrwxrwx   1 root root  33  3월 22 01:34 mkl -&gt; compilers_and_libraries/linux/mkl
+lrwxrwxrwx   1 root root  29  3월 22 01:34 parallel_studio_xe_2019 -&gt; parallel_studio_xe_2019.2.057
+drwxr-xr-x   5 root root 216  3월 22 01:34 parallel_studio_xe_2019.2.057
+drwxr-xr-x   3 root root  16  3월 22 01:34 samples_2019
+lrwxrwxrwx   1 root root  33  3월 22 01:34 tbb -&gt; compilers_and_libraries/linux/tbb
+</code></pre>
+<p>(2) Intel MKL 2019 library environment settings</p>
+<ul>
+<li>Append the following statement into ~/.bashrc</li>
+</ul>
+<pre><code class="language-bash"># INTEL MKL enviroment variables for ($MKLROOT, can be checked with the value export | grep MKL)
+source /opt/intel/mkl/bin/mklvars.sh intel64
+</code></pre>
+<p><strong> - <a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.6.0/">Apache Hadoop 2.6.0</a> (or higher)</strong></p>
+<p><strong> - <a href="https://archive.apache.org/dist/spark/spark-2.3.0/">Apache Spark 2.3 on Hadoop 2.6</a></strong></p>
+<p><strong> - ntp</strong>
+For clock synchronization between servers over packet-switched, variable-latency data networks.</p>
+<p><strong> - Settings for core dump(Optional)</strong></p>
+<p>(1) <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-abrt-installation">INSTALLING ABRT AND STARTING ITS SERVICES</a></p>
+<p>(2) Set core dump file size</p>
+<pre><code class="language-bash">ulimit -c unlimited
+</code></pre>
+<p>(3) Change the path of core dump files</p>
+<pre><code class="language-bash">echo /tmp/core.%p &gt; /proc/sys/kernel/core_pattern
+</code></pre>
+<h1 id="3-session-configuration-files">3. Session configuration files<a class="headerlink" href="#3-session-configuration-files" title="Permanent link">&para;</a></h1>
+<p><strong> '~/.bashrc'</strong></p>
+<p>Add followings</p>
+<pre><code class="language-bash"># .bashrc
+
+if [ -f /etc/bashrc ]; then
+. /etc/bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+HADOOP_HOME=/home/nvkvs/hadoop
+HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+SPARK_HOME=/home/nvkvs/spark
+
+PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin:$SPARK_HOME/sbin:$HOME/sbin
+
+export PATH SPARK_HOME HADOOP_HOME HADOOP_CONF_DIR YARN_CONF_DIR
+alias cfc='source ~/.use_cluster'
+</code></pre>
+<h1 id="4-install-and-start-lightningdb">4. Install and Start LightningDB<a class="headerlink" href="#4-install-and-start-lightningdb" title="Permanent link">&para;</a></h1>
+<p>With LTCLI provided by LightningDB, users can deploy and use LightningDB.</p>
+<p>Install LTCLI with the following command.</p>
+<pre><code class="language-bash">$ pip install ltcli --upgrade --user
+</code></pre>
+<p>After installation is completed, start LTCLI with <a href="../command-line-interface/#command-line-interface">Commands</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>

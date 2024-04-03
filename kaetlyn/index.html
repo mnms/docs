@@ -1,0 +1,1264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightning DB is a DRAM / SSD optimized real-time in-memory DBMS.">
+      
+      
+        <meta name="author" content="Lightning DB Team">
+      
+      
+        <link rel="canonical" href="https://mnms.github.io/docs/kaetlyn/">
+      
+      
+        <link rel="prev" href="../cli-thriftserver/">
+      
+      
+        <link rel="next" href="../zeppelin-example-nyctaxi/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Data ingestion with KAFKA - Lightning DB Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-kafka-broker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lightning DB Docs" class="md-header__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lightning DB Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Data ingestion with KAFKA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lightning DB Docs" class="md-nav__button md-logo" aria-label="Lightning DB Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Lightning DB Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mnms/docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    source repository
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" tabindex="0" aria-expanded="false">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-note/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../awards-recognition/" class="md-nav__link">
+        Awards and Recognition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" tabindex="0" aria-expanded="false">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prerequisite/" class="md-nav__link">
+        Prerequisite
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-ltcli/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-ingestion-and-querying/" class="md-nav__link">
+        Data Ingestion and querying
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../try-with-zeppelin/" class="md-nav__link">
+        Try out with Zeppelin
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" tabindex="0" aria-expanded="false">
+          Command Line Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Command Line Interface" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Command Line Interface
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-version/" class="md-nav__link">
+        Version
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-conf/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli/" class="md-nav__link">
+        Redis3 cli (LightningDB v1.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cli2/" class="md-nav__link">
+        Redis5 cli (LightningDB v2.x)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-cluster/" class="md-nav__link">
+        Cluster
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-thriftserver/" class="md-nav__link">
+        Thriftserver
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" tabindex="0" aria-expanded="true">
+          Ecosystem
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ecosystem" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Ecosystem
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Data ingestion with KAFKA
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" tabindex="0" aria-expanded="false">
+          Zeppelin
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Zeppelin" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Zeppelin
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-nyctaxi/" class="md-nav__link">
+        NYC TAXI Benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zeppelin-example-face-data/" class="md-nav__link">
+        KNN SEARCH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" tabindex="0" aria-expanded="false">
+          Build and deploy on Kubernetes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Build and deploy on Kubernetes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Build and deploy on Kubernetes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-k8s/" class="md-nav__link">
+        Why Kubernetes?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-lightningdb-on-k8s/" class="md-nav__link">
+        Build LightningDB(Admin Only)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy-lightningdb-on-k8s/" class="md-nav__link">
+        Deploy LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-lightningdb-on-k8s/" class="md-nav__link">
+        How to use LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Additional Resources
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Additional Resources" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Additional Resources
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get-started-with-scratch/" class="md-nav__link">
+        Manual Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-use-flashbase/" class="md-nav__link">
+        Install with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manage-failover/" class="md-nav__link">
+        Failover with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-scaleout/" class="md-nav__link">
+        Scaleout with LightningDB
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+<h1 id="1-kafka-broker">1. Kafka broker<a class="headerlink" href="#1-kafka-broker" title="Permanent link">&para;</a></h1>
+<p><strong> 1. Kafka Cluster </strong></p>
+<p>(1) Install kafka</p>
+<ul>
+<li>Install kafka in each server in which kafka cluster is utilized.</li>
+<li>Add <code>$KAFKA_HOME</code> path into <code>~/.bash_profile</code>.</li>
+</ul>
+<p>(2) Install zookeeper</p>
+<ul>
+<li>In each server of kafka cluster, set <code>$dataDir</code>, <code>$server.1 ~ $server.n</code> properties in <code>$KAFKA_HOME/config/zookeeper.properties</code>.</li>
+<li>For example, if you try to configure kafka cluster with <code>my-server1</code>, <code>my-server2</code>, set <code>server.1</code>, <code>server.2</code> fields.</li>
+</ul>
+<pre><code class="language-console">dataDir=/hdd_01/zookeeper
+# the port at which the clients will connect
+clientPort=2181
+# disable the per-ip limit on the number of connections since this is a non-production config
+maxClientCnxns=0
+
+initLimit=5
+syncLimit=2
+
+# Zookeeper will use these ports (2891, etc.) to connect the individual follower nodes to the leader nodes.
+# The other ports (3881, etc.) are used for leader election in the ensemble.
+server.1=my-server1:2888:3888
+server.2=my-server2:2888:3888
+</code></pre>
+<ul>
+<li>In each server, set <code>${dataDir}/myid</code> with its own id.</li>
+<li>For example, use <code>echo "1" &gt; ${dataDir}/myid</code> in my-server1 and <code>echo "2" &gt; ${dataDir}/myid</code> in my-server2.</li>
+<li>start zookeeper in each server.</li>
+</ul>
+<pre><code class="language-console">    &gt; $KAFKA_HOME/bin/zookeeper-server-start.sh config/zookeeper.properties &amp;
+</code></pre>
+<p>(3) Start kafka broker</p>
+<ul>
+<li>Edit <code>$KAFKA_HOME/conf/server.properties</code> in each server,</li>
+<li>Set <code>Broker ID</code> in <code>my-server1</code>.</li>
+</ul>
+<pre><code class="language-console">    broker.id=1     // '2' in case of my-server2
+</code></pre>
+<ul>
+<li>Configure zookeeper IP and PORT : Add <code>,</code> as seperator.</li>
+</ul>
+<pre><code class="language-console">    zookeeper.connect=my-server1:2181,my-server2:2181
+</code></pre>
+<ul>
+<li>Configure a path for Kafka data: Add a directory in each disk for load balancing.</li>
+</ul>
+<pre><code class="language-console">    log.dirs=/hdd_01/kafka,/hdd_02/kafka,/hdd_03/kafka,/hdd_04/kafka
+</code></pre>
+<ul>
+<li>Configure a retention time for keeping record and a retention size limit for each partition.</li>
+</ul>
+<pre><code class="language-console">    # default value: 168
+    log.retention.hours=168 
+
+    # '-1' means 'unlimited'.
+    log.retention.bytes=-1
+</code></pre>
+<ul>
+<li>Configure a max size of a message.</li>
+</ul>
+<pre><code class="language-console">    # If a size of a produced message exceed this limit, the exception is thrown.
+    # If you want to create a message with many rows, increase this value and restart broker.
+    # default value: 1000012 byte
+    message.max.bytes=1000012
+</code></pre>
+<ul>
+<li>Start kafka server in each server.</li>
+</ul>
+<pre><code class="language-console">    &gt; $KAFKA_HOME/bin/kafka-server-start.sh config/server.properties &amp;
+</code></pre>
+<ul>
+<li>Create topic.</li>
+</ul>
+<pre><code class="language-console">    # --zookeeper localhost:2181 : Need zookeeper host &amp; clientPort, because topics and partition information are stored in zookeeper.
+    # --topic nvkvs : For example, set 'nvkvs' as topic name.
+    # --partitions 16 : For example, set 2 partitions in each disk and use 16 partitions((# of cluster nodes) X (# of disks in each node) X 2 = 2 X 4 X 2 = 16).
+    # --replication-factor 2 : Create 1 follower for each partition.
+    &gt; $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 16 --topic nvkvs
+    # Check a generated topic: A broker.id of Replicas is different with a broker.id of Leader.
+    &gt; $KAFKA_HOME/bin/kafka-topics.sh --zookeeper localhost:2181 --describe --topic nvkvs
+
+    Topic:nvkvs PartitionCount:16   ReplicationFactor:2 Configs:
+    Topic: nvkvs    Partition: 0    Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 1    Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 2    Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 3    Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 4    Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 5    Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 6    Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 7    Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 8    Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 9    Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 10   Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 11   Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 12   Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 13   Leader: 1   Replicas: 1,0   Isr: 1,0
+    Topic: nvkvs    Partition: 14   Leader: 0   Replicas: 0,1   Isr: 1,0
+    Topic: nvkvs    Partition: 15   Leader: 1   Replicas: 1,0   Isr: 1,0
+</code></pre>
+<ul>
+<li>Delete topic / Modify the number of partitions.</li>
+</ul>
+<pre><code class="language-console">    # Topic delete Command
+    &gt; $KAFKA_HOME/bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic nvkvs
+
+    # Topic partition modification
+    &gt; $KAFKA_HOME/bin/kafka-topics.sh --zookeeper localhost:2181/chroot --alter --topic nvkvs --partitions 6
+</code></pre>
+<p><strong> 2. Kafka Topic Information </strong></p>
+<ul>
+<li>Consumer list</li>
+</ul>
+<pre><code class="language-console">    &gt; $KAFKA_HOME/bin/kafka-consumer-groups.sh  --list --bootstrap-server localhost:9092
+</code></pre>
+<ul>
+<li>Console consumer start</li>
+</ul>
+<pre><code class="language-console">    &gt; $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nvkvs --from-beginning
+</code></pre>
+<ul>
+<li>Consumer offset check</li>
+</ul>
+<pre><code class="language-console">    # Add '--group {consumer group name}'
+    &gt; $KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group (Consumer group name)
+
+    TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+    nvkvs           4          272904          272904          0               -               -               -
+    nvkvs           12         272904          272904          0               -               -               -
+    nvkvs           15         273113          273113          0               -               -               -
+    nvkvs           6          272906          272906          0               -               -               -
+    nvkvs           0          272907          272907          0               -               -               -
+    nvkvs           8          272905          272905          0               -               -               -
+    nvkvs           3          273111          273111          0               -               -               -
+    nvkvs           9          273111          273111          0               -               -               -
+    nvkvs           13         273111          273111          0               -               -               -
+    nvkvs           10         272912          272912          0               -               -               -
+    nvkvs           1          273111          273111          0               -               -               -
+    nvkvs           11         273112          273112          0               -               -               -
+    nvkvs           14         272904          272904          0               -               -               -
+    nvkvs           7          273110          273110          0               -               -               -
+    nvkvs           5          273111          273111          0               -               -               -
+    nvkvs           2          272905          272905          0               -               -               -
+</code></pre>
+<ul>
+<li>Consumer offset modification</li>
+</ul>
+<pre><code class="language-console">    # --shift-by &lt;positive_or_negative_integer&gt;
+    # --group &lt; name of group to shift&gt;
+    &gt; $KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --reset-offsets --shift-by -10000 --execute --group (Consumer 그룹명) --topic nvkvs
+</code></pre>
+<h1 id="2-kafka-consumer">2. Kafka consumer<a class="headerlink" href="#2-kafka-consumer" title="Permanent link">&para;</a></h1>
+<p><strong> 1. Kaetlyn Consumer </strong></p>
+<ul>
+<li>tsr2-kaetlyn edit</li>
+</ul>
+<pre><code>  KAFKA_SERVER : Kafka Broker의 host:port
+  DRIVER_MEMORY, EXECUTOR_MEMORY : A memory of Spark Driver/Excutor의 Memory in Yarn. After start, check 'FGC' count with using 'jstat -gc' and optimize these values.
+  EXECUTERS, EXECUTER_CORES : Basically consumers as many as the number of kafka partitions are generated. With this rule, need to optimize the number of EXECUTERS, EXECUTER_CORES.
+  JSON_PATH : The path of TABLE json. Do not support hdfs path. This is relative path from tsr2-kaetlyn.
+  KAFKA_CONSUMER_GROUP_ID : consumer group id
+  KAFKA_CONSUMING_TOPIC_LIST : Topic list with seperator ','.
+  JOB_GENERATION_PERIOD : With this period, check latest-offset and execute consuming job.
+  MAX_RATE_PER_PARTITION : the maximum offset that a consumer executes within a job period.
+</code></pre>
+<pre><code class="language-console">&gt; cfc 1 (or c01)
+&gt; tsr2-kaetlyn edit
+
+#!/bin/bash
+###############################################################################
+# Common variables
+SPARK_CONF=${SPARK_CONF:-$SPARK_HOME/conf}
+SPARK_BIN=${SPARK_BIN:-$SPARK_HOME/bin}
+SPARK_SBIN=${SPARK_SBIN:-$SPARK_HOME/sbin}
+SPARK_LOG=${SPARK_LOG:-$SPARK_HOME/logs}
+
+SPARK_METRICS=${SPARK_CONF}/metrics.properties
+SPARK_UI_PORT=${SPARK_UI_PORT:-14040}
+
+KAFKA_SERVER=my-server1:9092
+
+###############################################################################
+# Properties for Consumer
+DRIVER_MEMORY=2g
+
+EXECUTOR_MEMORY=2g
+EXECUTERS=16
+EXECUTER_CORES=4
+
+JSON_PATH=~/Flashbase/flashbase-benchmark/json/load_no_skew
+KAFKA_CONSUMER_GROUP_ID=nvkvs_redis_connector
+KAFKA_CONSUMING_TOPIC_LIST=nvkvs
+JOB_GENERATION_PERIOD=1
+MAX_RATE_PER_PARTITION=100
+...
+</code></pre>
+<p><strong> 2. Kaetlyn Consumer start/stop </strong></p>
+<ul>
+<li>Because a kaetlyn consumer is a spark application in yarn cluster, Hadoop/Yarn and spark should already be installed.</li>
+<li>Start and monitor Driver Log </li>
+</ul>
+<pre><code class="language-console">&gt; tsr2-kaetlyn consumer start
+&gt; tsr2-kaetlyn consumer monitor
+</code></pre>
+<ul>
+<li>If a consumer is started successfully, a state of application in yarn is set as RUNNING.</li>
+</ul>
+<pre><code class="language-console">&gt; yarn application -list
+</code></pre>
+<ul>
+<li>Stop : By SIGTERM, stop a current job and update kafka offset.</li>
+</ul>
+<pre><code class="language-console">&gt; tsr2-kaetlyn consumer stop
+</code></pre>
+<p><strong> 3. Kaetlyn Log level modification </strong></p>
+<ul>
+<li>Kaetlyn use a logback as a logger. After kaetlyn consumer start, '$SPARK_HOME/conf/logback-kaetlyn.xml' file is generated.</li>
+<li>to modify driver log level, edit this file.</li>
+</ul>
+<pre><code class="language-console">  &gt; vi $SPARK_HOME/conf/logback-kaetlyn.xml
+</code></pre>
+<h1 id="3-kafka-producer">3. Kafka producer<a class="headerlink" href="#3-kafka-producer" title="Permanent link">&para;</a></h1>
+<p>Start kafka producer.</p>
+<pre><code class="language-console">kafka-console-producer.sh --broker-list localhost:9092 --topic {topic name} &lt; {filename to ingest}
+</code></pre>
+<p>To produce for a kaetlyn consumer,  2 header fields should be included.</p>
+<pre><code class="language-console">TABLE_ID
+SEPARATOR
+</code></pre>
+<p>If you use 'kafkacat', you can produce with the additional header fields.(https://docs.confluent.io/3.3.0/app-development/kafkacat-usage.html# )</p>
+<p><strong> 1. How to install kafkacat </strong></p>
+<ul>
+<li>c++ compiler</li>
+</ul>
+<pre><code class="language-console">$yum install gcc-c++
+</code></pre>
+<ul>
+<li>Download source codes</li>
+</ul>
+<pre><code class="language-console">$ git clone https://github.com/edenhill/librdkafka
+</code></pre>
+<ul>
+<li>Make and Installation</li>
+</ul>
+<pre><code class="language-console">$ cd librdkafka
+$ ./configure
+$ make
+$ sudo make install
+</code></pre>
+<ul>
+<li>Move to '/usr/local/lib' and execute below commands.</li>
+</ul>
+<pre><code class="language-console">$ git clone https://github.com/edenhill/kafkacat
+$ cd kafkacat
+$ ./configure
+$ make
+$ sudo make install
+</code></pre>
+<ul>
+<li>How to find Lib path</li>
+</ul>
+<pre><code class="language-console">$ ldd kafkacat
+</code></pre>
+<ul>
+<li>Create and edit /etc/ld.so.conf.d/usrlocal.conf</li>
+</ul>
+<pre><code class="language-console">Contents:
+/usr/local/lib
+</code></pre>
+<ul>
+<li>Save and execution</li>
+</ul>
+<pre><code class="language-console">$ ldconfig -v
+</code></pre>
+<ul>
+<li>If 'kafkacat' is shown, kafkacat is installed successfully.</li>
+</ul>
+<pre><code class="language-console">$kafkacat
+</code></pre>
+<p><strong> 2. Producing with kafkacat </strong></p>
+<p>1) Produce a single file</p>
+<pre><code class="language-console">kafkacat -b localhost:9092 -t {topic name} -T -P -H TABLE_ID='{table id}' -H  SEPARATOR='|' -l {filename}
+</code></pre>
+<p>2) Produce all files in a directory</p>
+<p>After moving to the directory path,</p>
+<pre><code class="language-console">ls | xargs -n 1 kafkacat -q -b localhost:9092 -t {topic name} -P -H TABLE_ID='{table id}' -H  SEPARATOR='|' -l
+</code></pre>
+<p><strong> 3. kafka-utils.sh </strong></p>
+<p>With kafka-utils.sh, check the status of kafka broker.</p>
+<p>Because 'kafka-utils.sh' exists under sbin path of each cluster, you can use this with 'cfc {cluster number}'.</p>
+<pre><code class="language-console">[C:6][ltdb@d205 ~]$ which kafka-utils.sh
+~/tsr2/cluster_6/tsr2-assembly-1.0.0-SNAPSHOT/sbin/kafka-utils.sh
+</code></pre>
+<p>After 'CONSUMER_GROUP_ID' is set, kafka-utils.sh is enabled.</p>
+<pre><code class="language-console">[C:6][ltdb@d205 ~]$ kafka-utils.sh help
+Please, set $CONSUMER_GROUP_ID first.
+</code></pre>
+<p>Need to set'kafka-utils.sh'.</p>
+<pre><code class="language-console">#!/bin/bash
+
+CONSUMER_GROUP_ID='nvkvs_redis_connector'  // Need to modify
+KAFKA_SERVER=localhost:9092
+ZOOKEEPER_SERVER=localhost:2181...
+</code></pre>
+<pre><code class="language-console">[C:6][ltdb@d205 ~/kafka/config]$ kafka-utils.sh help
+kafka-utils.sh offset-check
+kafka-utils.sh offset-monitor
+kafka-utils.sh offset-earliest topic_name
+kafka-utils.sh offset-latest topic_name
+kafka-utils.sh offset-move topic_name 10000
+kafka-utils.sh error-monitor error_topic_name
+kafka-utils.sh consumer-list
+kafka-utils.sh topic-check topic_name
+kafka-utils.sh topic-create topic_name 10
+kafka-utils.sh topic-delete topic_name
+kafka-utils.sh topic-config-check topic_name
+kafka-utils.sh topic-config-set topic_name config_name config_value
+kafka-utils.sh topic-config-remove topic_name config_name
+kafka-utils.sh topic-list
+kafka-utils.sh message-earliest topic_name
+kafka-utils.sh message-latest topic_name
+</code></pre>
+<p>If a command needs args, the error messages like below is shown.</p>
+<pre><code class="language-console">[C:6][ltdb@d205 ~/kafka/config]$ kafka-utils.sh offset-move 
+Please, specify topic name &amp; the size of moving offset (ex) kafka-utils.sh offset-move my-topic 100
+[C:6][ltdb@d205 ~/kafka/config]$ kafka-utils.sh topic-create
+Please, specify topic name and its partition count. (ex) kafka-utils.sh topic-create topic-new 10
+[C:6][ltdb@d205 ~/kafka/config]$
+</code></pre>
+<p>For example,</p>
+<pre><code class="language-console">[C:6][ltdb@d205 ~]$ kafka-utils.sh message-earliest nvkvs3
+20160711055950|ELG|2635055200|34317|5|6091|1|25|0|11|0|100.0|0.0|0|2846|3|33|0|5|0|-1000|0.0|0.0|94932|1027|0|176|35.2|40|0|7818000000|109816071|10|0|6000000.0|164843|2.75|0|2592|6000000|0.04|1288488|1303|1338|0|530|1|88.33|0|721|67948|428|0|1|108|108.0|108|0|0.0|0|0|0|-1000|1|1|100.0|62|39.0|62.9|23.0|37.1|0|0|0|0|29|10|-7022851.0|59998.0|-117.05|-6865443.5|59998.0|-114.43|4|198060.0|59998.0|22.5|3.3|0|1|5.82|3|1.94||0|0|0|0|0|0|0|0|4|0|0|0|15|14|231|140|0|0|0|0|0|0|0|0|4|0|0|0|15|13|174|110|1|0|0|0|0|0|0|0|0|0|0|0|0|0|1|0|0|0|0|0|0|0|1|0|0|0|0|0|0|0|0|0|0.0|0.0|0.0|0.0|0.0|0.0|570.0|0.0|3.0|0.0|0.0|0.0|0.0|2.0|3.0|3.0|0.0|15.73|0.0|0.0|0.0|0.0|0.0|12.0|22.0|68.0|83.0|339.0|205.0|144.0|54.0|38.0|12.0|0.0|0.0|0.0|0.0|0.0|0.0|100.0|50.55|1:22,2:7|1.0|||||1:1,17:1,23:1|13.67|0|0|0.0|0.0|-1000||-1000||-1000|11|2|05
+Processed a total of 1 messages
+
+
+[C:6][ltdb@d205 ~]$ kafka-utils.sh topic-list
+__consumer_offsets
+nvkvs3
+topic-error
+topic_name
+
+
+[C:6][ltdb@d205 ~]$ kafka-utils.sh topic-create ksh 18
+Created topic ksh.
+
+
+[C:6][ltdb@d205 ~]$ kafka-utils.sh topic-check  ksh
+Topic:ksh   PartitionCount:18   ReplicationFactor:2 Configs:
+    Topic: ksh  Partition: 0    Leader: 1   Replicas: 1,3   Isr: 1,3
+    Topic: ksh  Partition: 1    Leader: 2   Replicas: 2,1   Isr: 2,1
+    Topic: ksh  Partition: 2    Leader: 3   Replicas: 3,2   Isr: 3,2
+    Topic: ksh  Partition: 3    Leader: 1   Replicas: 1,2   Isr: 1,2
+    Topic: ksh  Partition: 4    Leader: 2   Replicas: 2,3   Isr: 2,3
+    Topic: ksh  Partition: 5    Leader: 3   Replicas: 3,1   Isr: 3,1
+    Topic: ksh  Partition: 6    Leader: 1   Replicas: 1,3   Isr: 1,3
+    Topic: ksh  Partition: 7    Leader: 2   Replicas: 2,1   Isr: 2,1
+    Topic: ksh  Partition: 8    Leader: 3   Replicas: 3,2   Isr: 3,2
+    Topic: ksh  Partition: 9    Leader: 1   Replicas: 1,2   Isr: 1,2
+    Topic: ksh  Partition: 10   Leader: 2   Replicas: 2,3   Isr: 2,3
+    Topic: ksh  Partition: 11   Leader: 3   Replicas: 3,1   Isr: 3,1
+    Topic: ksh  Partition: 12   Leader: 1   Replicas: 1,3   Isr: 1,3
+    Topic: ksh  Partition: 13   Leader: 2   Replicas: 2,1   Isr: 2,1
+    Topic: ksh  Partition: 14   Leader: 3   Replicas: 3,2   Isr: 3,2
+    Topic: ksh  Partition: 15   Leader: 1   Replicas: 1,2   Isr: 1,2
+    Topic: ksh  Partition: 16   Leader: 2   Replicas: 2,3   Isr: 2,3
+    Topic: ksh  Partition: 17   Leader: 3   Replicas: 3,1   Isr: 3,1
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All right reserved, <a href='https://lightningdb.io'>Lightning DB Team</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": 0.1}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="../search/main.js"></script>
+      
+    
+  </body>
+</html>
